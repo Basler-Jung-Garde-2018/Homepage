@@ -1,0 +1,84 @@
+<div class="homepage-container">
+  <div class="title-section">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <h3>Basler Guggenmuusig</h3>
+    <h1>Jung Garde 2018</h1>
+    <p>Kinder und Jugendgugge</p>
+    <p>2018 mit dem Gedanken an die Nachwuchsförderung für die Basler Fasnacht gegründet</p>
+  </div>
+
+
+  <div class="slideshow">
+    <mat-icon class="slideshow-icon">chevron_left</mat-icon>
+    <img src="https://via.placeholder.com/1500x500" alt="Slideshow Bild" class="slideshow-image">
+    <mat-icon class="slideshow-icon">chevron_right</mat-icon>
+  </div>
+
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>info</mat-icon>
+            Unsere Jung Garde
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button routerLink="/ueber-uns">Mehr Infos
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-card>
+    <div class="countdown-section">
+      <h3>Countdown bis zur nächsten Fasnacht:</h3>
+      <div class="countdown-timer">
+        <div class="countdown-item">
+          <h4>100</h4>
+          <p>Tage</p>
+        </div>
+        <div class="countdown-item">
+          <h4>5</h4>
+          <p>Stunden</p>
+        </div>
+        <div class="countdown-item">
+          <h4>34</h4>
+          <p>Minuten</p>
+        </div>
+        <div class="countdown-item">
+          <h4>12</h4>
+          <p>Sekunden</p>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="audio">
+  <h5>Eine kleine Kostprobe von uns:</h5>
+  <audio #audioPlayer src="assets/testJunggarde.mp3"></audio>
+
+  <button (click)="audioPlayer.play()">
+    <mat-icon aria-hidden="false" fontIcon="play_circle"></mat-icon>
+  </button>
+
+  <button (click)="audioPlayer.pause()">
+    <mat-icon aria-hidden="false" fontIcon="pause_circle"></mat-icon>
+  </button>
+
+  <label for="volumeControl">Lautstärke:</label>
+  <input id="volumeControl" type="range" min="0" max="1" step="0.01" (input)="onVolumeChange($event, audioPlayer)">
+</div>
+
+
