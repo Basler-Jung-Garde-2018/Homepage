@@ -37,9 +37,24 @@
 
 
 <h1>NUR ZUM TESTEN!</h1>
-<input type="file" (change)="onFileSelected($event)" multiple/>
+<div>
+  <h2>Galerie hochladen</h2>
+  <input type="file" multiple (change)="handleFileInput($event)" accept="image/*" />
 
-<div *ngFor="let image of base64Images">
-  <img [src]="image" alt="Uploaded image" style="max-width: 200px; margin: 10px;"/>
+  <button (click)="loadGallery()">Galerie laden</button>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let gallery of galleries">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ gallery.event }} - {{ gallery.year }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ gallery.id }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img [src]="gallery.base64" alt="Gallery Image" style="max-width: 100%; height: auto;">
+      <p>Format: {{ gallery.format }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
-<button>Hochladen</button>
