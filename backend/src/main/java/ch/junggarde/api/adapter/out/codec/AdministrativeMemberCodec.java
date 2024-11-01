@@ -39,13 +39,13 @@ public class AdministrativeMemberCodec implements CollectibleCodec<Administrativ
     @Override
     public void encode(BsonWriter bsonWriter, AdministrativeMember administrativeMember, EncoderContext encoderContext) {
         final Document document = new Document()
-                .append(AdministrativeMember.Fields.id, administrativeMember.getId())
-                .append(AdministrativeMember.Fields.memberId, administrativeMember.getMemberId())
+                .append(AdministrativeMember.Fields.id, administrativeMember.getId().toString())
+                .append(AdministrativeMember.Fields.memberId, administrativeMember.getMemberId().toString())
                 .append(AdministrativeMember.Fields.role, administrativeMember.getRole().toString())
                 .append(AdministrativeMember.Fields.jobTitle, administrativeMember.getJobTitle())
                 .append(AdministrativeMember.Fields.description, administrativeMember.getDescription())
-                .append(AdministrativeMember.Fields.imageId, administrativeMember.getImageId())
-                .append(AdministrativeMember.Fields.supervisorId, administrativeMember.getSupervisorId());
+                .append(AdministrativeMember.Fields.imageId, administrativeMember.getImageId().toString())
+                .append(AdministrativeMember.Fields.supervisorId, administrativeMember.getSupervisorId().toString());
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
 

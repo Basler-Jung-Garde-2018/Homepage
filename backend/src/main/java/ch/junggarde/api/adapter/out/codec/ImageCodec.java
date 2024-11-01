@@ -26,7 +26,6 @@ public class ImageCodec implements CollectibleCodec<Image> {
         final Document document = documentCodec.decode(bsonReader, decoderContext);
         return new Image(
                 UUID.fromString(document.getString(Image.Fields.id)),
-                document.getString(Image.Fields.format),
                 document.getString(Image.Fields.base64)
         );
     }
@@ -35,7 +34,6 @@ public class ImageCodec implements CollectibleCodec<Image> {
     public void encode(BsonWriter bsonWriter, Image image, EncoderContext encoderContext) {
         final Document document = new Document()
                 .append(Image.Fields.id, image.getId().toString())
-                .append(Image.Fields.format, image.getFormat())
                 .append(Image.Fields.base64, image.getBase64());
         documentCodec.encode(bsonWriter, document, encoderContext);
     }

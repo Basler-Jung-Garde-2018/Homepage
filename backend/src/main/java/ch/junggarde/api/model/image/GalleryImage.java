@@ -20,13 +20,11 @@ public class GalleryImage {
     private UUID imageId;
     private int year;
     private String event;
-    private UUID positionId;
 
-    public GalleryImage(UUID imageId, int year, String event, UUID positionId) {
+    public GalleryImage(UUID imageId, int year, String event) {
         this.id = UUID.randomUUID();
         this.imageId = imageId;
         this.year = year;
         this.event = event;
-        this.positionId = positionId;
     }
 }

@@ -1,4 +1,4 @@
-package ch.junggarde.api.application.dto;
+package ch.junggarde.api.application.dto.out;
 
 import ch.junggarde.api.model.member.Member;
 

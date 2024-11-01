@@ -1,4 +1,4 @@
-package ch.junggarde.api.application.dto;
+package ch.junggarde.api.application.dto.out;
 
 import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.member.AdministrativeMember;
@@ -12,7 +12,6 @@ public record AdministrativeMemberDTO(
         String jobTitle,
         String description,
         String supervisorId,
-        String imageFormat,
         String imageBase64
 ) {
     public static AdministrativeMemberDTO fromDomainModel(AdministrativeMember administrativeMember, Member member, Image image) {
@@ -24,7 +23,6 @@ public record AdministrativeMemberDTO(
                 administrativeMember.getJobTitle(),
                 administrativeMember.getDescription(),
                 administrativeMember.getSupervisorId().toString(),
-                image.getFormat(),
                 image.getBase64()
         );
     }

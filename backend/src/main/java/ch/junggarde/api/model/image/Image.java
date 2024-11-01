@@ -17,12 +17,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Image {
     private UUID id;
-    private String format;
     private String base64;
 
-    public Image(String format, String base64) {
+    public Image(String base64) {
         this.id = UUID.randomUUID();
-        this.format = format;
         this.base64 = base64;
     }
 }
