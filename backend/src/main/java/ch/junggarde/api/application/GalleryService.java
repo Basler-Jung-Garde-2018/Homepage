@@ -2,8 +2,7 @@ package ch.junggarde.api.application;
 
 import ch.junggarde.api.adapter.out.persistance.GalleryImageRepository;
 import ch.junggarde.api.adapter.out.persistance.ImageRepository;
-import ch.junggarde.api.application.dto.in.AddToGalleryRequest;
-import ch.junggarde.api.application.dto.out.GalleryImageDTO;
+import ch.junggarde.api.application.dto.GalleryImageDTO;
 import ch.junggarde.api.model.image.GalleryImage;
 import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.image.ImageNotFound;

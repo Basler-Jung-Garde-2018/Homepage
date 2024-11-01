@@ -1,7 +1,8 @@
 package ch.junggarde.api.adapter.in;
 
 import ch.junggarde.api.application.MemberService;
-import ch.junggarde.api.application.dto.in.AddToMembersRequest;
+import ch.junggarde.api.application.dto.AdministrativeMemberDTO;
+import ch.junggarde.api.application.dto.MemberDTO;
 import ch.junggarde.api.model.member.MemberNotFound;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -27,10 +28,9 @@ public class MemberResource {
     }
 
     @POST
-    public Response addMembers(List<AddToMembersRequest> members) {
-        log.info("add {} Images", members.size());
+    public Response addMembers(List<MemberDTO> members) {
+        log.info("add {} Members", members.size());
         return Response.ok().entity(memberService.addMembers(members)).build();
-
     }
 
     @Path("/administrative")
@@ -41,6 +41,13 @@ public class MemberResource {
         } catch (MemberNotFound e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @Path("/administrative")
+    @POST
+    public Response addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberDTOS) {
+        log.info("add {} AdministrativeMembers", administrativeMemberDTOS.size());
+        return Response.ok().entity(memberService.addAdministrativeMembers(administrativeMemberDTOS)).build();
     }
 
 }

@@ -20,12 +20,12 @@ public class AdministrativeMemberRepository {
     @ConfigProperty(name = "quarkus.mongodb.database")
     String database;
 
-    public void save(AdministrativeMember administrativeMember) {
-        collection().insertOne(administrativeMember);
-    }
-
     public List<AdministrativeMember> findAll() {
         return collection().find().into(new ArrayList<>());
+    }
+
+    public void saveAdministrativeMembers(List<AdministrativeMember> administrativeMembers) {
+        collection().insertMany(administrativeMembers);
     }
 
     private MongoCollection<AdministrativeMember> collection() {

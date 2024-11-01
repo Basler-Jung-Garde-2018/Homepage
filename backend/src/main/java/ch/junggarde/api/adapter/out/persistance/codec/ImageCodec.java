@@ -2,11 +2,7 @@ package ch.junggarde.api.adapter.out.persistance.codec;
 
 import ch.junggarde.api.model.image.Image;
 import com.mongodb.MongoClientSettings;
-import org.bson.BsonReader;
-import org.bson.BsonString;
-import org.bson.BsonValue;
-import org.bson.BsonWriter;
-import org.bson.Document;
+import org.bson.*;
 import org.bson.codecs.Codec;
 import org.bson.codecs.CollectibleCodec;
 import org.bson.codecs.DecoderContext;

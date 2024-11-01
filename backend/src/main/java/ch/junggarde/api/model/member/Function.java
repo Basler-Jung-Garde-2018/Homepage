@@ -9,5 +9,6 @@ public enum Function {
     TROMPETE,
     EUPHONIUM,
     POSAUNE,
-    SOUSAPHONE
+    SOUSAPHONE,
+    NONE
 }

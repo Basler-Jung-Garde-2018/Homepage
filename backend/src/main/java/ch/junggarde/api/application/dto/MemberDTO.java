@@ -1,8 +1,10 @@
-package ch.junggarde.api.application.dto.out;
+package ch.junggarde.api.application.dto;
 
 import ch.junggarde.api.model.member.Member;
+import jakarta.annotation.Nullable;
 
 public record MemberDTO(
+        @Nullable
         String id,
         String firstname,
         String lastname,

@@ -20,8 +20,8 @@ public class AppointmentRepository {
     @ConfigProperty(name = "quarkus.mongodb.database")
     String database;
 
-    public void save(Appointment appointment) {
-        collection().insertOne(appointment);
+    public void saveAppointments(List<Appointment> appointments) {
+        collection().insertMany(appointments);
     }
 
     public List<Appointment> findAll() {

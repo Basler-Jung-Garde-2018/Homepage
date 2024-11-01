@@ -1,16 +1,19 @@
-package ch.junggarde.api.application.dto.out;
+package ch.junggarde.api.application.dto;
 
 import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.member.AdministrativeMember;
 import ch.junggarde.api.model.member.Member;
+import jakarta.annotation.Nullable;
 
 public record AdministrativeMemberDTO(
+        @Nullable
         String id,
         String firstname,
         String lastname,
         String role,
         String jobTitle,
         String description,
+        @Nullable
         String supervisorId,
         String imageBase64
 ) {

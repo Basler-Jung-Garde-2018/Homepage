@@ -3,13 +3,10 @@ package ch.junggarde.api.application;
 import ch.junggarde.api.adapter.out.persistance.AdministrativeMemberRepository;
 import ch.junggarde.api.adapter.out.persistance.ImageRepository;
 import ch.junggarde.api.adapter.out.persistance.MemberRepository;
-import ch.junggarde.api.application.dto.in.AddToMembersRequest;
-import ch.junggarde.api.application.dto.out.AdministrativeMemberDTO;
-import ch.junggarde.api.application.dto.out.MemberDTO;
+import ch.junggarde.api.application.dto.AdministrativeMemberDTO;
+import ch.junggarde.api.application.dto.MemberDTO;
 import ch.junggarde.api.model.image.Image;
-import ch.junggarde.api.model.member.AdministrativeMember;
-import ch.junggarde.api.model.member.Member;
-import ch.junggarde.api.model.member.MemberNotFound;
+import ch.junggarde.api.model.member.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -63,13 +60,53 @@ public class MemberService {
                 ).toList();
     }
 
-    public List<MemberDTO> addMembers(List<AddToMembersRequest> memberRequests) throws MemberNotFound {
+    public List<MemberDTO> addMembers(List<MemberDTO> memberRequests) throws MemberNotFound {
         if (memberRequests.isEmpty()) {
             return new ArrayList<>();
         }
-        List<Member> members = memberRequests.stream().map(member -> new Member(member.firstname(), member.lastname(), member.function())).toList();
+        List<Member> members = memberRequests.stream().map(member -> new Member(member.firstname(), member.lastname(), Function.valueOf(member.function()))).toList();
         memberRepository.saveMembers(members);
 
         return members.stream().map(MemberDTO::fromDomainModel).toList();
+    }
+
+    public List<AdministrativeMemberDTO> addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberRequests) throws MemberNotFound {
+        if (administrativeMemberRequests.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<AdministrativeMemberDTO> response = new ArrayList<>(administrativeMemberRequests.size());
+        List<Image> images = new ArrayList<>();
+        List<AdministrativeMember> administrativeMembers = new ArrayList<>(administrativeMemberRequests.size());
+        List<Member> members = new ArrayList<>(administrativeMemberRequests.size());
+
+        administrativeMemberRequests.forEach(administrativeMemberRequest -> {
+            Member member = new Member(
+                    administrativeMemberRequest.firstname(),
+                    administrativeMemberRequest.lastname()
+            );
+            Image image = new Image(
+                    administrativeMemberRequest.imageBase64()
+            );
+
+            AdministrativeMember administrativeMember = new AdministrativeMember(
+                    member.getId(),
+                    Role.valueOf(administrativeMemberRequest.role()),
+                    administrativeMemberRequest.jobTitle(),
+                    administrativeMemberRequest.description(),
+                    image.getId(),
+                    administrativeMemberRequest.supervisorId()
+            );
+            images.add(image);
+            administrativeMembers.add(administrativeMember);
+            members.add(member);
+
+            response.add(AdministrativeMemberDTO.fromDomainModel(administrativeMember, member, image));
+        });
+
+        imageRepository.saveImages(images);
+        memberRepository.saveMembers(members);
+        administrativeMemberRepository.saveAdministrativeMembers(administrativeMembers);
+
+        return response;
     }
 }

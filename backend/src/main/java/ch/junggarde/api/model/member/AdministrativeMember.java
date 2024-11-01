@@ -23,4 +23,16 @@ public class AdministrativeMember {
     private String description;
     private UUID imageId;
     private UUID supervisorId;
+
+    public AdministrativeMember(UUID memberId, Role role, String jobTitle, String description, UUID imageId, String supervisorId) {
+        this.id = UUID.randomUUID();
+        this.memberId = memberId;
+        this.role = role;
+        this.jobTitle = jobTitle;
+        this.description = description;
+        this.imageId = imageId;
+        if (supervisorId != null) {
+            this.supervisorId = UUID.fromString(supervisorId);
+        }
+    }
 }

@@ -1,8 +1,10 @@
-package ch.junggarde.api.application.dto.out;
+package ch.junggarde.api.application.dto;
 
 import ch.junggarde.api.model.Appointment;
+import jakarta.annotation.Nullable;
 
 public record AppointmentDTO(
+        @Nullable
         String id,
         String date,
         String location,

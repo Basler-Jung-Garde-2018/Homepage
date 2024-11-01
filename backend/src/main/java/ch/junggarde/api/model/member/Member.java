@@ -27,4 +27,11 @@ public class Member {
         this.lastname = lastname;
         this.function = function;
     }
+
+    public Member(String firstname, String lastname) {
+        this.id = UUID.randomUUID();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.function = Function.NONE;
+    }
 }

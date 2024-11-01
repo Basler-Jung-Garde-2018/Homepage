@@ -22,4 +22,12 @@ public class Appointment {
     private String location;
     private String name;
     private AppointmentType type;
+
+    public Appointment(LocalDateTime date, String location, String name, AppointmentType type) {
+        this.id = UUID.randomUUID();
+        this.date = date;
+        this.location = location;
+        this.name = name;
+        this.type = type;
+    }
 }

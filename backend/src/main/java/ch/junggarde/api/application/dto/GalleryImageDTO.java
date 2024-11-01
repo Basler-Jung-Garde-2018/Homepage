@@ -1,4 +1,4 @@
-package ch.junggarde.api.application.dto.out;
+package ch.junggarde.api.application.dto;
 
 import ch.junggarde.api.model.image.GalleryImage;
 import ch.junggarde.api.model.image.Image;
