@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Appointment} from "../model/appointments";
 import {Gallery} from "../model/gallery";
 
@@ -17,8 +17,8 @@ export class ClientService {
     });
   }
 
-  public createGallery(data: any): Observable<Gallery[]> {
-    return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, JSON.stringify(data));
+  public createGallery(data: Partial<Gallery>[]): Observable<Gallery[]> {
+    return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
   }
 
   public getGallery(year: number, event: string, page: number): Observable<Gallery[]> {

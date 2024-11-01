@@ -6,3 +6,4 @@ quarkus:
     cors:
       ~: true
       origins: "http://localhost:4200"
+      methods: GET,PUT,POST,DELETE

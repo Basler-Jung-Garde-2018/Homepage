@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
-@Path("/gallery/")
+@Path("/gallery")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped

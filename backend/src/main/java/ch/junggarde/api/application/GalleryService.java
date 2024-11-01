@@ -47,6 +47,9 @@ public class GalleryService {
     }
 
     public List<GalleryImageDTO> addImages(List<AddToGalleryRequest> galleryRequests) {
+        if (galleryRequests.isEmpty()) {
+            return new ArrayList<>();
+        }
         List<GalleryImageDTO> response = new ArrayList<>(galleryRequests.size());
         List<GalleryImage> galleryImages = new ArrayList<>(galleryRequests.size());
         List<Image> images = new ArrayList<>(galleryRequests.size());
