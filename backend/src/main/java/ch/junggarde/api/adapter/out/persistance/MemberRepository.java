@@ -22,10 +22,6 @@ public class MemberRepository {
     @ConfigProperty(name = "quarkus.mongodb.database")
     String database;
 
-    public void save(Member member) {
-        collection().insertOne(member);
-    }
-
     public List<Member> findAdministrativeMembers(List<String> memberIds) {
         return collection().find(Filters.in(Image.Fields.id, memberIds)).into(new ArrayList<>());
     }
@@ -36,5 +32,9 @@ public class MemberRepository {
 
     public List<Member> findAll() {
         return collection().find().into(new ArrayList<>());
+    }
+
+    public void saveMembers(List<Member> members) {
+        collection().insertMany(members);
     }
 }

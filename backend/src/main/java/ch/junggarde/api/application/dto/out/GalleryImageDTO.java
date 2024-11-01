@@ -2,8 +2,10 @@ package ch.junggarde.api.application.dto.out;
 
 import ch.junggarde.api.model.image.GalleryImage;
 import ch.junggarde.api.model.image.Image;
+import jakarta.annotation.Nullable;
 
 public record GalleryImageDTO(
+        @Nullable
         String id,
         String base64,
         int year,

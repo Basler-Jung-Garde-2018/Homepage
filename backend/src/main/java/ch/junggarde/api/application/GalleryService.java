@@ -46,7 +46,7 @@ public class GalleryService {
                 ).toList();
     }
 
-    public List<GalleryImageDTO> addImages(List<AddToGalleryRequest> galleryRequests) {
+    public List<GalleryImageDTO> addImages(List<GalleryImageDTO> galleryRequests) {
         if (galleryRequests.isEmpty()) {
             return new ArrayList<>();
         }
@@ -54,7 +54,7 @@ public class GalleryService {
         List<GalleryImage> galleryImages = new ArrayList<>(galleryRequests.size());
         List<Image> images = new ArrayList<>(galleryRequests.size());
 
-        for (AddToGalleryRequest galleryRequest : galleryRequests) {
+        for (GalleryImageDTO galleryRequest : galleryRequests) {
             Image image = new Image(galleryRequest.base64());
             GalleryImage galleryImage = new GalleryImage(
                     image.getId(),

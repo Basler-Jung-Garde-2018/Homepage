@@ -1,20 +1,22 @@
 package ch.junggarde.api.adapter.in;
 
 import ch.junggarde.api.application.MemberService;
+import ch.junggarde.api.application.dto.in.AddToMembersRequest;
 import ch.junggarde.api.model.member.MemberNotFound;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
 
 @Path("/members")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Log4j2
 public class MemberResource {
     @Inject
     MemberService memberService;
@@ -22,6 +24,13 @@ public class MemberResource {
     @GET
     public Response getMembers() {
         return Response.ok(memberService.getMembers()).build();
+    }
+
+    @POST
+    public Response addMembers(List<AddToMembersRequest> members) {
+        log.info("add {} Images", members.size());
+        return Response.ok().entity(memberService.addMembers(members)).build();
+
     }
 
     @Path("/administrative")
@@ -33,4 +42,5 @@ public class MemberResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }

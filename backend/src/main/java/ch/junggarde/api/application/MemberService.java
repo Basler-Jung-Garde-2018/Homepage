@@ -3,6 +3,7 @@ package ch.junggarde.api.application;
 import ch.junggarde.api.adapter.out.persistance.AdministrativeMemberRepository;
 import ch.junggarde.api.adapter.out.persistance.ImageRepository;
 import ch.junggarde.api.adapter.out.persistance.MemberRepository;
+import ch.junggarde.api.application.dto.in.AddToMembersRequest;
 import ch.junggarde.api.application.dto.out.AdministrativeMemberDTO;
 import ch.junggarde.api.application.dto.out.MemberDTO;
 import ch.junggarde.api.model.image.Image;
@@ -12,6 +13,7 @@ import ch.junggarde.api.model.member.MemberNotFound;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -59,5 +61,15 @@ public class MemberService {
                                         .orElse(new Image())
                         )
                 ).toList();
+    }
+
+    public List<MemberDTO> addMembers(List<AddToMembersRequest> memberRequests) throws MemberNotFound {
+        if (memberRequests.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Member> members = memberRequests.stream().map(member -> new Member(member.firstname(), member.lastname(), member.function())).toList();
+        memberRepository.saveMembers(members);
+
+        return members.stream().map(MemberDTO::fromDomainModel).toList();
     }
 }

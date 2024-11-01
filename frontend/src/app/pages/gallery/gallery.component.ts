@@ -55,9 +55,11 @@ export class GalleryComponent implements OnInit {
   }
 
   loadGallery(): void {
+    console.log("gallery load start")
     this.clientService.getGallery(this.selectedYear, this.event, this.page).subscribe(
       (data: Gallery[]) => {
         this.galleries = data;
+        console.log("gallery loaded")
       },
       (error) => {
         console.error("Fehler beim Laden der Galerie:", error);

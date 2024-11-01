@@ -20,4 +20,11 @@ public class Member {
     private String firstname;
     private String lastname;
     private Function function;
+
+    public Member(String firstname, String lastname, Function function) {
+        this.id = UUID.randomUUID();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.function = function;
+    }
 }

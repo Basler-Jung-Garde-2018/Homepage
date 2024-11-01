@@ -2,6 +2,7 @@ package ch.junggarde.api.adapter.in;
 
 import ch.junggarde.api.application.GalleryService;
 import ch.junggarde.api.application.dto.in.AddToGalleryRequest;
+import ch.junggarde.api.application.dto.out.GalleryImageDTO;
 import ch.junggarde.api.model.image.ImageNotFound;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -37,7 +38,7 @@ public class GalleryResource {
     }
 
     @POST
-    public Response addImages(List<AddToGalleryRequest> images) {
+    public Response addImages(List<GalleryImageDTO> images) {
         log.info("add {} Images", images.size());
         return Response.ok().entity(galleryService.addImages(images)).build();
     }
