@@ -1,0 +1,77 @@
+.homepage-container {
+  text-align: center;
+  padding: 20px;
+}
+
+mat-card-content {
+  text-align: left;
+}
+
+h1 {
+  color: #00a19d;
+}
+
+p {
+  color: grey;
+}
+
+.title-section {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+}
+
+.slideshow-card {
+  margin: 20px 0;
+}
+
+.slideshow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slideshow-image {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.slideshow-icon {
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.info-card {
+  margin: 20px 0;
+
+}
+
+.countdown-section {
+  margin: 20px 0;
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+}
+
+.countdown-item {
+  margin: 0 10px;
+}
+
+.music-section {
+  margin: 20px 0;
+}
+
+.audio {
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+  margin: 10px;
+}

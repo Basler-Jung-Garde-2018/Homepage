@@ -1,0 +1,67 @@
+<div class="title-section">
+  <h1>Termine & Social Media</h1>
+</div>
+<h1 style="color: black; font-weight: bold; text-align: center">Termine kommen noch</h1>
+<p>List of appointments</p>
+<p *ngFor="let appointment of appointments">{{appointment.name}}</p>
+<mat-card>
+  <div class="social-media-section">
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Social Media</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>Hier findest du uns auch:</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="social-media-cards">
+        <mat-card class="social-media-card"
+                  (click)="openLink('https://www.youtube.com/@guggemuusiggugge-myslijung6818')">
+          <img src="https://via.placeholder.com/750x750" alt="Slideshow Bild" class="slideshow-image">
+          <mat-card-header>
+            <mat-icon aria-hidden="false">smart_display</mat-icon>
+            <mat-card-title>YouTube</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Hier laden wir Videos von Auftritten hoch</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="social-media-card" (click)="openLink('https://www.instagram.com/jung_gardebasel/')">
+          <img src="https://via.placeholder.com/750x750" alt="Slideshow Bild" class="slideshow-image">
+          <mat-card-header>
+            <mat-icon aria-hidden="false">photo_camera</mat-icon>
+            <mat-card-title>Instagram</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Hier werden regelmäßig Bilder gepostet</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="social-media-card" (click)="openLink('https://www.tiktok.com/@junggarde2018')">
+          <img src="https://via.placeholder.com/750x750" alt="Slideshow Bild" class="slideshow-image">
+          <mat-card-header>
+            <mat-icon aria-hidden="false">theater_comedy</mat-icon>
+            <mat-card-title>TikTok</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>TikTok Videos von unseren Auftritten</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="social-media-card" (click)="openLink('https://www.facebook.com')">
+          <img src="https://via.placeholder.com/750x750" alt="Facebook Bild" class="slideshow-image">
+          <mat-card-header>
+            <mat-icon aria-hidden="false">facebook</mat-icon>
+            <mat-card-title>Facebook</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Folge uns auf Facebook für mehr Updates</p>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </mat-card-content>
+  </div>
+</mat-card>

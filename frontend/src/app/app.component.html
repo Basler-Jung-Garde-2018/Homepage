@@ -1,0 +1,18 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  <span class="spacer"></span>
+  <div class="nav-links">
+    <a mat-button routerLink="/startseite">Startseite</a>
+    <a mat-button routerLink="/kalender">Termine & Social Media</a>
+    <a mat-button routerLink="/galerie">Galerie</a>
+    <a mat-button routerLink="/ueber-uns">Über uns</a>
+  </div>
+</mat-toolbar>
+
+<div
+  class="bg-image">
+  <router-outlet></router-outlet>
+</div>
+
