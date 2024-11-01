@@ -1,60 +1,41 @@
-<mat-accordion>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Filter</mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <mat-form-field>
-      <mat-label>Jahr</mat-label>
-      <mat-select [(ngModel)]="selectedYear">
-        <mat-option value="2020">2020</mat-option>
-        <mat-option value="2021">2021</mat-option>
-        <mat-option value="2022">2022</mat-option>
-        <mat-option value="2023">2023</mat-option>
-        <mat-option value="2024">2024</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Event</mat-label>
-      <mat-select [(ngModel)]="event">
-        <mat-option value="Diverses">Diverses</mat-option>
-        <mat-option value="Fasnacht Mäntig">Fasnacht Mäntig</mat-option>
-        <mat-option value="Fasnacht Zyschtig">Fasnacht Zyschtig</mat-option>
-        <mat-option value="Fasnacht Mittwuch">Fasnacht Mittwuch</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<div *ngFor="let image of galleries">
-  <img [src]="'data:image/' + image.format + ';base64,' + image.base64" alt="{{ image.event }}" />
-  <p>{{ image.event }} ({{ image.year }})</p>
-</div>
-
-<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
-</mat-paginator>
-
-
-<h1>NUR ZUM TESTEN!</h1>
-<div>
-  <h2>Galerie hochladen</h2>
-  <input type="file" multiple (change)="handleFileInput($event)" accept="image/*" />
-
-  <button (click)="loadGallery()">Galerie laden</button>
-
+<div class="accordion-wrapper">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let gallery of galleries">
+    <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ gallery.event }} - {{ gallery.year }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ gallery.id }}
-        </mat-panel-description>
+        <mat-panel-title>Filter</mat-panel-title>
       </mat-expansion-panel-header>
-      <img [src]="gallery.base64" alt="Gallery Image" style="max-width: 100%; height: auto;">
-      <p>Format: {{ gallery.format }}</p>
+
+      <div class="filter-container">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Jahr</mat-label>
+          <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
+            <mat-option value="2020">2020</mat-option>
+            <mat-option value="2021">2021</mat-option>
+            <mat-option value="2022">2022</mat-option>
+            <mat-option value="2023">2023</mat-option>
+            <mat-option value="2024">2024</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Event</mat-label>
+          <mat-select [(ngModel)]="event" (selectionChange)="loadGallery()">
+            <mat-option value="Diverses">Diverses</mat-option>
+            <mat-option value="Fasnacht Mäntig">Fasnacht Mäntig</mat-option>
+            <mat-option value="Fasnacht Zyschtig">Fasnacht Zyschtig</mat-option>
+            <mat-option value="Fasnacht Mittwuch">Fasnacht Mittwuch</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="apply-button" (click)="loadGallery()">Filter anwenden</button>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
+</div>
+
+
+<div class="gallery-container">
+  <mat-card *ngFor="let gallery of galleries" class="gallery-card">
+    <img [src]="gallery.base64" alt="Gallery Image" class="gallery-image" />
+  </mat-card>
 </div>

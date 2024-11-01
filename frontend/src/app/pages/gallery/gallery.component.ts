@@ -8,8 +8,8 @@ import { NgForOf } from "@angular/common";
 import { ClientService } from "../../service/client.service";
 import { Gallery } from "../../model/gallery";
 import { FormsModule } from "@angular/forms";
-import { GalleryService } from "../../service/gallery.service";
-import { v4 as uuidv4 } from 'uuid'; // UUID library
+import {MatCard} from "@angular/material/card";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-gallery',
@@ -23,7 +23,9 @@ import { v4 as uuidv4 } from 'uuid'; // UUID library
     MatLabel,
     MatPaginator,
     NgForOf,
-    FormsModule
+    FormsModule,
+    MatCard,
+    MatButton
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
@@ -32,10 +34,10 @@ import { v4 as uuidv4 } from 'uuid'; // UUID library
 export class GalleryComponent implements OnInit {
   galleries: Gallery[] = [];
   selectedYear: number;
-  event: string = 'Fasnacht Mittwuch';
-  page: number = 1;
+  event: string = 'Fasnacht';
+  page: number = 0;
 
-  constructor(private clientService: ClientService, private galleryService: GalleryService) {
+  constructor(private clientService: ClientService) {
     this.selectedYear = new Date().getFullYear();
   }
 
@@ -45,53 +47,9 @@ export class GalleryComponent implements OnInit {
         this.galleries = data;
       },
       (error) => {
-        console.error('Error fetching gallery', error);
+        console.error("Fehler beim Laden der Galerie:", error);
       }
     );
-  }
-
-  handleFileInput(event: any): void {
-    const files = event.target.files as FileList;
-    const newGalleries: Gallery[] = [];
-
-    // Create an array of promises for file reading
-    const fileReadPromises = Array.from(files).map((file) => {
-      return new Promise<Gallery>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64String = reader.result as string;
-          const newGallery: Gallery = {
-            id: uuidv4(),
-            format: 'jpeg', // Standardformat; kann nach Bedarf angepasst werden
-            base64: base64String,
-            year: this.selectedYear,
-            event: this.event,
-            positionId: 'defaultPositionId' // Standardposition; kann nach Bedarf angepasst werden
-          };
-
-          // Log the new gallery object
-          console.log('New Gallery Object:', newGallery);
-          resolve(newGallery);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    // Wait for all file read promises to resolve
-    Promise.all(fileReadPromises).then((results) => {
-      newGalleries.push(...results); // Add all new galleries to the array
-
-      // Now call the client service with the populated newGalleries
-      this.clientService.createGallery(newGalleries).subscribe(
-        (response) => {
-          console.log('Gallery created successfully:', response);
-          this.loadGallery(); // Laden der Galerie nach dem Upload
-        },
-        (error) => {
-          console.error('Error creating gallery', error);
-        }
-      );
-    });
   }
 
   ngOnInit(): void {
