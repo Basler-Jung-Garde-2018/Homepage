@@ -1,0 +1,6 @@
+quarkus:
+  mongodb:
+    database: jung-garde
+  http:
+    port: 8080
+    root-path: /jung-garde
