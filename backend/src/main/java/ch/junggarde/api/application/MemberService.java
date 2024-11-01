@@ -1,8 +1,8 @@
 package ch.junggarde.api.application;
 
-import ch.junggarde.api.adapter.out.AdministrativeMemberRepository;
-import ch.junggarde.api.adapter.out.ImageRepository;
-import ch.junggarde.api.adapter.out.MemberRepository;
+import ch.junggarde.api.adapter.out.persistance.AdministrativeMemberRepository;
+import ch.junggarde.api.adapter.out.persistance.ImageRepository;
+import ch.junggarde.api.adapter.out.persistance.MemberRepository;
 import ch.junggarde.api.application.dto.out.AdministrativeMemberDTO;
 import ch.junggarde.api.application.dto.out.MemberDTO;
 import ch.junggarde.api.model.image.Image;

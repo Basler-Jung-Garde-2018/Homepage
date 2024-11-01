@@ -1,4 +1,4 @@
-package ch.junggarde.api.adapter.out.codec;
+package ch.junggarde.api.adapter.out.persistance.codec;
 
 import ch.junggarde.api.model.media.Media;
 import ch.junggarde.api.model.media.MediaType;

@@ -1,6 +1,6 @@
 package ch.junggarde.api.application;
 
-import ch.junggarde.api.adapter.out.AppointmentRepository;
+import ch.junggarde.api.adapter.out.persistance.AppointmentRepository;
 import ch.junggarde.api.application.dto.out.AppointmentDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
