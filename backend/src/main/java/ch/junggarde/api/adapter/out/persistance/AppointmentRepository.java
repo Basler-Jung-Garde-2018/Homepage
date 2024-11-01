@@ -1,4 +1,4 @@
-package ch.junggarde.api.adapter.out;
+package ch.junggarde.api.adapter.out.persistance;
 
 import ch.junggarde.api.model.Appointment;
 import com.mongodb.client.MongoClient;

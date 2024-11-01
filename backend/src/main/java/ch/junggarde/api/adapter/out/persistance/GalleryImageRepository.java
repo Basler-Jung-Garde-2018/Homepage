@@ -1,4 +1,4 @@
-package ch.junggarde.api.adapter.out;
+package ch.junggarde.api.adapter.out.persistance;
 
 import ch.junggarde.api.model.image.GalleryImage;
 import com.mongodb.client.MongoClient;
@@ -24,7 +24,12 @@ public class GalleryImageRepository {
     String database;
 
     public List<GalleryImage> getGallery(int year, String event, int page) {
-        int docOnPage = page == 0 ? 40 : 20;
+        int docOnPage = 20;
+        if (page == 0) {
+            docOnPage = 40;
+        } else {
+            page += 1;
+        }
         Bson filter = Filters.and(
                 Filters.eq(GalleryImage.Fields.year, year),
                 Filters.eq(GalleryImage.Fields.event, event)

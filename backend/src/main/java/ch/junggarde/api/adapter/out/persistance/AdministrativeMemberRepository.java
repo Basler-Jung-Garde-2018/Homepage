@@ -1,4 +1,4 @@
-package ch.junggarde.api.adapter.out;
+package ch.junggarde.api.adapter.out.persistance;
 
 import ch.junggarde.api.model.member.AdministrativeMember;
 import com.mongodb.client.MongoClient;

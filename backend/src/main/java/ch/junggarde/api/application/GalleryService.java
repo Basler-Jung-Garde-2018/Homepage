@@ -1,8 +1,9 @@
 package ch.junggarde.api.application;
 
-import ch.junggarde.api.adapter.out.GalleryImageRepository;
-import ch.junggarde.api.adapter.out.ImageRepository;
-import ch.junggarde.api.application.dto.GalleryImageDTO;
+import ch.junggarde.api.adapter.out.persistance.GalleryImageRepository;
+import ch.junggarde.api.adapter.out.persistance.ImageRepository;
+import ch.junggarde.api.application.dto.in.AddToGalleryRequest;
+import ch.junggarde.api.application.dto.out.GalleryImageDTO;
 import ch.junggarde.api.model.image.GalleryImage;
 import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.image.ImageNotFound;
@@ -12,7 +13,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @ApplicationScoped
 @Log4j2
@@ -46,18 +46,17 @@ public class GalleryService {
                 ).toList();
     }
 
-    public List<GalleryImageDTO> addImages(List<GalleryImageDTO> galleryImageDTOs) {
-        List<GalleryImageDTO> response = new ArrayList<>(galleryImageDTOs.size());
-        List<GalleryImage> galleryImages = new ArrayList<>(galleryImageDTOs.size());
-        List<Image> images = new ArrayList<>(galleryImageDTOs.size());
+    public List<GalleryImageDTO> addImages(List<AddToGalleryRequest> galleryRequests) {
+        List<GalleryImageDTO> response = new ArrayList<>(galleryRequests.size());
+        List<GalleryImage> galleryImages = new ArrayList<>(galleryRequests.size());
+        List<Image> images = new ArrayList<>(galleryRequests.size());
 
-        for (GalleryImageDTO galleryImageDTO : galleryImageDTOs) {
-            Image image = new Image(galleryImageDTO.format(), galleryImageDTO.base64());
+        for (AddToGalleryRequest galleryRequest : galleryRequests) {
+            Image image = new Image(galleryRequest.base64());
             GalleryImage galleryImage = new GalleryImage(
                     image.getId(),
-                    galleryImageDTO.year(),
-                    galleryImageDTO.event(),
-                    UUID.fromString(galleryImageDTO.positionId())
+                    galleryRequest.year(),
+                    galleryRequest.event()
             );
 
             images.add(image);

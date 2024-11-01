@@ -1,4 +1,4 @@
-package ch.junggarde.api.adapter.out.codec;
+package ch.junggarde.api.adapter.out.persistance.codec;
 
 import ch.junggarde.api.model.media.Media;
 import ch.junggarde.api.model.media.MediaType;
@@ -38,7 +38,7 @@ public class MediaCodec implements CollectibleCodec<Media> {
         final Document document = new Document()
                 .append(Member.Fields.id, media.getId().toString())
                 .append(Media.Fields.type, media.getType().toString())
-                .append(Media.Fields.mediaId, media.getMediaId());
+                .append(Media.Fields.mediaId, media.getMediaId().toString());
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
 
