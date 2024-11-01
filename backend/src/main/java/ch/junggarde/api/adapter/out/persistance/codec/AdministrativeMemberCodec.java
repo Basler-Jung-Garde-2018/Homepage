@@ -47,7 +47,7 @@ public class AdministrativeMemberCodec implements CollectibleCodec<Administrativ
 
     @Override
     public AdministrativeMember generateIdIfAbsentFromDocument(AdministrativeMember administrativeMember) {
-        return null;
+        return administrativeMember;
     }
 
     @Override

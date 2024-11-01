@@ -44,7 +44,7 @@ public class AppointmentCodec implements CollectibleCodec<Appointment> {
 
     @Override
     public Appointment generateIdIfAbsentFromDocument(Appointment appointment) {
-        return null;
+        return appointment;
     }
 
     @Override

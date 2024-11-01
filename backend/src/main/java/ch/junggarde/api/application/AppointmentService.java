@@ -6,12 +6,14 @@ import ch.junggarde.api.model.Appointment;
 import ch.junggarde.api.model.AppointmentType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
+@Log4j2
 public class AppointmentService {
     @Inject
     AppointmentRepository appointmentRepository;
