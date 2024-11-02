@@ -35,10 +35,11 @@
 
 .bg-image {
   background-image: url('/assets/background.png');
-  background-size: cover;
+  background-size: auto; /* Ändert die Größe des Hintergrunds, damit es sich wiederholt */
   background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  background-repeat: repeat; /* Stellt sicher, dass das Hintergrundbild sich wiederholt */
+  min-height: 100vh; /* Setzt die minimale Höhe auf 100vh, damit der Hintergrund sichtbar ist */
   width: 100vw;
-  object-fit: cover;
+  object-fit: cover; /* Diese Eigenschaft ist nicht erforderlich, da der Hintergrund nicht mit einem Bildobjekt funktioniert */
 }
+
