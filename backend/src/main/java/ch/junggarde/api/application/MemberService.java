@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 @Log4j2
@@ -86,9 +87,14 @@ public class MemberService {
                     administrativeMemberRequest.firstname(),
                     administrativeMemberRequest.lastname()
             );
-            Image image = new Image(
-                    administrativeMemberRequest.imageBase64()
-            );
+
+            Image image = new Image();
+            if (administrativeMemberRequest.imageBase64().equals("BILD")) {
+                image.setId(UUID.fromString("590363f1-1f66-4930-a268-daa391c32d0f"));
+            } else {
+                image.setBase64(administrativeMemberRequest.imageBase64());
+                images.add(image);
+            }
 
             AdministrativeMember administrativeMember = new AdministrativeMember(
                     member.getId(),
@@ -98,7 +104,6 @@ public class MemberService {
                     image.getId(),
                     administrativeMemberRequest.supervisorId()
             );
-            images.add(image);
             administrativeMembers.add(administrativeMember);
             members.add(member);
 
