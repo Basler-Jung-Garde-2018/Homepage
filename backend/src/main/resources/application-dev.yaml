@@ -1,0 +1,9 @@
+quarkus:
+  mongodb:
+    database: jung-garde
+    connection-string: mongodb://localhost:27017
+  http:
+    cors:
+      ~: true
+      origins: "http://localhost:4200"
+      methods: GET,PUT,POST,DELETE

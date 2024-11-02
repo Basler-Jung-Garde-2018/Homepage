@@ -1,0 +1,69 @@
+<div class="banner">
+  <p>Diese Webseite befindet sich in der Entwicklung. Bleiben Sie dran!</p>
+  <a href="http://www.jung-garde.org">Besuchen Sie unsere Webseite</a>
+</div>
+<div class="homepage-container">
+  <div class="title-section">
+    <h3>Basler Guggenmuusig</h3>
+    <h1>Jung Garde 2018</h1>
+    <p>Kinder und Jugendgugge</p>
+    <p>2018 mit dem Gedanken an die Nachwuchsförderung für die Basler Fasnacht gegründet</p>
+  </div>
+
+  <div class="slideshow">
+    <img src="./assets/Homepage_Main.jpg" alt="Slideshow Bild" class="slideshow-image">
+  </div>
+
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>info</mat-icon>
+            Unsere Jung Garde
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub blub
+            blub blub blub blub</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button routerLink="/ueber-uns">Mehr Infos
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-card class="countdown-card">
+    <iframe
+      src="https://free.timeanddate.com/countdown/i9m7h7a0/n1229/cf100/cm0/cu4/ct0/cs0/ca0/cr0/ss0/cac000/cpc000/pct/tcbfd2f0/fs100/szw320/szh135/tatCountdown%20bis%20zur%20n%C3%A4chsten%20Fasnacht%3A/tac000/tptTime%20since%20Event%20started%20in/tpc000/mac000/mpc000/iso2025-03-02T00:00:00"
+      allowtransparency="true"
+      frameborder="0"
+      width="320"
+      height="135"
+      sandbox="allow-same-origin allow-scripts"></iframe>
+  </mat-card>
+
+</div>
+
+<div class="audio">
+  <h5>Eine kleine Kostprobe von uns:</h5>
+  <audio #audioPlayer src="assets/Jung-Garde-Kostprobe.mp3"></audio>
+
+  <button (click)="audioPlayer.play()">
+    <mat-icon aria-hidden="false" fontIcon="play_circle"></mat-icon>
+  </button>
+
+  <button (click)="audioPlayer.pause()">
+    <mat-icon aria-hidden="false" fontIcon="pause_circle"></mat-icon>
+  </button>
+
+  <label for="volumeControl">Lautstärke:</label>
+  <input id="volumeControl" type="range" min="0" max="1" step="0.01" (input)="onVolumeChange($event, audioPlayer)">
+</div>

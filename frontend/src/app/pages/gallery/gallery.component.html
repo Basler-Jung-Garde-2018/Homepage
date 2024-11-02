@@ -1,0 +1,58 @@
+<div class="accordion-wrapper">
+  <mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filter</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="filter-container">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Jahr</mat-label>
+          <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
+            <mat-option value="2020">2020</mat-option>
+            <mat-option value="2021">2021</mat-option>
+            <mat-option value="2022">2022</mat-option>
+            <mat-option value="2023">2023</mat-option>
+            <mat-option value="2024">2024</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Event</mat-label>
+          <mat-select [(ngModel)]="event" (selectionChange)="loadGallery()">
+            <mat-option value="Diverses">Diverses</mat-option>
+            <mat-option value="Fasnacht Mäntig">Fasnacht Mäntig</mat-option>
+            <mat-option value="Fasnacht Zyschtig">Fasnacht Zyschtig</mat-option>
+            <mat-option value="Fasnacht Mittwuch">Fasnacht Mittwuch</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="apply-button" (click)="loadGallery()">Filter anwenden</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+
+<div class="gallery-container">
+  <mat-card *ngFor="let gallery of galleries" class="gallery-card">
+    <img [src]="gallery.base64" alt="Gallery Image" class="gallery-image" />
+  </mat-card>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="eventForm" (ngSubmit)="onUpload()">
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input matInput formControlName="year" type="number">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Event</mat-label>
+        <input matInput formControlName="event" type="text">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Submit</button>
+    </form>
+    <input type="file" (change)="onFileSelected($event)" multiple>
+  </mat-card-content>
+</mat-card>

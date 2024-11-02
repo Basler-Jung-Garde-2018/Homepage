@@ -1,0 +1,62 @@
+POST http://localhost:8080/jung-garde/gallery
+Content-Type: application/json
+
+[
+  {
+    "base64": "aGVsbG93b3JsZA==",
+    "year": 2021,
+    "event": "Event One"
+  },
+  {
+    "base64": "dGVzdGluZzEyMw==",
+    "year": 2022,
+    "event": "Event Two"
+  },
+  {
+    "base64": "c2FtcGxlYmFzZTY0",
+    "year": 2023,
+    "event": "Event Three"
+  }
+]
+
+###
+
+POST http://localhost:8080/jung-garde/appointments
+Content-Type: application/json
+
+[
+  {
+    "date": "2007-12-03T10:15:30",
+    "location": "Basel",
+    "name": "Fasnacht",
+    "type": "FASNACHT"
+  }
+]
+
+###
+POST http://localhost:8080/jung-garde/members
+Content-Type: application/json
+
+[
+  {
+    "firstname": "Fynn",
+    "lastname": "Fokus",
+    "function": "EUPHONIUM"
+  }
+]
+
+###
+POST http://localhost:8080/jung-garde/members/administrative
+Content-Type: application/json
+
+[
+  {
+    "firstname": "Fynn",
+    "lastname": "Fokus",
+    "role": "VORSTAND",
+    "jobTitle": "Posaunen Erwachsener",
+    "description": "Super cooler typ",
+    "supervisorId": "1594c884-e884-4625-b436-da8bf33c265b",
+    "imageBase64": "jasdf9043ieufpe0vjewgvdsfve5gwöore8zb"
+  }
+]

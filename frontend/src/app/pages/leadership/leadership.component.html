@@ -1,0 +1,65 @@
+<div class="title-section">
+  <h1>Unsere Führungsriege</h1>
+</div>
+<h2 style="margin-top: 0px">Vorstand</h2>
+<div class="card flex justify-content-center overflow-x-auto">
+  <p-organizationChart
+    [value]="vorstand"
+    selectionMode="multiple"
+    [(selection)]="selectedNodes"
+    [collapsible]="true">
+    <ng-template let-node pTemplate="person">
+      <div class="p-2 text-center">
+        <div class="font-bold">
+          {{ node.data.name }}
+        </div>
+        <div>
+          {{ node.data.title }}
+        </div>
+      </div>
+    </ng-template>
+  </p-organizationChart>
+</div>
+
+<h2>MuKo</h2>
+<div class="card flex justify-content-center overflow-x-auto">
+  <p-organizationChart
+    [value]="muko"
+    selectionMode="multiple"
+    [(selection)]="selectedNodes"
+    preserveSpace="false"
+    [collapsible]="true">
+    <ng-template let-node pTemplate="person">
+      <div class="p-2 text-center">
+        <div class="font-bold">
+          {{ node.data.name }}
+        </div>
+        <div>
+          {{ node.data.title }}
+        </div>
+      </div>
+    </ng-template>
+  </p-organizationChart>
+</div>
+
+<h2>Sujet-Kommision</h2>
+<div class="card flex justify-content-center overflow-x-auto">
+  <p-organizationChart
+    [value]="sujet"
+    selectionMode="multiple"
+    [(selection)]="selectedNodes"
+    preserveSpace="false"
+    [collapsible]="true">
+    <ng-template let-node pTemplate="person">
+      <div class="p-2 text-center">
+        <div class="font-bold">
+          {{ node.data.name }}
+        </div>
+        <div>
+          {{ node.data.title }}
+        </div>
+      </div>
+    </ng-template>
+  </p-organizationChart>
+</div>
+
