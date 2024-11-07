@@ -12,7 +12,7 @@ import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ClientService} from "../../service/client.service";
 import {Appointment} from "../../model/appointments";
-import {NgForOf} from "@angular/common";
+import {DatePipe, NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-calendar',
@@ -29,13 +29,19 @@ import {NgForOf} from "@angular/common";
     MatCardTitle,
     MatCardSubtitle,
     MatIcon,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss'
 })
 export class CalendarComponent implements OnInit{
   appointments: Appointment[] | null = null;
+  testAppointments: Appointment[] = [
+    { id: '1', date: '2024-11-07T10:00:00', location: 'Basel', name: 'Morgestreich', type: 'FASNACHT' },
+    { id: '2', date: '2024-11-07T12:30:00', location: 'Dornach', name: 'Fasnachts Mittwuch', type: 'FASNACHT' },
+    { id: '3', date: '2024-11-07T14:00:00', location: 'Ettingen', name: 'Dorf Fasnacht', type: 'FASNACHT' }
+  ];
 
 
   constructor(private clientService: ClientService) {
@@ -61,6 +67,41 @@ export class CalendarComponent implements OnInit{
 
 
   public reloadAppointments(): void {
-    this.loadAppointments();
+  //  this.loadAppointments();
+  }
+
+  downloadICS(appointment: Appointment): void {
+    const startDate = new Date(appointment.date);
+    const endDate = new Date(startDate);
+    endDate.setHours(endDate.getHours() + 1); // Termin dauert 1 Stunde
+
+    const formatDate = (date: Date): string => {
+      return date.toISOString().replace(/-|:|\.\d{3}/g, '');
+    };
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      `UID:${appointment.id}`,
+      `DTSTAMP:${formatDate(new Date())}`,
+      `DTSTART:${formatDate(startDate)}`,
+      `DTEND:${formatDate(endDate)}`,
+      `SUMMARY:${appointment.name}`,
+      `LOCATION:${appointment.location}`,
+      `DESCRIPTION:Type - ${appointment.type}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = window.URL.createObjectURL(blob);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.href = url;
+    downloadAnchor.download = `appointment_${appointment.id}.ics`;
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    document.body.removeChild(downloadAnchor);
+    window.URL.revokeObjectURL(url);
   }
 }
