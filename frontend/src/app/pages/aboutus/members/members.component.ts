@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { VortrabService } from '../../testDB/mitglieder_vortrab.service';
+import { VortrabService } from '../../../testDB/mitglieder_vortrab.service';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 
@@ -18,7 +18,7 @@ export class MembersComponent {
   selectedNodes!: TreeNode[];
   vortrab: TreeNode[] = [];
 
-  
+
   constructor(private vortrabService: VortrabService) {
     this.vortrab = this.vortrabService.getVorstand()
   }
