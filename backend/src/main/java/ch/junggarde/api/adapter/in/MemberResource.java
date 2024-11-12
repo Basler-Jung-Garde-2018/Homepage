@@ -47,7 +47,8 @@ public class MemberResource {
     @POST
     public Response addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberDTOS) {
         log.info("add {} AdministrativeMembers", administrativeMemberDTOS.size());
-        return Response.ok().entity(memberService.addAdministrativeMembers(administrativeMemberDTOS)).build();
+        memberService.addAdministrativeMembers(administrativeMemberDTOS);
+        return Response.ok().build();
     }
 
 }

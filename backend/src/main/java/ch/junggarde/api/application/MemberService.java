@@ -11,9 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @ApplicationScoped
 @Log4j2
@@ -48,19 +46,53 @@ public class MemberService {
 
         List<Image> images = imageRepository.findImagesByIds(imageIds);
 
-        return administrativeMembers.stream()
-                .map(administrativeMember -> AdministrativeMemberDTO.fromDomainModel(
-                                administrativeMember,
-                                members.stream()
-                                        .filter(member -> member.getId().equals(administrativeMember.getId()))
-                                        .findFirst()
-                                        .orElseThrow(() -> new MemberNotFound(administrativeMember.getId())),
-                                images.stream()
-                                        .filter(image -> image.getId().equals(administrativeMember.getImageId()))
-                                        .findFirst()
-                                        .orElse(new Image())
-                        )
-                ).toList();
+        List<FullAdministrativeMember> fullAdministrativeMembers = new ArrayList<>(administrativeMembers.size());
+        administrativeMembers.forEach(administrativeMember -> {
+            Member member = members.stream().filter(listMember -> administrativeMember.getMemberId().equals(listMember.getId())).findFirst().orElseThrow(() -> new MemberNotFound(administrativeMember.getId()));
+            Image image = images.stream().filter(listImage -> administrativeMember.getImageId().equals(listImage.getId())).findFirst().orElse(null);
+            fullAdministrativeMembers.add(
+                    new FullAdministrativeMember(
+                            administrativeMember.getId(),
+                            member.getFirstname(),
+                            member.getLastname(),
+                            member.getFunction(),
+                            administrativeMember.getRole(),
+                            administrativeMember.getJobTitle(),
+                            administrativeMember.getDescription(),
+                            image != null ? image.getBase64() : "",
+                            administrativeMember.getSupervisorId()
+                    )
+            );
+        });
+
+        return buildHierarchy(fullAdministrativeMembers).stream().map(AdministrativeMemberDTO::fromDomainModel).toList();
+    }
+
+    public List<FullAdministrativeMember> buildHierarchy(List<FullAdministrativeMember> members) {
+        // Create a map for quick access to members by their IDs
+        Map<UUID, FullAdministrativeMember> memberMap = new HashMap<>();
+        for (FullAdministrativeMember member : members) {
+            memberMap.put(member.getId(), member);
+        }
+
+        // Root members (those with no supervisor) will be added here
+        List<FullAdministrativeMember> topLevelMembers = new ArrayList<>();
+
+        // Build the hierarchy
+        for (FullAdministrativeMember member : members) {
+            if (member.getSupervisorId() == null) {
+                // Top-level member (no supervisor)
+                topLevelMembers.add(member);
+            } else {
+                // Find the supervisor and add this member as their subordinate
+                FullAdministrativeMember supervisor = memberMap.get(member.getSupervisorId());
+                if (supervisor != null) {
+                    supervisor.getSubordinates().add(member);
+                }
+            }
+        }
+
+        return topLevelMembers;
     }
 
     public List<MemberDTO> addMembers(List<MemberDTO> memberRequests) throws MemberNotFound {
@@ -73,11 +105,10 @@ public class MemberService {
         return members.stream().map(MemberDTO::fromDomainModel).toList();
     }
 
-    public List<AdministrativeMemberDTO> addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberRequests) throws MemberNotFound {
+    public void addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberRequests) throws MemberNotFound {
         if (administrativeMemberRequests.isEmpty()) {
-            return new ArrayList<>();
+            return;
         }
-        List<AdministrativeMemberDTO> response = new ArrayList<>(administrativeMemberRequests.size());
         List<Image> images = new ArrayList<>();
         List<AdministrativeMember> administrativeMembers = new ArrayList<>(administrativeMemberRequests.size());
         List<Member> members = new ArrayList<>(administrativeMemberRequests.size());
@@ -106,14 +137,10 @@ public class MemberService {
             );
             administrativeMembers.add(administrativeMember);
             members.add(member);
-
-            response.add(AdministrativeMemberDTO.fromDomainModel(administrativeMember, member, image));
         });
 
         imageRepository.saveImages(images);
         memberRepository.saveMembers(members);
         administrativeMemberRepository.saveAdministrativeMembers(administrativeMembers);
-
-        return response;
     }
 }
