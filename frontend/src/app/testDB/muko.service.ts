@@ -35,32 +35,58 @@ export class MukoService {
               expanded: false,
               type: 'person',
               data: {
-                name: 'Nevio Knupp',
-                title: 'Registerleitung Bass'
+                name: 'Zoi Messmer',
+                title: 'Ansprechpartnerin / Übersicht'
               },
               children: [
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Emily Kapp',
+                    title: 'Registerleitung Trompeten'
                   }
                 },
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Enea Knupp',
+                    title: 'STV Trompeten'
                   }
                 },
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Dominic Guthauser',
+                    title: 'Erwachsener'
+                  }
+                }
+              ]
+            },
+            {
+              expanded: false,
+              type: 'person',
+              data: {
+                name: 'Björn Breitenstein',
+                title: 'Registerleitung Posaunen'
+              },
+              children: [
+                {
+                  expanded: true,
+                  type: 'person',
+                  data: {
+                    name: 'Leonie Liers',
+                    title: 'STV Posaunen'
+                  }
+                },
+                {
+                  expanded: true,
+                  type: 'person',
+                  data: {
+                    name: 'Vakant',
+                    title: 'Erwachsener'
                   }
                 }
               ]
@@ -77,8 +103,8 @@ export class MukoService {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Max Häfelfinger',
+                    title: 'STV Bass'
                   }
                 },
                 {
@@ -86,15 +112,7 @@ export class MukoService {
                   type: 'person',
                   data: {
                     name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    title: 'Erwachsener'
                   }
                 }
               ]
@@ -103,32 +121,24 @@ export class MukoService {
               expanded: false,
               type: 'person',
               data: {
-                name: 'Nevio Knupp',
-                title: 'Registerleitung Bass'
+                name: 'Bryan Büffing',
+                title: 'Registerleitung Schlag'
               },
               children: [
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Enea Stöckli',
+                    title: 'STV Schlag'
                   }
                 },
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Rafael Claude',
+                    title: 'Erwachsener'
                   }
                 }
               ]
@@ -137,66 +147,16 @@ export class MukoService {
               expanded: false,
               type: 'person',
               data: {
-                name: 'Nevio Knupp',
-                title: 'Registerleitung Bass'
+                name: 'Muko Helfer',
+                title: 'Helfer'
               },
               children: [
                 {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                }
-              ]
-            },
-            {
-              expanded: false,
-              type: 'person',
-              data: {
-                name: 'Nevio Knupp',
-                title: 'Registerleitung Bass'
-              },
-              children: [
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
-                  }
-                },
-                {
-                  expanded: true,
-                  type: 'person',
-                  data: {
-                    name: 'Andy Kübli',
-                    title: 'Erwachsener?'
+                    name: 'Tobi Pfluger',
+                    title: 'Schlaginstruktor'
                   }
                 }
               ]

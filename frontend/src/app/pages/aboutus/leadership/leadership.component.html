@@ -9,7 +9,7 @@
     [(selection)]="selectedNodes"
     [collapsible]="true">
     <ng-template let-node pTemplate="person">
-      <div class="p-2 text-center">
+      <div class="cyan-background">
         <div class="font-bold">
           {{ node.data.name }}
         </div>
@@ -21,6 +21,7 @@
   </p-organizationChart>
 </div>
 
+
 <h2>MuKo</h2>
 <div class="card flex justify-content-center overflow-x-auto">
   <p-organizationChart
@@ -30,7 +31,7 @@
     preserveSpace="false"
     [collapsible]="true">
     <ng-template let-node pTemplate="person">
-      <div class="p-2 text-center">
+      <div class="cyan-background">
         <div class="font-bold">
           {{ node.data.name }}
         </div>
@@ -51,7 +52,7 @@
     preserveSpace="false"
     [collapsible]="true">
     <ng-template let-node pTemplate="person">
-      <div class="p-2 text-center">
+      <div class="cyan-background">
         <div class="font-bold">
           {{ node.data.name }}
         </div>

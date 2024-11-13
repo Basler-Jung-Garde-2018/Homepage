@@ -1,0 +1,25 @@
+<div class="title-section">
+  <h1>Unsere Mitglieder</h1>
+</div>
+
+<div class="members-container">
+  <div *ngFor="let functionType of functionOrder" class="function-group">
+
+    <!-- Bild des Instruments, falls vorhanden -->
+
+
+    <div class="function-title">{{ functionType | titlecase }}</div>
+    <div *ngIf="getImageForFunction(functionType)" class="function-image">
+      <img [src]="getImageForFunction(functionType)" alt="{{ functionType | titlecase }} Bild">
+    </div>
+    <div class="members-list">
+      <div *ngFor="let member of getMembersByFunction(functionType)" class="member-card">
+        <div class="member-info">
+          <h3>{{ member.firstname }} {{ member.lastname }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

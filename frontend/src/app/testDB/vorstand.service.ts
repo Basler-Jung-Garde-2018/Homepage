@@ -19,7 +19,7 @@ export class VorstandService {
       expanded: true,
       type: 'person',
       data: {
-        name: 'Rafael Clause',
+        name: 'Rafael Claude',
         title: 'Obmaa / Major'
       },
       children: [
@@ -35,7 +35,7 @@ export class VorstandService {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
+                name: 'Mirjam Hagmann',
                 title: 'Kassier'
               }
             },
@@ -43,32 +43,32 @@ export class VorstandService {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
-                title: 'Kassier'
+                name: 'Vakant',
+                title: 'Aktuar'
               }
             },
             {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
-                title: 'Kassier'
+                name: 'Stephanie Knupp',
+                title: 'Sujet Obfrau'
               }
             },
             {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
-                title: 'Kassier'
+                name: 'Tanja Mäder',
+                title: 'Materialverwaltung'
               }
             },
             {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
-                title: 'Kassier'
+                name: 'Salima Robles',
+                title: 'Fasnachts OK'
               }
             }
           ]

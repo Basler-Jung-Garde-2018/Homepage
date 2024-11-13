@@ -1,0 +1,34 @@
+.title-section {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #00a19d;
+}
+h2 {
+  font-weight: bold;
+  margin-top: 100px;
+  text-align: center;
+}
+.cyan-background {
+  background-color: darkcyan;
+  color: white;
+  border-radius: 15px;
+  margin: 10px;
+  padding: 10px;
+  width: 150px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+

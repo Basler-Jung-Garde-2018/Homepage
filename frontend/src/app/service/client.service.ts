@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Appointment} from "../model/appointments";
 import {Gallery} from "../model/gallery";
+import {Member} from "../model/members";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,6 @@ import {Gallery} from "../model/gallery";
 export class ClientService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:8080/jung-garde';
-
-  public getPing(): void {
-    this.httpClient.get<any>(`${this.baseUrl}/ping`).subscribe(resp => {
-      console.log(resp);
-    });
-  }
 
   public createGallery(data: Partial<Gallery>[]): Observable<Gallery[]> {
     return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
@@ -29,8 +24,8 @@ export class ClientService {
     return this.httpClient.get<Appointment[]>(`${this.baseUrl}/appointments`);
   }
 
-  public getMembers(): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/members`);
+  public getMembers(): Observable<Member[]> {
+    return this.httpClient.get<Member[]>(`${this.baseUrl}/members`);
   }
 
   public getAdministrativeMembers(): Observable<any> {

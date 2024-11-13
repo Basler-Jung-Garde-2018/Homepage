@@ -1,0 +1,102 @@
+.title-section {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #00a19d;
+}
+.guggemuusig-card {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #fafafa;
+
+  .header {
+    background-color: #2e3d49;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .title {
+    font-size: 2rem;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .intro, .event, .contact, .additional-info, .fee-info, .alternative-contact {
+    font-size: 1.2rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .contact a,
+  .contact-details a {
+    color: #00796b;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 2px solid #00796b;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #004d40;
+      border-color: #004d40;
+    }
+  }
+
+  .fee-info {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .divider {
+    margin: 20px 0;
+    background-color: #00796b;
+  }
+  .form-placeholder {
+    font-size: 1.1rem;
+    color: #555555;
+    margin-top: 10px;
+  }
+}
+
+.support-card {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #fafafa;
+
+  .header {
+    background-color: #00695c;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+  }
+  .support-btn {
+    display: block;
+    width: 100%;
+    background-color: #00796b;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #004d40;
+    }
+  }
+
+  .title {
+    font-size: 2rem;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}

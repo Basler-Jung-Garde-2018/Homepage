@@ -69,6 +69,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "sslKey": "/etc/ssl/jung-garde.ch/jung-garde.key",
+            "sslCert": "/etc/ssl/jung-garde.ch/certificate.pem"
+          },
           "configurations": {
             "production": {
               "buildTarget": "jung-garde-frontend:build:production"

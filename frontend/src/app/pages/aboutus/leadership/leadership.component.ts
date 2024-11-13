@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import {OrganizationChartModule} from "primeng/organizationchart";
 import {TreeNode} from "primeng/api";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {VorstandService} from "../../testDB/vorstand.service";
-import {MukoService} from "../../testDB/muko.service";
-import {SujetkommisionService} from "../../testDB/sujetkommision.service";
+import {VorstandService} from "../../../testDB/vorstand.service";
+import {MukoService} from "../../../testDB/muko.service";
+import {SujetkommisionService} from "../../../testDB/sujetkommision.service";
 
 @Component({
   selector: 'app-leadership',

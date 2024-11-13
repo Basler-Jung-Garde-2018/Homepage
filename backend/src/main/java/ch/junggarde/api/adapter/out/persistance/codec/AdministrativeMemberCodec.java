@@ -28,7 +28,7 @@ public class AdministrativeMemberCodec implements CollectibleCodec<Administrativ
                 document.getString(AdministrativeMember.Fields.jobTitle),
                 document.getString(AdministrativeMember.Fields.description),
                 UUID.fromString(document.getString(AdministrativeMember.Fields.imageId)),
-                UUID.fromString(document.getString(AdministrativeMember.Fields.supervisorId))
+                document.getString(AdministrativeMember.Fields.supervisorId) != null ? UUID.fromString(document.getString(AdministrativeMember.Fields.supervisorId)) : null
         );
     }
 
@@ -41,7 +41,7 @@ public class AdministrativeMemberCodec implements CollectibleCodec<Administrativ
                 .append(AdministrativeMember.Fields.jobTitle, administrativeMember.getJobTitle())
                 .append(AdministrativeMember.Fields.description, administrativeMember.getDescription())
                 .append(AdministrativeMember.Fields.imageId, administrativeMember.getImageId().toString())
-                .append(AdministrativeMember.Fields.supervisorId, administrativeMember.getSupervisorId().toString());
+                .append(AdministrativeMember.Fields.supervisorId, administrativeMember.getSupervisorId() != null ? administrativeMember.getSupervisorId().toString() : null);
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
 
