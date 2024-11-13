@@ -59,7 +59,7 @@ export class MukoService {
                   expanded: true,
                   type: 'person',
                   data: {
-                    name: 'Dominic Guthuser',
+                    name: 'Dominic Guthauser',
                     title: 'Erwachsener'
                   }
                 }
