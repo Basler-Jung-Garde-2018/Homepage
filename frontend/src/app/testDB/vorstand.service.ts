@@ -19,7 +19,7 @@ export class VorstandService {
       expanded: true,
       type: 'person',
       data: {
-        name: 'Rafael Clause',
+        name: 'Rafael Claude',
         title: 'Obmaa / Major'
       },
       children: [
@@ -35,7 +35,7 @@ export class VorstandService {
               expanded: true,
               type: 'person',
               data: {
-                name: 'Mirijam Hagmann',
+                name: 'Mirjam Hagmann',
                 title: 'Kassier'
               }
             },
