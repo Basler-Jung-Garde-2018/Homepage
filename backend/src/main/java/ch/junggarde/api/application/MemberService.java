@@ -139,7 +139,7 @@ public class MemberService {
             members.add(member);
         });
 
-        imageRepository.saveImages(images);
+        if (!images.isEmpty()) imageRepository.saveImages(images);
         memberRepository.saveMembers(members);
         administrativeMemberRepository.saveAdministrativeMembers(administrativeMembers);
     }

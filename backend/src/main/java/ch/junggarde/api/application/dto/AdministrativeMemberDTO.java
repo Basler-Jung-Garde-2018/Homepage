@@ -16,7 +16,7 @@ public record AdministrativeMemberDTO(
         @Nullable
         String supervisorId,
         @Nullable
-        List<AdministrativeMemberDTO> members,
+        List<AdministrativeMemberDTO> subordinates,
         String imageBase64
 ) {
     public static AdministrativeMemberDTO fromDomainModel(FullAdministrativeMember administrativeMember) {
@@ -27,7 +27,7 @@ public record AdministrativeMemberDTO(
                 administrativeMember.getRole().toString(),
                 administrativeMember.getJobTitle(),
                 administrativeMember.getDescription(),
-                administrativeMember.getSupervisorId().toString(),
+                administrativeMember.getSupervisorId() != null ? administrativeMember.getSupervisorId().toString() : null,
                 administrativeMember.getSubordinates().stream().map(AdministrativeMemberDTO::fromDomainModel).toList(),
                 administrativeMember.getBase64()
         );
