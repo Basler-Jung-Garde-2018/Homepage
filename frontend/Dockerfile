@@ -15,6 +15,7 @@ FROM nginx:alpine
 RUN rm -r /usr/share/nginx/html/*
 COPY --from=build /app/dist/jung-garde-frontend/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY /etc/ssl/jung-garde.ch/* /etc/ssl/jung-garde.ch/
 
 EXPOSE 80
 
