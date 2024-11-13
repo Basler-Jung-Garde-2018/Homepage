@@ -29,8 +29,8 @@ export class SujetkommisionService {
           expanded: true,
           type: 'person',
           data: {
-            name: '1-2 Aktive?',
-            title: 'Sujet Kommision'
+            name: '1-2 Aktive',
+            title: ''
           }
         }
       ]

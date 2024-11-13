@@ -1,22 +1,25 @@
 <div class="title-section">
   <h1>Unsere Mitglieder</h1>
 </div>
-<h2 style="margin-top: 0px">Vortrab</h2>
-<div class="card flex justify-content-center overflow-x-auto">
-  <p-organizationChart
-    [value]="vortrab"
-    selectionMode="multiple"
-    [(selection)]="selectedNodes"
-    [collapsible]="true">
-    <ng-template let-node pTemplate="person">
-      <div class="p-2 text-center">
-        <div class="font-bold">
-          {{ node.data.name }}
-        </div>
-        <div>
-          {{ node.data.title }}
+
+<div class="members-container">
+  <div *ngFor="let functionType of functionOrder" class="function-group">
+
+    <!-- Bild des Instruments, falls vorhanden -->
+
+
+    <div class="function-title">{{ functionType | titlecase }}</div>
+    <div *ngIf="getImageForFunction(functionType)" class="function-image">
+      <img [src]="getImageForFunction(functionType)" alt="{{ functionType | titlecase }} Bild">
+    </div>
+    <div class="members-list">
+      <div *ngFor="let member of getMembersByFunction(functionType)" class="member-card">
+        <div class="member-info">
+          <h3>{{ member.firstname }} {{ member.lastname }}</h3>
         </div>
       </div>
-    </ng-template>
-  </p-organizationChart>
+    </div>
+  </div>
 </div>
+
+

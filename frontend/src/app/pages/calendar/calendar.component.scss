@@ -54,6 +54,7 @@
   position: relative;
   width: 100%;
   margin-bottom: 20px;
+  padding: 10px;
 }
 
 .timeline-marker {
@@ -113,9 +114,11 @@ mat-card-content {
   font-size: 18px;
 }
 .scrollable-container {
-  max-height: 600px; /* Festgelegte maximale Höhe */
-  overflow-y: auto;  /* Scrollen bei Überlauf */
-  width: 100%;       /* Passt sich der Breite an */
-  border: 1px solid #e0e0e0; /* Optional: Rand für optische Abgrenzung */
-  padding: 10px;     /* Optional: Innenabstand */
+  max-height: 600px;
+  overflow-y: auto;
+  width: 100%;
+  padding: 10px;
+}
+.highlight {
+  background-color: darkcyan;
 }
