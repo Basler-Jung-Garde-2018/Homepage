@@ -1,12 +1,12 @@
 <div class="title-section">
   <h1>Termine & Social Media</h1>
 </div>
-<div class="timeline-container">
-  <div *ngFor="let appointment of testAppointments" class="timeline-item">
+<div class="timeline-container scrollable-container">
+  <div *ngFor="let appointment of appointments" class="timeline-item">
     <mat-card class="appointment-card">
       <mat-card-header>
         <mat-card-title>{{ appointment.name }}</mat-card-title>
-        <mat-card-subtitle>{{ appointment.date | date: 'dd.MM.yyyy' }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ appointment.date | date: 'dd.MM.yyyy HH:mm' }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p>{{ appointment.location }}</p>
@@ -16,8 +16,6 @@
     <div class="timeline-marker"></div>
   </div>
 </div>
-
-<p *ngFor="let appointment of appointments">{{appointment.name}}</p>
 <mat-card>
   <div class="social-media-section">
     <mat-card-header>

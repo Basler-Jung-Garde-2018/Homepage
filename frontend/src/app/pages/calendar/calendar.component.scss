@@ -112,3 +112,10 @@ mat-card-content {
 .download-btn mat-icon {
   font-size: 18px;
 }
+.scrollable-container {
+  max-height: 600px; /* Festgelegte maximale Höhe */
+  overflow-y: auto;  /* Scrollen bei Überlauf */
+  width: 100%;       /* Passt sich der Breite an */
+  border: 1px solid #e0e0e0; /* Optional: Rand für optische Abgrenzung */
+  padding: 10px;     /* Optional: Innenabstand */
+}

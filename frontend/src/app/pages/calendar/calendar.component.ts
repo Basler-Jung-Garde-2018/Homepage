@@ -37,12 +37,6 @@ import {DatePipe, NgForOf} from "@angular/common";
 })
 export class CalendarComponent implements OnInit{
   appointments: Appointment[] | null = null;
-  testAppointments: Appointment[] = [
-    { id: '1', date: '2024-11-07T10:00:00', location: 'Basel', name: 'Morgestreich', type: 'FASNACHT' },
-    { id: '2', date: '2024-11-07T12:30:00', location: 'Dornach', name: 'Fasnachts Mittwuch', type: 'FASNACHT' },
-    { id: '3', date: '2024-11-07T14:00:00', location: 'Ettingen', name: 'Dorf Fasnacht', type: 'FASNACHT' }
-  ];
-
 
   constructor(private clientService: ClientService) {
   }
@@ -65,9 +59,8 @@ export class CalendarComponent implements OnInit{
     });
   }
 
-
   public reloadAppointments(): void {
-  //  this.loadAppointments();
+   this.loadAppointments();
   }
 
   downloadICS(appointment: Appointment): void {
