@@ -1,3 +1,6 @@
+<div class="title-section">
+  <h1>Galerie</h1>
+</div>
 <div class="accordion-wrapper">
   <mat-accordion>
     <mat-expansion-panel hideToggle>
@@ -9,6 +12,8 @@
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>Jahr</mat-label>
           <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
+            <mat-option value="2018">2018</mat-option>
+            <mat-option value="2019">2019</mat-option>
             <mat-option value="2020">2020</mat-option>
             <mat-option value="2021">2021</mat-option>
             <mat-option value="2022">2022</mat-option>

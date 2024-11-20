@@ -2,9 +2,6 @@ quarkus:
   mongodb:
     database: jung-garde
     connection-string: mongodb://localhost:27017
-    credentials:
-      username: "user"
-      password: ${MONGO_PASSWORD}
   http:
     cors:
       ~: true

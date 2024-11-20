@@ -3,8 +3,10 @@ quarkus:
     database: jung-garde
     connection-string: mongodb://localhost:27017
     credentials:
-      username: "user"
-      password: ${MONGO_PASSWORD}
+      username: "myuser"
+      password: "password"
   http:
     port: 8080
     root-path: /jung-garde
+  container-imag:
+    build: true

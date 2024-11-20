@@ -15,12 +15,13 @@ p {
 }
 
 .title-section {
+  margin-top: 80px;
   padding: 20px;
   border-radius: 10px;
 }
 
 .logo {
-  width: 100px;
+  width: 300px;
   height: auto;
 }
 
@@ -30,14 +31,12 @@ p {
 
 .slideshow {
   display: flex;
-  align-items: center; /* Zentriert vertikal */
-  justify-content: center; /* Zentriert horizontal */
-  max-width: 100%; /* Bild wird nicht breiter als der Container */
-  height: auto; /* Beibehaltung des Seitenverhältnisses */
-  width: 50%; /* Setzt die Breite des Bildes auf 50% des Containers */
-  /* Alternativ: */
-  /* width: 300px; */ /* Feste Breite, wenn gewünscht */
-  margin: 0 auto; /* Zentriert das Bild, falls es einen festen Platz hat */
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  height: auto;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .slideshow-image {
@@ -51,6 +50,9 @@ p {
 }
 
 .info-card {
+  width: auto;
+  height: auto;
+  margin: 20px;
 }
 
 .countdown-section {
@@ -93,25 +95,8 @@ button {
   pointer-events: auto;
   border: none;
 }
-.banner {
-  background-color: #ffcc00;
-  color: #000;
-  text-align: center;
-  padding: 15px;
-  font-size: 18px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.banner a {
-  color: #000;
-  font-weight: bold;
-  text-decoration: underline;
-  margin-left: 10px;
+.logo-hp {
+  height: auto;
 }
 
 

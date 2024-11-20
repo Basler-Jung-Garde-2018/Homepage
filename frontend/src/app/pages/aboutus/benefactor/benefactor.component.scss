@@ -2,7 +2,15 @@
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  margin-top: 80px;
   color: #00a19d;
+}
+
+.header {
+  background-color: #00695c;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px 8px 0 0;
 }
 .guggemuusig-card {
   max-width: 800px;
@@ -12,12 +20,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   background-color: #fafafa;
-
-  .header {
-    background-color: #2e3d49;
-    padding: 20px;
-    border-radius: 8px 8px 0 0;
-  }
 
   .title {
     font-size: 2rem;
@@ -73,11 +75,6 @@
   border-radius: 12px;
   background-color: #fafafa;
 
-  .header {
-    background-color: #00695c;
-    padding: 20px;
-    border-radius: 8px 8px 0 0;
-  }
   .support-btn {
     display: block;
     width: 100%;
