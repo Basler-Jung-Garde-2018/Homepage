@@ -21,13 +21,10 @@ FROM openjdk:21-jdk-slim
 WORKDIR /deployments
 
 # Kopieren der Quarkus-Build-Artefakte aus dem vorherigen Build-Image
-COPY --chown=777 --from=build /app/target/quarkus-app/lib/ /deployments/lib/
-COPY --chown=777 --from=build /app/target/quarkus-app/*.jar /deployments/
-COPY --chown=777 --from=build /app/target/quarkus-app/app/ /deployments/app/
-COPY --chown=777 --from=build /app/target/quarkus-app/quarkus/ /deployments/quarkus/
-
-# Benutzerwechsel
-USER 777
+COPY --from=build /app/target/quarkus-app/lib/ /deployments/lib/
+COPY --from=build /app/target/quarkus-app/*.jar /deployments/
+COPY --from=build /app/target/quarkus-app/app/ /deployments/app/
+COPY --from=build /app/target/quarkus-app/quarkus/ /deployments/quarkus/
 
 # Startbefehl
 ENTRYPOINT ["java", "-jar", "/deployments/quarkus-run.jar"]

@@ -8,12 +8,8 @@ quarkus:
   http:
     port: 8080
     root-path: /jung-garde
-    cors:
-      ~: true
-      origins:
-        - "http://localhost"
-      methods:
-        - GET
-        - PUT
-        - POST
-        - DELETE
+    insecure-requests: redirect
+    ssl:
+      certificate:
+        files: /etc/ssl/certs/fullchain.pem
+        key-files: /etc/ssl/private/jung-garde-key.key

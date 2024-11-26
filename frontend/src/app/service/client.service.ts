@@ -10,7 +10,7 @@ import {Member} from "../model/members";
 })
 export class ClientService {
   private readonly httpClient = inject(HttpClient);
-  private readonly baseUrl = 'http://116.203.36.81:8080/jung-garde';
+  private readonly baseUrl = 'https://jung-garde.ch:8443/jung-garde';
 
   public createGallery(data: Partial<Gallery>[]): Observable<Gallery[]> {
     return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
