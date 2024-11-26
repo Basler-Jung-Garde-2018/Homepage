@@ -1,0 +1,29 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=host.docker.internal
+      - MONGO_PASSWORD=y81YEsicQw0mCN
+      - JAVA_APP_JAR="/deployments/quarkus-run.jar"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

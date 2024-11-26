@@ -1,7 +1,7 @@
 quarkus:
   mongodb:
     database: jung-garde
-    connection-string: mongodb://127.0.0.1:27017
+    connection-string: mongodb://${DB_HOST}:27017
     credentials:
       username: "user"
       password: ${MONGO_PASSWORD}

@@ -26,10 +26,6 @@ COPY --chown=777 --from=build /app/target/quarkus-app/*.jar /deployments/
 COPY --chown=777 --from=build /app/target/quarkus-app/app/ /deployments/app/
 COPY --chown=777 --from=build /app/target/quarkus-app/quarkus/ /deployments/quarkus/
 
-# Umgebungsvariablen
-ENV MONGO_PASSWORD=y81YEsicQw0mCN
-ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
-
 # Benutzerwechsel
 USER 777
 
