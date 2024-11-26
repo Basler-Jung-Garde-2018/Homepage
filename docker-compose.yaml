@@ -19,4 +19,4 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /etc/ssl/jung-garde.ch/:/etc/ssl/jung-garde.ch/
+      - /etc/ssl/:/etc/ssl/
