@@ -1,7 +1,7 @@
 quarkus:
   mongodb:
     database: jung-garde
-    connection-string: mongodb://localhost:27017
+    connection-string: mongodb://mongodb:27017
     credentials:
       username: "user"
       password: ${MONGO_PASSWORD}
@@ -13,3 +13,7 @@ quarkus:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
         key-files: /etc/ssl/private/jung-garde-key.key
+    cors:
+      ~: true
+      origins:
+        - "https://jung-garde.ch"
