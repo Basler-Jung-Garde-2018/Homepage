@@ -13,9 +13,7 @@ RUN npm run build --omit=dev
 FROM nginx:alpine
 
 RUN rm -r /usr/share/nginx/html/*
-COPY --chown=777 --from=build /app/dist/jung-garde-frontend/browser /usr/share/nginx/html
-COPY --chown=777 nginx.conf /etc/nginx/nginx.conf
-
-USER 777
+COPY --from=build /app/dist/jung-garde-frontend/browser /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
