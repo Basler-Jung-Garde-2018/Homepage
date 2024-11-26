@@ -18,3 +18,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+    volumes:
+      - /etc/ssl/jung-garde.ch/:/etc/ssl/jung-garde.ch/
