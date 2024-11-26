@@ -1,10 +1,19 @@
 quarkus:
   mongodb:
     database: jung-garde
-    connection-string: mongodb://localhost:27017
+    connection-string: mongodb://${DB_HOST}:27017
     credentials:
       username: "user"
       password: ${MONGO_PASSWORD}
   http:
     port: 8080
     root-path: /jung-garde
+    cors:
+      ~: true
+      origins:
+        - "http://localhost"
+      methods:
+        - GET
+        - PUT
+        - POST
+        - DELETE

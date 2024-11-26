@@ -3,6 +3,7 @@
   border-radius: 10px;
   text-align: center;
   color: #00a19d;
+  margin-top: 80px;
 }
 h2 {
   font-weight: bold;
@@ -30,5 +31,15 @@ h2 {
   align-items: center;
   overflow-x: auto;
 }
+.card-muko {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 12px;
+}
+
 
 
