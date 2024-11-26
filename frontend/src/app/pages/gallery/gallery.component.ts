@@ -41,17 +41,8 @@ export class GalleryComponent implements OnInit {
   event: string = 'Fasnacht';
   page: number = 0;
 
-  fileStrings: string[] = [];
-
-  eventForm: FormGroup;
-
-
-  constructor(private clientService: ClientService, private fb: FormBuilder) {
+  constructor(private clientService: ClientService) {
     this.selectedYear = new Date().getFullYear();
-    this.eventForm = this.fb.group({
-      year: [2024],
-      event: ['Fasnacht']
-    });
   }
 
   loadGallery(): void {
@@ -65,37 +56,6 @@ export class GalleryComponent implements OnInit {
         console.error("Fehler beim Laden der Galerie:", error);
       }
     );
-  }
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      Array.from(input.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.fileStrings.push(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-  }
-
-  onUpload() {
-    const event: string = this.eventForm.get("event")?.value
-    const year: number = Number.parseInt(this.eventForm.get("year")?.value)
-    const gallery: Partial<Gallery>[] = this.fileStrings.map(file => {
-      return {
-        "base64": file,
-        "event": event,
-        "year": year
-      }
-    });
-
-    this.clientService.createGallery(gallery).subscribe({
-      next: (data) => console.log("nice"),
-      error: (error) => console.log(error)
-    });
-
   }
 
   ngOnInit(): void {

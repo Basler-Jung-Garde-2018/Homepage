@@ -8,6 +8,7 @@ import {MembersComponent} from "./pages/aboutus/members/members.component";
 import {LeadershipComponent} from "./pages/aboutus/leadership/leadership.component";
 import {BenefactorComponent} from "./pages/aboutus/benefactor/benefactor.component";
 import {ImpressumComponent} from "./pages/impressum/impressum.component";
+import {GeheimVersteckHihiComponent} from "./pages/geheim-versteck-hihi/geheim-versteck-hihi.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/startseite', pathMatch: 'full' },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'kalender', component: CalendarComponent, title: 'Termine & Social Media' },
   { path: 'galerie', component: GalleryComponent, title: 'Galerie' },
   { path: 'impressum', component: ImpressumComponent, title: 'Impressum' },
+  { path: 'hihi', component: GeheimVersteckHihiComponent },
   { path: '**', component: NotfoundComponent }
 ];

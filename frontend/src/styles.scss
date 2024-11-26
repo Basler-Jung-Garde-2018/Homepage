@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -6,32 +5,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button {
   border: solid lightgrey 2px;
 }
-/* In styles.css oder einer globalen CSS-Datei */
 html, body {
-  margin: 0; /* Entfernt Standardabstände */
-  height: 100%; /* Setzt die Höhe auf 100% */
-  overflow-x: hidden; /* Verhindert horizontales Scrollen */
+  margin: 0;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .app-container {
   display: flex;
-  flex-direction: column; /* Stellt sicher, dass die Kinder untereinander angeordnet sind */
-  min-height: 100vh; /* Setzt die Mindesthöhe auf die volle Ansichtshöhe */
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .header-toolbar {
-  flex: 0 0 auto; /* Header hat eine feste Höhe */
+  flex: 0 0 auto;
 }
 
 .bg-image {
-  flex: 1 1 auto; /* Der Hintergrund nimmt den verfügbaren Platz ein */
+  flex: 1 1 auto;
   background-image: url('/assets/background.png');
-  background-size: auto; /* Das Bild wird in seiner Größe angezeigt */
-  background-repeat: repeat; /* Das Bild wiederholt sich */
-  background-position: center; /* Positioniert das Bild in der Mitte */
+  background-size: auto;
+  background-repeat: repeat;
+  background-position: center;
 }
 
-/* Zusätzlich: */
 .content {
-  overflow-y: auto; /* Ermöglicht vertikales Scrollen, wenn der Inhalt zu lang ist */
+  overflow-y: auto;
 }
