@@ -8,3 +8,12 @@ quarkus:
   http:
     port: 8080
     root-path: /jung-garde
+    cors:
+      ~: true
+      origins:
+        - "http://localhost"
+      methods:
+        - GET
+        - PUT
+        - POST
+        - DELETE
