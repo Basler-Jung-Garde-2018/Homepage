@@ -4,11 +4,13 @@ services:
       context: ./backend
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
-      - "8080:8080"
+      - "8443:8443"
     environment:
       - DB_HOST=host.docker.internal
       - MONGO_PASSWORD=y81YEsicQw0mCN
       - JAVA_APP_JAR="/deployments/quarkus-run.jar"
+    volumes:
+      - /etc/ssl/:/etc/ssl/
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -20,3 +22,12 @@ services:
       - "443:443"
     volumes:
       - /etc/ssl/:/etc/ssl/
+
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
