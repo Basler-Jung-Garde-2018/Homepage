@@ -51,7 +51,6 @@ export class MembersComponent implements OnInit {
   }
 
   getImageForFunction(functionType: FunctionType): string {
-    // Only instruments get an image, the rest don't
     switch (functionType) {
       case FunctionType.SNARE: return 'assets/instrumente/Snare.png';
       case FunctionType.SCHLAGZEUG: return 'assets/instrumente/Schlagzyg.png';

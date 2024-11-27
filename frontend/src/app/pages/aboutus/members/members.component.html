@@ -5,9 +5,6 @@
 <div class="members-container">
   <div *ngFor="let functionType of functionOrder" class="function-group">
 
-    <!-- Bild des Instruments, falls vorhanden -->
-
-
     <div class="function-title">{{ functionType | titlecase }}</div>
     <div *ngIf="getImageForFunction(functionType)" class="function-image">
       <img [src]="getImageForFunction(functionType)" alt="{{ functionType | titlecase }} Bild">
