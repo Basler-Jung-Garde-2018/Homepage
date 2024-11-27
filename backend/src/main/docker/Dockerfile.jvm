@@ -1,0 +1,30 @@
+# Basis-Image mit OpenJDK 21
+FROM openjdk:21-jdk-slim AS build
+
+# Install Maven
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+
+# Arbeitsverzeichnis im Container
+WORKDIR /app
+
+# Kopieren der Maven-Konfigurations- und Quellcode-Dateien
+COPY pom.xml ./
+COPY src ./src
+
+# Build der Quarkus-Anwendung mit Maven
+RUN mvn clean package -DskipTests
+
+# Neues schlankes Image für die Laufzeit
+FROM openjdk:21-jdk-slim
+
+# Arbeitsverzeichnis im Laufzeitcontainer
+WORKDIR /deployments
+
+# Kopieren der Quarkus-Build-Artefakte aus dem vorherigen Build-Image
+COPY --from=build /app/target/quarkus-app/lib/ /deployments/lib/
+COPY --from=build /app/target/quarkus-app/*.jar /deployments/
+COPY --from=build /app/target/quarkus-app/app/ /deployments/app/
+COPY --from=build /app/target/quarkus-app/quarkus/ /deployments/quarkus/
+
+# Startbefehl
+ENTRYPOINT ["java", "-jar", "/deployments/quarkus-run.jar"]

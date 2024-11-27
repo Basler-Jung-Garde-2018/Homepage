@@ -1,16 +1,16 @@
 :host {
   display: block;
   padding: 20px;
-  background-color: transparent; /* Entfernt den grauen Hintergrund */
+  background-color: transparent;
 }
 
 .impressum-card {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: white; /* Weißer Hintergrund für das Impressum */
+  background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für ein modernes Aussehen */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .title {
@@ -25,7 +25,7 @@ section {
 
 h2 {
   font-size: 1.5rem;
-  color: #444; /* Dunklerer Text für Abschnittsüberschriften */
+  color: #444;
   margin-bottom: 10px;
 }
 
@@ -36,13 +36,13 @@ h3 {
 
 p {
   font-size: 1rem;
-  color: #555; /* Leicht grauer Text für den Inhalt */
+  color: #555;
 }
 
 a {
-  color: #3f51b5; /* Blau für Links */
+  color: #3f51b5;
   text-decoration: none;
   &:hover {
-    text-decoration: underline; /* Unterstreicht Links beim Hover */
+    text-decoration: underline;
   }
 }

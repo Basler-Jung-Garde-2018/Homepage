@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npm audit fix
+
 COPY . .
 
 RUN npm run build --omit=dev
@@ -15,8 +17,5 @@ FROM nginx:alpine
 RUN rm -r /usr/share/nginx/html/*
 COPY --from=build /app/dist/jung-garde-frontend/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY /etc/ssl/jung-garde.ch/* /etc/ssl/jung-garde.ch/
-
-EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
