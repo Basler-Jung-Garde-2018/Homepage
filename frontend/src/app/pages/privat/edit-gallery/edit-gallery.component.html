@@ -1,1 +1,65 @@
-<p>edit-gallery works!</p>
+<mat-card class="upload-card">
+  <mat-card-header>
+    <mat-card-title>Bilder hochladen</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="eventForm" (ngSubmit)="onUpload()" class="event-form">
+      <div class="form-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Year</mat-label>
+          <input matInput formControlName="year" type="number" placeholder="Enter year">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Event</mat-label>
+          <input matInput formControlName="event" type="text" placeholder="Enter event name">
+        </mat-form-field>
+      </div>
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        multiple
+        class="file-input">
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<div class="gallery-container">
+  <table mat-table [dataSource]="galleryData" class="gallery-table">
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="event">
+      <th mat-header-cell *matHeaderCellDef> Event </th>
+      <td mat-cell *matCellDef="let element"> {{element.event}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="base64">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.base64" [src]="element.base64" alt="Image" class="gallery-image" (click)="openImageModal(element.base64)" />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="toggle">
+      <th mat-header-cell *matHeaderCellDef> Öffentlich </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-slide-toggle [(ngModel)]="element.public" color="primary"></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="modal" *ngIf="isModalOpen" (click)="closeImageModal()">
+  <div class="modal-content">
+    <span class="close" (click)="closeImageModal()">&times;</span>
+    <img [src]="selectedImage" alt="Enlarged Image" />
+  </div>
+</div>

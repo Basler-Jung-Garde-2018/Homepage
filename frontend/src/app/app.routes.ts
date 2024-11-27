@@ -25,7 +25,7 @@ export const routes: Routes = [
   { path: 'impressum', component: ImpressumComponent, title: 'Impressum' },
   { path: 'private-section/gallery', component:  EditGalleryComponent},
   { path: 'private-section/media', component: MediaPageComponent },
-  { path: 'private-section/merch', component: MerchComponent }
+  { path: 'private-section/merch', component: MerchComponent },
   { path: 'hihi', component: GeheimVersteckHihiComponent },
   { path: '**', component: NotfoundComponent }
 ];
