@@ -8,7 +8,17 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Event</mat-label>
-        <input matInput formControlName="event" type="text">
+        <input type="text"
+               placeholder="Fasnacht"
+               aria-label="Event"
+               matInput
+               formControlName="event"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+          }
+        </mat-autocomplete>
       </mat-form-field>
       <button mat-raised-button type="submit">Submit</button>
     </form>
