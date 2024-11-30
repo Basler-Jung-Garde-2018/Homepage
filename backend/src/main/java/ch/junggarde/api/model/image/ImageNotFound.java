@@ -1,11 +1,11 @@
 package ch.junggarde.api.model.image;
 
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
-@Log4j2
+@Slf4j
 public class ImageNotFound extends RuntimeException {
 
     public ImageNotFound(UUID galleryImageId) {
