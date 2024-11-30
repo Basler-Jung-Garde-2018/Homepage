@@ -41,4 +41,11 @@ public class GalleryResource {
         log.info("add {} Images", images.size());
         return Response.ok().entity(galleryService.addImages(images)).build();
     }
+
+    @PUT
+    public Response publishImages(List<String> imageIds) {
+        log.info("publish {} Images", imageIds.size());
+        galleryService.publishImages(imageIds);
+        return Response.ok().build();
+    }
 }

@@ -71,4 +71,11 @@ public class GalleryService {
 
         return response;
     }
+
+    public void publishImages(List<String> imageIds) {
+        if (imageIds.isEmpty()) {
+            return;
+        }
+        this.galleryImageRepository.publishImages(imageIds);
+    }
 }

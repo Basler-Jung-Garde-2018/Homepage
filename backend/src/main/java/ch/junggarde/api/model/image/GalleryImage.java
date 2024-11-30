@@ -20,6 +20,7 @@ public class GalleryImage {
     private UUID imageId;
     private int year;
     private String event;
+    private boolean published = false;
 
     public GalleryImage(UUID imageId, int year, String event) {
         this.id = UUID.randomUUID();

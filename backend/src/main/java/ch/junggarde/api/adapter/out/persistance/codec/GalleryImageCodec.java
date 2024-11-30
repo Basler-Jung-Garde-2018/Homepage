@@ -25,7 +25,8 @@ public class GalleryImageCodec implements CollectibleCodec<GalleryImage> {
                 UUID.fromString(document.getString(GalleryImage.Fields.id)),
                 UUID.fromString(document.getString(GalleryImage.Fields.imageId)),
                 document.getInteger(GalleryImage.Fields.year),
-                document.getString(GalleryImage.Fields.event)
+                document.getString(GalleryImage.Fields.event),
+                document.getBoolean(GalleryImage.Fields.published)
         );
     }
 
@@ -35,7 +36,8 @@ public class GalleryImageCodec implements CollectibleCodec<GalleryImage> {
                 .append(GalleryImage.Fields.id, galleryImage.getId().toString())
                 .append(GalleryImage.Fields.imageId, galleryImage.getImageId().toString())
                 .append(GalleryImage.Fields.year, galleryImage.getYear())
-                .append(GalleryImage.Fields.event, galleryImage.getEvent());
+                .append(GalleryImage.Fields.event, galleryImage.getEvent())
+                .append(GalleryImage.Fields.published, galleryImage.isPublished());
 
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
