@@ -1,12 +1,14 @@
 quarkus:
   mongodb:
     database: jung-garde
-    connection-string: mongodb://host.docker.internal:27017
+    connection-string: mongodb://localhost:27017
     credentials:
       username: "user"
       password: ${MONGO_PASSWORD}
   http:
+    port: 8080
+    root-path: /jung-garde
     cors:
       ~: true
-      origins: "http://localhost:4200"
-      methods: GET,PUT,POST,DELETE
+      origins:
+        - "https://localhost.ch"
