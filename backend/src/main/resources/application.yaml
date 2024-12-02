@@ -11,4 +11,4 @@ quarkus:
     cors:
       ~: true
       origins:
-        - "https://localhost.ch"
+        - "https://jung-garde.ch"
