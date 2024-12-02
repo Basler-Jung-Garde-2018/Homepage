@@ -17,6 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Media {
     private UUID id;
-    private MediaType type;
+    private FileType type;
     private UUID mediaId;
 }

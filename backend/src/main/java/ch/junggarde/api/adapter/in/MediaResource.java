@@ -1,9 +1,9 @@
 package ch.junggarde.api.adapter.in;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import ch.junggarde.api.application.MediaService;
+import ch.junggarde.api.model.media.FileType;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +15,17 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Path("/upload")
+@Path("/media")
 @Slf4j
 public class MediaResource {
 
+    @Inject
+    MediaService mediaService;
+
     @POST
+    @Path("/{type}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response uploadMedia(MultipartFormDataInput input) {
+    public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
         log.info("Uploading file");
         try {
             // Retrieve the uploaded files
@@ -33,17 +36,9 @@ public class MediaResource {
                     .filter(entry -> entry.getValue() != null)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-            StringBuilder fileDetails = new StringBuilder();
-            for (Map.Entry<String, InputStream> entry : fileMap.entrySet()) {
-                // Process the file without saving
-                String fieldName = entry.getKey();
-                InputStream fileStream = entry.getValue();
-                fileDetails.append("Received file: ").append(fieldName)
-                        .append(", Content Length: ").append(fileStream.available())
-                        .append(" bytes\n");
-            }
+            this.mediaService.uploadFiles(fileMap, FileType.valueOf(type));
 
-            return Response.ok(fileDetails.toString()).build();
+            return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Failed to process file upload: " + e.getMessage())

@@ -12,3 +12,7 @@ quarkus:
       ~: true
       origins:
         - "https://jung-garde.ch"
+
+variable:
+  path:
+    disk: /data/disk/

@@ -6,13 +6,11 @@ services:
     ports:
       - "8443:8443"
     environment:
-      - DB_HOST=host.docker.internal
       - MONGO_PASSWORD=y81YEsicQw0mCN
       - JAVA_APP_JAR="/deployments/quarkus-run.jar"
     volumes:
       - /etc/ssl/:/etc/ssl/
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - file_data:/data/disk
 
   frontend:
     build:
@@ -31,3 +29,4 @@ services:
       - mongo_data:/data/db
 volumes:
   mongo_data:
+  file_data:

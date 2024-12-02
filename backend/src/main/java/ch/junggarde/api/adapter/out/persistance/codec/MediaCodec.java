@@ -1,7 +1,7 @@
 package ch.junggarde.api.adapter.out.persistance.codec;
 
 import ch.junggarde.api.model.media.Media;
-import ch.junggarde.api.model.media.MediaType;
+import ch.junggarde.api.model.media.FileType;
 import ch.junggarde.api.model.member.Member;
 import com.mongodb.MongoClientSettings;
 import org.bson.*;
@@ -24,7 +24,7 @@ public class MediaCodec implements CollectibleCodec<Media> {
         final Document document = documentCodec.decode(bsonReader, decoderContext);
         return new Media(
                 UUID.fromString(document.getString(Media.Fields.id)),
-                MediaType.valueOf(document.getString(Media.Fields.type)),
+                FileType.valueOf(document.getString(Media.Fields.type)),
                 UUID.fromString(document.getString(Media.Fields.mediaId))
         );
     }

@@ -12,3 +12,7 @@ quarkus:
       ~: true
       origins:
         - "https://localhost"
+
+variable:
+  path:
+    disk: src/main/resources/tmp/
