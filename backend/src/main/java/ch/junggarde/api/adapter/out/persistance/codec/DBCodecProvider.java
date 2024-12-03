@@ -3,7 +3,7 @@ package ch.junggarde.api.adapter.out.persistance.codec;
 import ch.junggarde.api.model.Appointment;
 import ch.junggarde.api.model.image.GalleryImage;
 import ch.junggarde.api.model.image.Image;
-import ch.junggarde.api.model.media.Media;
+import ch.junggarde.api.model.media.MetaData;
 import ch.junggarde.api.model.member.AdministrativeMember;
 import ch.junggarde.api.model.member.Member;
 import org.bson.codecs.Codec;
@@ -22,7 +22,7 @@ public class DBCodecProvider implements CodecProvider {
             return (Codec<T>) new MemberCodec();
         } else if (clazz.equals(AdministrativeMember.class)) {
             return (Codec<T>) new AdministrativeMemberCodec();
-        } else if (clazz.equals(Media.class)) {
+        } else if (clazz.equals(MetaData.class)) {
             return (Codec<T>) new MediaCodec();
         } else if (clazz.equals(Appointment.class)) {
             return (Codec<T>) new AppointmentCodec();
