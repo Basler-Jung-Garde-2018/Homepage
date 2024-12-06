@@ -13,6 +13,8 @@ quarkus:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
         key-files: /etc/ssl/private/jung-garde-key.key
+    limits:
+      max-body-size: 650M
     cors:
       ~: true
       origins:
