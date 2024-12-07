@@ -30,7 +30,7 @@ public class MediaResource {
     @Path("/{type}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
-        log.info("Uploading file");
+        log.info("HTTP POST /media/{}", type);
         try {
 
             this.mediaService.uploadFiles(input, FileType.valueOf(type));
@@ -46,6 +46,7 @@ public class MediaResource {
     @GET
     @Path("/{type}")
     public Response getMetaData(@PathParam("type") String type) {
+        log.info("HTTP GET /media/{}", type);
         try {
             return Response.ok(this.mediaService.getMetaData(FileType.valueOf(type))).build();
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public class MediaResource {
     @Path("/{type}/{mediaId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getMedia(@PathParam("type") String type, @PathParam("mediaId") String mediaId) {
-        log.info("HTTP /media/{}/{}", type, mediaId);
+        log.info("HTTP GET /media/{}/{}", type, mediaId);
         try {
             File file = this.mediaService.getMediaFromDisk(type, UUID.fromString(mediaId));
             return Response.ok((StreamingOutput) output -> {

@@ -24,6 +24,7 @@ public class MemberResource {
 
     @GET
     public Response getMembers() {
+        log.info("HTTP GET /members");
         return Response.ok(memberService.getMembers()).build();
     }
 
@@ -36,6 +37,7 @@ public class MemberResource {
     @Path("/administrative")
     @GET
     public Response getAdministrative() {
+        log.info("HTTP GET /members/administrative");
         try {
             return Response.ok().entity(memberService.getAdministrativeMembers()).build();
         } catch (MemberNotFound e) {
