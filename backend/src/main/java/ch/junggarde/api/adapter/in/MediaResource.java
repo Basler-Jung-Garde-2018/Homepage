@@ -58,6 +58,7 @@ public class MediaResource {
     @Path("/{type}/{mediaId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getMedia(@PathParam("type") String type, @PathParam("mediaId") String mediaId) {
+        log.info("HTTP /media/{}/{}", type, mediaId);
         try {
             File file = this.mediaService.getMediaFromDisk(type, UUID.fromString(mediaId));
             return Response.ok((StreamingOutput) output -> {

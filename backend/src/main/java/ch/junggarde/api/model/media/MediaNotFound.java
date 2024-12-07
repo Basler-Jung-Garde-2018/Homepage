@@ -8,6 +8,6 @@ import java.util.UUID;
 public class MediaNotFound extends RuntimeException {
     public MediaNotFound(UUID imageId) {
         super("Media not found");
-        log.error("Image of galleryImage {} not found", imageId);
+        log.error("Media with ID {} not found", imageId);
     }
 }
