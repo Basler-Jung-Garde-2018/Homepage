@@ -6,9 +6,7 @@ quarkus:
       username: "user"
       password: ${MONGO_PASSWORD}
   http:
-    port: 8080
     root-path: /jung-garde
-    insecure-requests: redirect
     ssl:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
