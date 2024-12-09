@@ -29,7 +29,7 @@ public class GalleryResource {
             @PathParam("page") int page
     ) {
         try {
-            log.info("Returning gallery. Year: {}, event: {}, page: {}", year, event, page);
+            log.info("HTTP GET /gallery/{}/{}/{}", year, event, page);
             return Response.ok().entity(this.galleryService.getGallery(year, event, page)).build();
         } catch (ImageNotFound e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -38,12 +38,14 @@ public class GalleryResource {
 
     @POST
     public Response addImages(List<GalleryImageDTO> images) {
+        log.info("HTTP POST /gallery {}", images);
         log.info("add {} Images", images.size());
         return Response.ok().entity(galleryService.addImages(images)).build();
     }
 
     @PUT
     public Response publishImages(List<String> imageIds) {
+        log.info("HTTP PUT /gallery {}", imageIds);
         log.info("publish {} Images", imageIds.size());
         galleryService.publishImages(imageIds);
         return Response.ok().build();

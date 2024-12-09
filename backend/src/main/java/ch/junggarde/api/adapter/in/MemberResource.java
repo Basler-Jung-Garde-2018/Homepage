@@ -30,6 +30,7 @@ public class MemberResource {
 
     @POST
     public Response addMembers(List<MemberDTO> members) {
+        log.info("HTTP POST /members {}", members);
         log.info("add {} Members", members.size());
         return Response.ok().entity(memberService.addMembers(members)).build();
     }
@@ -48,6 +49,7 @@ public class MemberResource {
     @Path("/administrative")
     @POST
     public Response addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberDTOS) {
+        log.info("HTTP POST /members/administrative {}", administrativeMemberDTOS);
         log.info("add {} AdministrativeMembers", administrativeMemberDTOS.size());
         memberService.addAdministrativeMembers(administrativeMemberDTOS);
         return Response.ok().build();

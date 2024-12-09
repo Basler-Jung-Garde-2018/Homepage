@@ -30,7 +30,7 @@ public class MediaResource {
     @Path("/{type}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
-        log.info("HTTP POST /media/{}", type);
+        log.info("HTTP POST /media/{} {}", type, input);
         try {
 
             this.mediaService.uploadFiles(input, FileType.valueOf(type));

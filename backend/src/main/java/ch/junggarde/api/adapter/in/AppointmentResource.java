@@ -29,7 +29,7 @@ public class AppointmentResource {
 
     @POST
     public Response saveAppointments(List<AppointmentDTO> appointments) {
-        log.info("HTTP POST /appointments");
+        log.info("HTTP POST /appointments {}", appointments);
         return Response.ok().entity(appointMentService.saveAppointments(appointments)).build();
     }
 }
