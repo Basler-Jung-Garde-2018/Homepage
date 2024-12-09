@@ -3,7 +3,7 @@ quarkus:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
     credentials:
-      username: "user"
+      username: ${MONGO_USER}
       password: ${MONGO_PASSWORD}
   http:
     root-path: /jung-garde
