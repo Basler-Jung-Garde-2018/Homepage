@@ -9,7 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -17,18 +17,20 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-@Log4j2
+@Slf4j
 public class MemberResource {
     @Inject
     MemberService memberService;
 
     @GET
     public Response getMembers() {
+        log.info("HTTP GET /members");
         return Response.ok(memberService.getMembers()).build();
     }
 
     @POST
     public Response addMembers(List<MemberDTO> members) {
+        log.info("HTTP POST /members {}", members);
         log.info("add {} Members", members.size());
         return Response.ok().entity(memberService.addMembers(members)).build();
     }
@@ -36,6 +38,7 @@ public class MemberResource {
     @Path("/administrative")
     @GET
     public Response getAdministrative() {
+        log.info("HTTP GET /members/administrative");
         try {
             return Response.ok().entity(memberService.getAdministrativeMembers()).build();
         } catch (MemberNotFound e) {
@@ -46,6 +49,7 @@ public class MemberResource {
     @Path("/administrative")
     @POST
     public Response addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberDTOS) {
+        log.info("HTTP POST /members/administrative {}", administrativeMemberDTOS);
         log.info("add {} AdministrativeMembers", administrativeMemberDTOS.size());
         memberService.addAdministrativeMembers(administrativeMemberDTOS);
         return Response.ok().build();

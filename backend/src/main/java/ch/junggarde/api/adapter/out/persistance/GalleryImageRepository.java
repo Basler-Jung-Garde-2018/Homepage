@@ -4,6 +4,8 @@ import ch.junggarde.api.model.image.GalleryImage;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
@@ -32,8 +34,10 @@ public class GalleryImageRepository {
         }
         Bson filter = Filters.and(
                 Filters.eq(GalleryImage.Fields.year, year),
-                Filters.eq(GalleryImage.Fields.event, event)
+                Filters.eq(GalleryImage.Fields.event, event),
+                Filters.eq(GalleryImage.Fields.published, true)
         );
+
         return collection().find(filter)
                 .skip(page * docOnPage)
                 .limit(docOnPage)
@@ -46,5 +50,11 @@ public class GalleryImageRepository {
 
     public void saveImages(List<GalleryImage> galleryImages) {
         collection().insertMany(galleryImages);
+    }
+
+    public void publishImages(List<String> imageIds) {
+        Bson filter = Filters.in(GalleryImage.Fields.id, imageIds);
+        Bson update = Updates.set(GalleryImage.Fields.published, true);
+        collection().updateMany(filter, update, new UpdateOptions().upsert(false));
     }
 }

@@ -1,7 +1,7 @@
 package ch.junggarde.api.adapter.out.persistance.codec;
 
-import ch.junggarde.api.model.media.Media;
-import ch.junggarde.api.model.media.MediaType;
+import ch.junggarde.api.model.media.FileType;
+import ch.junggarde.api.model.media.MetaData;
 import ch.junggarde.api.model.member.Member;
 import com.mongodb.MongoClientSettings;
 import org.bson.*;
@@ -12,7 +12,7 @@ import org.bson.codecs.EncoderContext;
 
 import java.util.UUID;
 
-public class MediaCodec implements CollectibleCodec<Media> {
+public class MediaCodec implements CollectibleCodec<MetaData> {
     private final Codec<Document> documentCodec;
 
     public MediaCodec() {
@@ -20,41 +20,43 @@ public class MediaCodec implements CollectibleCodec<Media> {
     }
 
     @Override
-    public Media decode(BsonReader bsonReader, DecoderContext decoderContext) {
+    public MetaData decode(BsonReader bsonReader, DecoderContext decoderContext) {
         final Document document = documentCodec.decode(bsonReader, decoderContext);
-        return new Media(
-                UUID.fromString(document.getString(Media.Fields.id)),
-                MediaType.valueOf(document.getString(Media.Fields.type)),
-                UUID.fromString(document.getString(Media.Fields.mediaId))
+        return new MetaData(
+                UUID.fromString(document.getString(MetaData.Fields.id)),
+                FileType.valueOf(document.getString(MetaData.Fields.type)),
+                document.getString(MetaData.Fields.name),
+                document.getInteger(MetaData.Fields.size)
         );
     }
 
     @Override
-    public void encode(BsonWriter bsonWriter, Media media, EncoderContext encoderContext) {
+    public void encode(BsonWriter bsonWriter, MetaData metaData, EncoderContext encoderContext) {
         final Document document = new Document()
-                .append(Member.Fields.id, media.getId().toString())
-                .append(Media.Fields.type, media.getType().toString())
-                .append(Media.Fields.mediaId, media.getMediaId().toString());
+                .append(Member.Fields.id, metaData.getId().toString())
+                .append(MetaData.Fields.type, metaData.getType().toString())
+                .append(MetaData.Fields.name, metaData.getName())
+                .append(MetaData.Fields.size, metaData.getSize());
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
 
     @Override
-    public Class<Media> getEncoderClass() {
-        return Media.class;
+    public Class<MetaData> getEncoderClass() {
+        return MetaData.class;
     }
 
     @Override
-    public Media generateIdIfAbsentFromDocument(Media media) {
-        return media;
+    public MetaData generateIdIfAbsentFromDocument(MetaData metaData) {
+        return metaData;
     }
 
     @Override
-    public boolean documentHasId(Media media) {
+    public boolean documentHasId(MetaData metaData) {
         return true;
     }
 
     @Override
-    public BsonValue getDocumentId(Media media) {
-        return new BsonString(media.getId().toString());
+    public BsonValue getDocumentId(MetaData metaData) {
+        return new BsonString(metaData.getId().toString());
     }
 }

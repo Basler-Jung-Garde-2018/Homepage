@@ -3,12 +3,10 @@ quarkus:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
     credentials:
-      username: "user"
+      username: ${MONGO_USER}
       password: ${MONGO_PASSWORD}
   http:
-    port: 8080
     root-path: /jung-garde
-    insecure-requests: redirect
     ssl:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
@@ -19,3 +17,7 @@ quarkus:
       ~: true
       origins:
         - "https://jung-garde.ch"
+
+variable:
+  path:
+    disk: /data/disk/

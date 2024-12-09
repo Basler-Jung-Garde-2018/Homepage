@@ -9,14 +9,16 @@ public record GalleryImageDTO(
         String id,
         String base64,
         int year,
-        String event
+        String event,
+        boolean published
 ) {
     public static GalleryImageDTO fromDomainModel(final GalleryImage galleryImage, final Image image) {
         return new GalleryImageDTO(
                 galleryImage.getId().toString(),
                 image.getBase64(),
                 galleryImage.getYear(),
-                galleryImage.getEvent()
+                galleryImage.getEvent(),
+                galleryImage.isPublished()
         );
     }
 }
