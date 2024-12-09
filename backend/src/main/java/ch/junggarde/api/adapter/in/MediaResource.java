@@ -33,7 +33,7 @@ public class MediaResource {
         log.info("HTTP POST /media/{} {}", type, input);
         try {
 
-            //this.mediaService.uploadFiles(input, FileType.valueOf(type));
+            this.mediaService.uploadFiles(input, FileType.valueOf(type));
 
             return Response.ok().build();
         } catch (Exception e) {
