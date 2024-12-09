@@ -11,6 +11,7 @@ services:
     env_file:
       - /root/.secrets/.env
     volumes:
+      - /root/.secrets/.env:/root/.secrets/.env
       - /etc/ssl/:/etc/ssl/
       - file_data:/data/disk
 
