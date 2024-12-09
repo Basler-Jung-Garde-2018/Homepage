@@ -5,12 +5,8 @@ services:
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
       - "8443:8443"
-    environment:
-      - MONGO_USER=${MONGO_USER}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
     env_file:
-      - path: /root/.secrets/.env
-        required: true
+      - /root/.secrets/.env
     volumes:
       - /etc/ssl/:/etc/ssl/
       - file_data:/data/disk
