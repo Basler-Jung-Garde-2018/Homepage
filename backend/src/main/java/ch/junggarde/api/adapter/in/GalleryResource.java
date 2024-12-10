@@ -41,7 +41,12 @@ public class GalleryResource {
     @Path("/{imageId}")
     public Response getGalleryImage(@PathParam("imageId") String imageId) {
         log.info("HTTP GET /gallery/{}", imageId);
-        return Response.ok().entity(this.galleryService.getGalleryData(UUID.fromString(imageId))).build();
+        try {
+            return Response.ok().entity(this.galleryService.getGalleryData(UUID.fromString(imageId))).build();
+        } catch (Exception e) {
+            log.error("[{}] {}", imageId, e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @POST

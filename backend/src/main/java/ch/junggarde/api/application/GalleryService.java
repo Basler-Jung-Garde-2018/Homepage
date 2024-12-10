@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -33,28 +34,12 @@ public class GalleryService {
         return this.galleryImageRepository.findGalleryIds(year, event, page).stream().map(UUID::toString).toList();
     }
 
-    public GalleryImageDTO getGalleryData(UUID imageId) throws ImageNotFound {
+    public GalleryImageDTO getGalleryData(UUID imageId) throws ImageNotFound, IOException {
         GalleryImage galleryImage = galleryImageRepository.findGalleryImageById(imageId);
 
         Image image = imageRepository.findById(galleryImage.getImageId());
-        try {
-            String start = image.getBase64().substring(0, 23);
-            byte[] imageBytes = Base64.getDecoder().decode(image.getBase64().substring(23));
-            log.info(String.valueOf(imageBytes.length));
-            if (imageBytes.length > 5_000_000) {
-                BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
-                BufferedImage downscaled = downscaleImage(bufferedImage, 1920, 1080);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(downscaled, "jpg", baos);
-                imageBytes = baos.toByteArray();
-                String downscaledBase64Image = Base64.getEncoder().encodeToString(imageBytes);
-                System.out.println("Downscaled Image Size: " + imageBytes.length);
-                image.setBase64(start + downscaledBase64Image);
-            }
+        checkAndDownScaleImage(image);
 
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
         return GalleryImageDTO.fromDomainModel(galleryImage, image);
     }
 
@@ -96,7 +81,27 @@ public class GalleryService {
         return this.galleryImageRepository.findEvents();
     }
 
-    private static BufferedImage downscaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+    private static void checkAndDownScaleImage(Image image) throws IOException {
+        int frontIndex = image.getBase64().indexOf(",") + 1;
+        String base64Front = image.getBase64().substring(0, frontIndex);
+        byte[] imageBytes = Base64.getDecoder().decode(image.getBase64().substring(frontIndex));
+
+        if (imageBytes.length > 2_000_000) {
+            BufferedImage original = ImageIO.read(new ByteArrayInputStream(imageBytes));
+
+            BufferedImage resized = resize(original, 1080 * original.getWidth() / original.getHeight(), 1080);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            String fileType = base64Front.substring(base64Front.indexOf("/") + 1, base64Front.indexOf(";"));
+            ImageIO.write(resized, fileType, baos);
+            imageBytes = baos.toByteArray();
+
+            String downscaledBase64Image = Base64.getEncoder().encodeToString(imageBytes);
+            image.setBase64(base64Front + downscaledBase64Image);
+        }
+    }
+
+    private static BufferedImage resize(BufferedImage originalImage, int targetWidth, int targetHeight) {
         BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, originalImage.getType());
         Graphics2D g = resizedImage.createGraphics();
         g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
