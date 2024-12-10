@@ -14,6 +14,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class GalleryImageRepository {
@@ -25,7 +26,26 @@ public class GalleryImageRepository {
     @ConfigProperty(name = "quarkus.mongodb.database")
     String database;
 
-    public List<GalleryImage> getGallery(int year, String event, int page) {
+    private MongoCollection<GalleryImage> collection() {
+        return mongoClient.get().getDatabase(database).getCollection(COLLECTION, GalleryImage.class);
+    }
+
+    public GalleryImage findGalleryImageById(UUID imageId) {
+        Bson filter = Filters.eq(GalleryImage.Fields.id, imageId.toString());
+        return collection().find(filter).first();
+    }
+
+    public void saveImages(List<GalleryImage> galleryImages) {
+        collection().insertMany(galleryImages);
+    }
+
+    public void publishImages(List<String> imageIds) {
+        Bson filter = Filters.in(GalleryImage.Fields.id, imageIds);
+        Bson update = Updates.set(GalleryImage.Fields.published, true);
+        collection().updateMany(filter, update, new UpdateOptions().upsert(false));
+    }
+
+    public List<UUID> findGalleryIds(int year, String event, int page) {
         int docOnPage = 20;
         if (page == 0) {
             docOnPage = 40;
@@ -41,20 +61,7 @@ public class GalleryImageRepository {
         return collection().find(filter)
                 .skip(page * docOnPage)
                 .limit(docOnPage)
+                .map(GalleryImage::getId)
                 .into(new ArrayList<>());
-    }
-
-    private MongoCollection<GalleryImage> collection() {
-        return mongoClient.get().getDatabase(database).getCollection(COLLECTION, GalleryImage.class);
-    }
-
-    public void saveImages(List<GalleryImage> galleryImages) {
-        collection().insertMany(galleryImages);
-    }
-
-    public void publishImages(List<String> imageIds) {
-        Bson filter = Filters.in(GalleryImage.Fields.id, imageIds);
-        Bson update = Updates.set(GalleryImage.Fields.published, true);
-        collection().updateMany(filter, update, new UpdateOptions().upsert(false));
     }
 }

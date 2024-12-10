@@ -11,6 +11,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class ImageRepository {
@@ -20,6 +21,10 @@ public class ImageRepository {
 
     @ConfigProperty(name = "quarkus.mongodb.database")
     String database;
+
+    public Image findById(UUID id) {
+        return collection().find(Filters.eq(Image.Fields.id, id.toString())).first();
+    }
 
     public List<Image> findImagesByIds(List<String> imageIds) {
         return collection().find(Filters.in(Image.Fields.id, imageIds)).into(new ArrayList<>());

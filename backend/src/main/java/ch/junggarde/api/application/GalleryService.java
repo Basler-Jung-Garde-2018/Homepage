@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 @Slf4j
@@ -22,27 +23,17 @@ public class GalleryService {
     @Inject
     ImageRepository imageRepository;
 
+    public List<String> getGallery(int year, String event, int page) {
+        return this.galleryImageRepository.findGalleryIds(year, event, page).stream().map(UUID::toString).toList();
+    }
 
-    public List<GalleryImageDTO> getGallery(int year, String event, int page) throws ImageNotFound {
-        List<GalleryImage> galleryImages = galleryImageRepository.getGallery(year, event, page);
 
-        // Get all imageIds of the gallery images
-        List<String> imageIds = galleryImages.stream()
-                .map(galleryImage -> galleryImage.getImageId().toString())
-                .toList();
+    public GalleryImageDTO getGalleryData(UUID imageId) throws ImageNotFound {
+        GalleryImage galleryImage = galleryImageRepository.findGalleryImageById(imageId);
 
-        List<Image> images = imageRepository.findImagesByIds(imageIds);
+        Image image = imageRepository.findById(galleryImage.getImageId());
 
-        // Add image to gallery image and map to dto
-        return galleryImages.stream()
-                .map(galleryImage -> GalleryImageDTO.fromDomainModel(
-                                galleryImage,
-                                images.stream()
-                                        .filter(image -> image.getId().equals(galleryImage.getImageId()))
-                                        .findFirst()
-                                        .orElseThrow(() -> new ImageNotFound(galleryImage.getId()))
-                        )
-                ).toList();
+        return GalleryImageDTO.fromDomainModel(galleryImage, image);
     }
 
     public List<GalleryImageDTO> addImages(List<GalleryImageDTO> galleryRequests) {
