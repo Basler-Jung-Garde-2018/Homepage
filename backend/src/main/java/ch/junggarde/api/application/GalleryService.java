@@ -27,7 +27,6 @@ public class GalleryService {
         return this.galleryImageRepository.findGalleryIds(year, event, page).stream().map(UUID::toString).toList();
     }
 
-
     public GalleryImageDTO getGalleryData(UUID imageId) throws ImageNotFound {
         GalleryImage galleryImage = galleryImageRepository.findGalleryImageById(imageId);
 
@@ -68,5 +67,9 @@ public class GalleryService {
             return;
         }
         this.galleryImageRepository.publishImages(imageIds);
+    }
+
+    public List<String> getEvents() {
+        return this.galleryImageRepository.findEvents();
     }
 }

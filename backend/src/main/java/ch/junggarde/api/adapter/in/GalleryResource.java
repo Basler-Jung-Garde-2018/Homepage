@@ -38,8 +38,9 @@ public class GalleryResource {
     }
 
     @GET
-    @Path("{imageId}")
+    @Path("/{imageId}")
     public Response getGalleryImage(@PathParam("imageId") String imageId) {
+        log.info("HTTP GET /gallery/{}", imageId);
         return Response.ok().entity(this.galleryService.getGalleryData(UUID.fromString(imageId))).build();
     }
 
@@ -56,5 +57,12 @@ public class GalleryResource {
         log.info("publish {} Images", imageIds.size());
         galleryService.publishImages(imageIds);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/events")
+    public List<String> getEvents() {
+        log.info("HTTP GET /gallery/events");
+        return galleryService.getEvents();
     }
 }

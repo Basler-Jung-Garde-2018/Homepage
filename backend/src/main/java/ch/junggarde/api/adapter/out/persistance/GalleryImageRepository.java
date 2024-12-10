@@ -4,11 +4,13 @@ import ch.junggarde.api.model.image.GalleryImage;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -30,19 +32,13 @@ public class GalleryImageRepository {
         return mongoClient.get().getDatabase(database).getCollection(COLLECTION, GalleryImage.class);
     }
 
+    private MongoCollection<Document> filterCollection() {
+        return mongoClient.get().getDatabase(database).getCollection(COLLECTION, Document.class);
+    }
+
     public GalleryImage findGalleryImageById(UUID imageId) {
         Bson filter = Filters.eq(GalleryImage.Fields.id, imageId.toString());
         return collection().find(filter).first();
-    }
-
-    public void saveImages(List<GalleryImage> galleryImages) {
-        collection().insertMany(galleryImages);
-    }
-
-    public void publishImages(List<String> imageIds) {
-        Bson filter = Filters.in(GalleryImage.Fields.id, imageIds);
-        Bson update = Updates.set(GalleryImage.Fields.published, true);
-        collection().updateMany(filter, update, new UpdateOptions().upsert(false));
     }
 
     public List<UUID> findGalleryIds(int year, String event, int page) {
@@ -58,10 +54,28 @@ public class GalleryImageRepository {
                 Filters.eq(GalleryImage.Fields.published, true)
         );
 
-        return collection().find(filter)
+        return filterCollection().find(filter)
                 .skip(page * docOnPage)
                 .limit(docOnPage)
-                .map(GalleryImage::getId)
+                .projection(Projections.fields(
+                        Projections.include("id"),
+                        Projections.excludeId()
+                ))
+                .map(document -> UUID.fromString(document.get("id", String.class)))
                 .into(new ArrayList<>());
+    }
+
+    public void saveImages(List<GalleryImage> galleryImages) {
+        collection().insertMany(galleryImages);
+    }
+
+    public void publishImages(List<String> imageIds) {
+        Bson filter = Filters.in(GalleryImage.Fields.id, imageIds);
+        Bson update = Updates.set(GalleryImage.Fields.published, true);
+        collection().updateMany(filter, update, new UpdateOptions().upsert(false));
+    }
+
+    public List<String> findEvents() {
+        return filterCollection().distinct("event", String.class).into(new ArrayList<>());
     }
 }
