@@ -40,7 +40,7 @@
 
 
 <div class="gallery-container">
-  <mat-card *ngFor="let gallery of galleries$ | async" class="gallery-card">
-    <img [src]="gallery.base64" alt="Gallery Image" class="gallery-image" />
+  <mat-card *ngFor="let image of gallery$ | async" class="gallery-card">
+    <img [src]="image.base64" alt="Gallery Image" class="gallery-image" loading="lazy"/>
   </mat-card>
 </div>

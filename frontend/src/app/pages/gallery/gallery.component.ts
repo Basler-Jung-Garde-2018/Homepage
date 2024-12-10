@@ -41,7 +41,7 @@ import {BehaviorSubject, from, map, mergeMap, Observable, scan, startWith} from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryComponent implements OnInit {
-  galleries$ = new BehaviorSubject<Gallery[]>([]);
+  gallery$ = new BehaviorSubject<Gallery[]>([]);
   page: number = 0;
 
   eventForm: FormGroup;
@@ -68,14 +68,11 @@ export class GalleryComponent implements OnInit {
 
     if (event && event !== "" && year) {
       console.log(`gallery load start. Year: ${year}, Event: ${event}`)
-
       this.clientService.getGalleryIds(year, event, this.page).pipe(
-        mergeMap(ids => from(ids)), // Convert the list of IDs into an observable stream
-        mergeMap(id => this.clientService.getGalleryImage(id)), // Fetch each image by ID
-        scan((acc: Gallery[], image: Gallery) => [...acc, image], []), // Accumulate the images
-      ).subscribe(images => {
-        this.galleries$.next(images); // Update the BehaviorSubject with the accumulated images
-      });
+        mergeMap(ids => from(ids)),
+        mergeMap(id => this.clientService.getGalleryImage(id)),
+        scan((acc: Gallery[], image: Gallery) => [...acc, image], []),
+      ).subscribe(images => this.gallery$.next(images));
     }
   }
 
@@ -92,5 +89,7 @@ export class GalleryComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+
+    this.loadGallery();
   }
 }
