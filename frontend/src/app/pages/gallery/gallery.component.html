@@ -11,7 +11,7 @@
       <div class="filter-container">
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>Jahr</mat-label>
-          <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
+          <mat-select [value]="selectedYear" [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
             <mat-option value="2018">2018</mat-option>
             <mat-option value="2019">2019</mat-option>
             <mat-option value="2020">2020</mat-option>
@@ -25,10 +25,9 @@
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>Event</mat-label>
           <mat-select [(ngModel)]="event" (selectionChange)="loadGallery()">
-            <mat-option value="Diverses">Diverses</mat-option>
-            <mat-option value="Fasnacht Mäntig">Fasnacht Mäntig</mat-option>
-            <mat-option value="Fasnacht Zyschtig">Fasnacht Zyschtig</mat-option>
-            <mat-option value="Fasnacht Mittwuch">Fasnacht Mittwuch</mat-option>
+            <mat-option *ngFor="let event of events" [value]="event">
+              {{ event }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 

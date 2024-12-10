@@ -6,12 +6,12 @@
     <form [formGroup]="eventForm" (ngSubmit)="onUpload()" class="event-form">
       <div class="form-fields">
         <mat-form-field appearance="outline">
-          <mat-label>Year</mat-label>
-          <input matInput formControlName="year" type="number" placeholder="Enter year">
+          <mat-label>Jahr</mat-label>
+          <input matInput formControlName="year" type="number" placeholder="Jahr eingeben">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Event</mat-label>
-          <input matInput formControlName="event" type="text" placeholder="Enter event name">
+          <input matInput formControlName="event" type="text" placeholder="Event auswählen">
         </mat-form-field>
       </div>
       <input
@@ -20,7 +20,7 @@
         multiple
         class="file-input">
       <div class="actions">
-        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <button mat-raised-button color="primary" type="submit">Hochladen</button>
       </div>
     </form>
   </mat-card-content>

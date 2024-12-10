@@ -10,8 +10,6 @@ import {BenefactorComponent} from "./pages/aboutus/benefactor/benefactor.compone
 import {ImpressumComponent} from "./pages/impressum/impressum.component";
 import {EditGalleryComponent} from "./pages/privat/edit-gallery/edit-gallery.component";
 import {MediaPageComponent} from "./pages/privat/media-page/media-page.component";
-import {MerchComponent} from "./pages/privat/merch/merch.component";
-import {GeheimVersteckHihiComponent} from "./pages/geheim-versteck-hihi/geheim-versteck-hihi.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/startseite', pathMatch: 'full' },
@@ -25,7 +23,5 @@ export const routes: Routes = [
   { path: 'impressum', component: ImpressumComponent, title: 'Impressum' },
   { path: 'private-section/gallery', component:  EditGalleryComponent},
   { path: 'private-section/media', component: MediaPageComponent },
-  { path: 'private-section/merch', component: MerchComponent },
-  { path: 'hihi', component: GeheimVersteckHihiComponent },
   { path: '**', component: NotfoundComponent }
 ];
