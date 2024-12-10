@@ -9,30 +9,30 @@
       </mat-expansion-panel-header>
 
       <div class="filter-container">
-        <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Jahr</mat-label>
-          <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadGallery()">
-            <mat-option value="2018">2018</mat-option>
-            <mat-option value="2019">2019</mat-option>
-            <mat-option value="2020">2020</mat-option>
-            <mat-option value="2021">2021</mat-option>
-            <mat-option value="2022">2022</mat-option>
-            <mat-option value="2023">2023</mat-option>
-            <mat-option value="2024">2024</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <form [formGroup]="eventForm" (ngSubmit)="loadGallery()">
+          <mat-form-field>
+            <mat-label>Year</mat-label>
+            <input matInput formControlName="year" type="number">
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Event</mat-label>
-          <mat-select [(ngModel)]="event" (selectionChange)="loadGallery()">
-            <mat-option value="Diverses">Diverses</mat-option>
-            <mat-option value="Fasnacht Mäntig">Fasnacht Mäntig</mat-option>
-            <mat-option value="Fasnacht Zyschtig">Fasnacht Zyschtig</mat-option>
-            <mat-option value="Fasnacht Mittwuch">Fasnacht Mittwuch</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Event</mat-label>
+            <input type="text"
+                   placeholder="Fasnacht"
+                   aria-label="Event"
+                   matInput
+                   formControlName="event"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              @for (option of filteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary" class="apply-button" (click)="loadGallery()">Filter anwenden</button>
 
-        <button mat-raised-button color="primary" class="apply-button" (click)="loadGallery()">Filter anwenden</button>
+        </form>
+
       </div>
     </mat-expansion-panel>
   </mat-accordion>
