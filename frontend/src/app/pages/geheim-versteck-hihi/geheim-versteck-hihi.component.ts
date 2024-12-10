@@ -87,9 +87,13 @@ export class GeheimVersteckHihiComponent implements OnInit {
     });
 
     this.clientService.createGallery(gallery).subscribe({
-      next: () => console.log("nice"),
+      next: () => {
+        this.fileStrings = [];
+        console.log("nice")
+      },
       error: (error) => console.log(error)
     });
+
 
   }
 
