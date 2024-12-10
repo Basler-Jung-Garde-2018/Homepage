@@ -10,7 +10,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +37,24 @@ public class GalleryService {
         GalleryImage galleryImage = galleryImageRepository.findGalleryImageById(imageId);
 
         Image image = imageRepository.findById(galleryImage.getImageId());
+        try {
+            String start = image.getBase64().substring(0, 23);
+            byte[] imageBytes = Base64.getDecoder().decode(image.getBase64().substring(23));
+            log.info(String.valueOf(imageBytes.length));
+            if (imageBytes.length > 5_000_000) {
+                BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                BufferedImage downscaled = downscaleImage(bufferedImage, 1920, 1080);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(downscaled, "jpg", baos);
+                imageBytes = baos.toByteArray();
+                String downscaledBase64Image = Base64.getEncoder().encodeToString(imageBytes);
+                System.out.println("Downscaled Image Size: " + imageBytes.length);
+                image.setBase64(start + downscaledBase64Image);
+            }
 
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return GalleryImageDTO.fromDomainModel(galleryImage, image);
     }
 
@@ -71,5 +94,13 @@ public class GalleryService {
 
     public List<String> getEvents() {
         return this.galleryImageRepository.findEvents();
+    }
+
+    private static BufferedImage downscaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, originalImage.getType());
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g.dispose();
+        return resizedImage;
     }
 }
