@@ -46,7 +46,7 @@ public class GalleryResource {
 
     @POST
     public Response addImages(List<GalleryImageDTO> images) {
-        log.info("HTTP POST /gallery {}", images);
+        log.info("HTTP POST /gallery");
         log.info("add {} Images", images.size());
         return Response.ok().entity(galleryService.addImages(images)).build();
     }
