@@ -29,7 +29,7 @@
               }
             </mat-autocomplete>
           </mat-form-field>
-          <button mat-raised-button type="submit" color="primary" class="apply-button" (click)="loadGallery()">Filter anwenden</button>
+          <button mat-raised-button type="submit" color="primary" class="apply-button">Filter anwenden</button>
 
         </form>
 
@@ -40,7 +40,7 @@
 
 
 <div class="gallery-container">
-  <mat-card *ngFor="let gallery of galleries" class="gallery-card">
+  <mat-card *ngFor="let gallery of galleries$ | async" class="gallery-card">
     <img [src]="gallery.base64" alt="Gallery Image" class="gallery-image" />
   </mat-card>
 </div>

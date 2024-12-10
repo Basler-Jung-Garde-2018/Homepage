@@ -16,8 +16,8 @@ export class ClientService {
     return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
   }
 
-  public getGallery(year: number, event: string, page: number): Observable<Gallery[]> {
-    return this.httpClient.get<Gallery[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
+  public getGalleryIds(year: number, event: string, page: number): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
   }
 
   public getAppointments(): Observable<Appointment[]> {
@@ -30,5 +30,13 @@ export class ClientService {
 
   public getAdministrativeMembers(): Observable<any> {
     return this.httpClient.get(`${this.baseUrl}/members/administrative`);
+  }
+
+  public getEventList(): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.baseUrl}/gallery/events`);
+  }
+
+  public getGalleryImage(id: string): Observable<Gallery> {
+    return this.httpClient.get<Gallery>(`${this.baseUrl}/gallery/${id}`);
   }
 }

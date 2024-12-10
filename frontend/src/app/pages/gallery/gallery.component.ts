@@ -11,7 +11,7 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
-import {map, Observable, startWith} from "rxjs";
+import {BehaviorSubject, from, map, mergeMap, Observable, scan, startWith} from "rxjs";
 
 @Component({
   selector: 'app-gallery',
@@ -41,7 +41,7 @@ import {map, Observable, startWith} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryComponent implements OnInit {
-  galleries: Gallery[] = [];
+  galleries$ = new BehaviorSubject<Gallery[]>([]);
   page: number = 0;
 
   eventForm: FormGroup;
@@ -68,22 +68,20 @@ export class GalleryComponent implements OnInit {
 
     if (event && event !== "" && year) {
       console.log(`gallery load start. Year: ${year}, Event: ${event}`)
-      this.clientService.getGallery(year, event, this.page).subscribe(
-        (data: Gallery[]) => {
-          this.galleries = data;
-          console.log("gallery loaded")
-        },
-        (error) => {
-          console.error("Fehler beim Laden der Galerie:", error);
-        }
-      );
+
+      this.clientService.getGalleryIds(year, event, this.page).pipe(
+        mergeMap(ids => from(ids)), // Convert the list of IDs into an observable stream
+        mergeMap(id => this.clientService.getGalleryImage(id)), // Fetch each image by ID
+        scan((acc: Gallery[], image: Gallery) => [...acc, image], []), // Accumulate the images
+      ).subscribe(images => {
+        this.galleries$.next(images); // Update the BehaviorSubject with the accumulated images
+      });
     }
   }
 
   ngOnInit(): void {
     this.clientService.getEventList().subscribe({
       next: (events: string[]) => {
-        console.log(events)
         this.eventList = events
       },
       error: error =>
@@ -94,7 +92,5 @@ export class GalleryComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
-
-    this.loadGallery();
   }
 }
