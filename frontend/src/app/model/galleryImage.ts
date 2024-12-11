@@ -1,4 +1,4 @@
-export interface Gallery {
+export interface GalleryImage {
   id: string;
   base64: string;
   year: number;

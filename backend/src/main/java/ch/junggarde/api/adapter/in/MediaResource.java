@@ -32,14 +32,10 @@ public class MediaResource {
     public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
         log.info("HTTP POST /media/{} {}", type, input);
         try {
-
-//            this.mediaService.uploadFiles(input, FileType.valueOf(type));
-
-            return Response.ok().build();
+            return Response.ok(this.mediaService.uploadFiles(input, FileType.valueOf(type))).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Failed to process file upload: " + e.getMessage())
-                    .build();
+                    .entity("Failed to process file upload: " + e.getMessage()).build();
         }
     }
 
