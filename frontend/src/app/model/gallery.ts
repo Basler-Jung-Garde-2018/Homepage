@@ -3,4 +3,5 @@ export interface Gallery {
   base64: string;
   year: number;
   event: string;
+  public: Boolean
 }

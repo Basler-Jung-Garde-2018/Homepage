@@ -37,7 +37,7 @@ import {MatCard, MatCardContent} from "@angular/material/card";
 })
 export class GalleryComponent implements OnInit {
   galleries: Gallery[] = [];
-  selectedYear: number;
+  selectedYear: number = 2024
   event: string = 'Fasnacht';
   page: number = 0;
 
