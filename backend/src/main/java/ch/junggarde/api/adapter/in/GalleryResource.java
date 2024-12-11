@@ -46,7 +46,6 @@ public class GalleryResource {
     @Path("/{imageId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getGalleryImage(@PathParam("imageId") String imageId) {
-        // todo add security to only show public images
         log.info("HTTP GET /gallery/{}", imageId);
         try {
             return Response.ok((StreamingOutput) output -> {

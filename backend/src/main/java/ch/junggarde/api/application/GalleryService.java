@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,17 @@ public class GalleryService {
             return;
         }
         this.galleryImageRepository.publishImages(imageIds);
+
+        // move files in other directory for better security
+        imageIds.forEach(id -> {
+            Path srcPath = Paths.get(DIRECTORY + "/IMAGE/" + id);
+            Path destPath = Paths.get(DIRECTORY + "/PUBLIC/" + id);
+            try {
+                Files.move(srcPath, destPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public List<String> getEvents() {
@@ -64,7 +78,7 @@ public class GalleryService {
     }
 
     public File getImageFromDisk(UUID imageId) {
-        File image = Paths.get(DIRECTORY + "/IMAGE/" + imageId.toString()).toFile();
+        File image = Paths.get(DIRECTORY, "PUBLIC", imageId.toString()).toFile();
         if (!image.exists() || !image.isFile()) {
             throw new ImageNotFound(imageId);
         }
