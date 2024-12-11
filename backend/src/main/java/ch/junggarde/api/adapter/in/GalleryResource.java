@@ -8,8 +8,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,21 +44,52 @@ public class GalleryResource {
 
     @GET
     @Path("/{imageId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getGalleryImage(@PathParam("imageId") String imageId) {
+        // todo add security to only show public images
         log.info("HTTP GET /gallery/{}", imageId);
         try {
-            return Response.ok().entity(this.galleryService.getGalleryData(UUID.fromString(imageId))).build();
+            return Response.ok((StreamingOutput) output -> {
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                    File file = this.galleryService.getImageFromDisk(UUID.fromString(imageId));
+
+                    BufferedImage image = Thumbnails.of(new FileInputStream(file))
+                            .scale(1)
+                            .asBufferedImage();
+
+                    if (image.getHeight() > 1080) {
+                        image = Thumbnails.of(new FileInputStream(file))
+                                .size((1080 * image.getWidth()) / image.getHeight(), 1080)
+                                .asBufferedImage();
+                    }
+
+                    ImageIO.write(image, "jpg", baos); // todo: use format name
+                    baos.flush();
+
+                    InputStream scaledInputStream = new ByteArrayInputStream(baos.toByteArray());
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = scaledInputStream.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                    throw new WebApplicationException(e);
+                }
+            }).build();
+        } catch (ImageNotFound e) {
+            return Response.serverError().status(Response.Status.NOT_FOUND).build();
         } catch (Exception e) {
-            log.error("[{}] {}", imageId, e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            log.error(e.getMessage(), e);
+            return Response.serverError().entity(e.getMessage()).build();
         }
     }
 
     @POST
-    public Response addImages(List<GalleryImageDTO> images) {
-        log.info("HTTP POST /gallery");
-        log.info("add {} Images", images.size());
-        return Response.ok().entity(galleryService.addImages(images)).build();
+    public Response addImageMetaData(List<GalleryImageDTO> imageMetadata) {
+        log.info("HTTP POST /gallery metadata.event: {}, metadata.year: {}", imageMetadata.getFirst().event(), imageMetadata.getFirst().year());
+        log.info("add {} Images", imageMetadata.size());
+        return Response.ok().entity(galleryService.addImages(imageMetadata)).build();
     }
 
     @PUT

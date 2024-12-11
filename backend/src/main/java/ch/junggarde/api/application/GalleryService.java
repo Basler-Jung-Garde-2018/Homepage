@@ -3,10 +3,14 @@ package ch.junggarde.api.application;
 import ch.junggarde.api.adapter.out.persistance.GalleryImageRepository;
 import ch.junggarde.api.application.dto.GalleryImageDTO;
 import ch.junggarde.api.model.image.GalleryImage;
+import ch.junggarde.api.model.image.ImageNotFound;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +20,10 @@ import java.util.UUID;
 public class GalleryService {
     @Inject
     GalleryImageRepository galleryImageRepository;
+
+    @Inject
+    @ConfigProperty(name = "variable.path.disk")
+    String DIRECTORY;
 
     public List<String> getGallery(int year, String event, int page) {
         return this.galleryImageRepository.findGalleryIds(year, event, page).stream().map(UUID::toString).toList();
@@ -53,5 +61,13 @@ public class GalleryService {
 
     public List<String> getEvents() {
         return this.galleryImageRepository.findEvents();
+    }
+
+    public File getImageFromDisk(UUID imageId) {
+        File image = Paths.get(DIRECTORY + "/IMAGE/" + imageId.toString()).toFile();
+        if (!image.exists() || !image.isFile()) {
+            throw new ImageNotFound(imageId);
+        }
+        return image;
     }
 }

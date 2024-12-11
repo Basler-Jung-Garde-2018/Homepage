@@ -36,10 +36,6 @@ export class ClientService {
     return this.httpClient.get<string[]>(`${this.baseUrl}/gallery/events`);
   }
 
-  public getGalleryImage(id: string): Observable<Gallery> {
-    return this.httpClient.get<Gallery>(`${this.baseUrl}/media/IMAGE/${id}`);
-  }
-
   public addMedia(files: File[]) {
     const formData = new FormData();
     files.forEach(file => {
@@ -47,5 +43,9 @@ export class ClientService {
     })
 
     return this.httpClient.post<string[]>(`${this.baseUrl}/media/IMAGE`, formData); // todo: remove IMAGE as hardcoded url
+  }
+
+  public getImageUrl(imageId: string): string {
+    return `${this.baseUrl}/gallery/${imageId}`
   }
 }
