@@ -12,7 +12,7 @@ export class ClientService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseUrl = 'https://jung-garde.ch:8443/jung-garde';
 
-  public createGallery(data: Partial<Gallery>[]): Observable<Gallery[]> {
+  public addGalleryMetaData(data: Partial<Gallery>[]): Observable<Gallery[]> {
     return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
   }
 
@@ -37,6 +37,15 @@ export class ClientService {
   }
 
   public getGalleryImage(id: string): Observable<Gallery> {
-    return this.httpClient.get<Gallery>(`${this.baseUrl}/gallery/${id}`);
+    return this.httpClient.get<Gallery>(`${this.baseUrl}/media/IMAGE/${id}`);
+  }
+
+  public addMedia(files: File[]) {
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append(file.name, file);
+    })
+
+    return this.httpClient.post<string[]>(`${this.baseUrl}/media/IMAGE`, formData); // todo: remove IMAGE as hardcoded url
   }
 }

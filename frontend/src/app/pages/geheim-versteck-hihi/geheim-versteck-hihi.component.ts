@@ -7,7 +7,7 @@ import {MatButton} from "@angular/material/button";
 import {ClientService} from "../../service/client.service";
 import {Gallery} from "../../model/gallery";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, startWith, switchMap} from "rxjs";
 import {AsyncPipe} from "@angular/common";
 
 @Component({
@@ -31,7 +31,7 @@ import {AsyncPipe} from "@angular/common";
 })
 export class GeheimVersteckHihiComponent implements OnInit {
   eventForm: FormGroup;
-  fileStrings: string[] = [];
+  files: File[] = [];
   options: string[] = [
     'Fasnacht',
     'Allschwiler Fasnacht',
@@ -65,36 +65,31 @@ export class GeheimVersteckHihiComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      Array.from(input.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.fileStrings.push(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      });
+      this.files = Array.from(input.files);
     }
   }
 
   onUpload() {
     const event: string = this.eventForm.get("event")?.value
     const year: number = Number.parseInt(this.eventForm.get("year")?.value)
-    const gallery: Partial<Gallery>[] = this.fileStrings.map(file => {
-      return {
-        "base64": file,
-        "event": event,
-        "year": year
-      }
-    });
-
-    this.clientService.createGallery(gallery).subscribe({
-      next: () => {
-        this.fileStrings = [];
-        console.log("nice")
-      },
-      error: (error) => console.log(error)
-    });
-
-
+    if (year && event && event !== "") {
+      this.clientService.addMedia(this.files).pipe(
+        switchMap((imageIds) => {
+          const gallery: Partial<Gallery>[] = imageIds.map(id => ({
+            id,
+            event,
+            year
+          }));
+          return this.clientService.addGalleryMetaData(gallery);
+        }),
+      ).subscribe({
+        next: () => {
+          console.log('Gallery metadata added successfully');
+        },
+        error: (err) => {
+          console.error('Unexpected error:', err);
+        }
+      });
+    }
   }
-
 }

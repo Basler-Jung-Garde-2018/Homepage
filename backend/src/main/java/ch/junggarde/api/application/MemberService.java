@@ -1,11 +1,9 @@
 package ch.junggarde.api.application;
 
 import ch.junggarde.api.adapter.out.persistance.AdministrativeMemberRepository;
-import ch.junggarde.api.adapter.out.persistance.ImageRepository;
 import ch.junggarde.api.adapter.out.persistance.MemberRepository;
 import ch.junggarde.api.application.dto.AdministrativeMemberDTO;
 import ch.junggarde.api.application.dto.MemberDTO;
-import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.member.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -18,9 +16,6 @@ import java.util.*;
 public class MemberService {
     @Inject
     MemberRepository memberRepository;
-
-    @Inject
-    ImageRepository imageRepository;
 
     @Inject
     AdministrativeMemberRepository administrativeMemberRepository;
@@ -44,12 +39,9 @@ public class MemberService {
                 .map(administrativeMember -> administrativeMember.getImageId().toString())
                 .toList();
 
-        List<Image> images = imageRepository.findImagesByIds(imageIds);
-
         List<FullAdministrativeMember> fullAdministrativeMembers = new ArrayList<>(administrativeMembers.size());
         administrativeMembers.forEach(administrativeMember -> {
             Member member = members.stream().filter(listMember -> administrativeMember.getMemberId().equals(listMember.getId())).findFirst().orElseThrow(() -> new MemberNotFound(administrativeMember.getId()));
-            Image image = images.stream().filter(listImage -> administrativeMember.getImageId().equals(listImage.getId())).findFirst().orElse(null);
             fullAdministrativeMembers.add(
                     new FullAdministrativeMember(
                             administrativeMember.getId(),
@@ -59,7 +51,7 @@ public class MemberService {
                             administrativeMember.getRole(),
                             administrativeMember.getJobTitle(),
                             administrativeMember.getDescription(),
-                            image != null ? image.getBase64() : "",
+                            "", // todo change to image id
                             administrativeMember.getSupervisorId()
                     )
             );
@@ -109,7 +101,6 @@ public class MemberService {
         if (administrativeMemberRequests.isEmpty()) {
             return;
         }
-        List<Image> images = new ArrayList<>();
         List<AdministrativeMember> administrativeMembers = new ArrayList<>(administrativeMemberRequests.size());
         List<Member> members = new ArrayList<>(administrativeMemberRequests.size());
 
@@ -119,27 +110,18 @@ public class MemberService {
                     administrativeMemberRequest.lastname()
             );
 
-            Image image = new Image();
-            if (administrativeMemberRequest.imageBase64().equals("BILD")) {
-                image.setId(UUID.fromString("590363f1-1f66-4930-a268-daa391c32d0f"));
-            } else {
-                image.setBase64(administrativeMemberRequest.imageBase64());
-                images.add(image);
-            }
-
             AdministrativeMember administrativeMember = new AdministrativeMember(
                     member.getId(),
                     Role.valueOf(administrativeMemberRequest.role()),
                     administrativeMemberRequest.jobTitle(),
                     administrativeMemberRequest.description(),
-                    image.getId(),
+                    UUID.randomUUID(), // todo change to imageId
                     administrativeMemberRequest.supervisorId()
             );
             administrativeMembers.add(administrativeMember);
             members.add(member);
         });
 
-        if (!images.isEmpty()) imageRepository.saveImages(images);
         memberRepository.saveMembers(members);
         administrativeMemberRepository.saveAdministrativeMembers(administrativeMembers);
     }

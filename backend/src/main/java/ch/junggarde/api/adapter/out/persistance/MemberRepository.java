@@ -1,6 +1,6 @@
 package ch.junggarde.api.adapter.out.persistance;
 
-import ch.junggarde.api.model.image.Image;
+import ch.junggarde.api.model.member.AdministrativeMember;
 import ch.junggarde.api.model.member.Member;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -23,7 +23,7 @@ public class MemberRepository {
     String database;
 
     public List<Member> findAdministrativeMembers(List<String> memberIds) {
-        return collection().find(Filters.in(Image.Fields.id, memberIds)).into(new ArrayList<>());
+        return collection().find(Filters.in(AdministrativeMember.Fields.id, memberIds)).into(new ArrayList<>());
     }
 
     private MongoCollection<Member> collection() {
