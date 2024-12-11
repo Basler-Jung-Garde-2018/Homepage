@@ -1,6 +1,12 @@
 quarkus:
+  log:
+    category:
+      "io.quarkus.oidc":
+        level: DEBUG
+      "io.quarkus.oidc.runtime":
+        level: DEBUG
   oidc:
-    auth-server-url: http://localhost:8080/realms/quarkus
+    auth-server-url: https://localhost:8543/realms/quarkus
     client-id: backend-service
     credentials:
       secret: secret
@@ -10,6 +16,7 @@ quarkus:
   keycloak:
     policy-enforcer:
       enable: true
+      lazy-load-paths: true
   mongodb:
     database: jung-garde
     connection-string: mongodb://localhost:27017
@@ -17,11 +24,7 @@ quarkus:
       username: "myuser"
       password: "password"
   http:
-    auth:
-      policy:
-        authenticated:
-          policy: authenticated
-    port: 9090
+    port: 8080
     root-path: /jung-garde
     limits:
       max-body-size:
