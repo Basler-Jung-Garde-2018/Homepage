@@ -1,6 +1,6 @@
 package ch.junggarde.api.model.media;
 
-public enum MediaType {
+public enum FileType {
     AUDIO,
     NOTES,
     PROTOCOL,

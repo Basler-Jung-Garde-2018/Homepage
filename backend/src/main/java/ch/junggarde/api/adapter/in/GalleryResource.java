@@ -8,15 +8,16 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.UUID;
 
 @Path("/gallery")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-@Log4j2
+@Slf4j
 public class GalleryResource {
     @Inject
     GalleryService galleryService;
@@ -29,16 +30,39 @@ public class GalleryResource {
             @PathParam("page") int page
     ) {
         try {
-            log.info("Returning gallery. Year: {}, event: {}, page: {}", year, event, page);
+            log.info("HTTP GET /gallery/{}/{}/{}", year, event, page);
             return Response.ok().entity(this.galleryService.getGallery(year, event, page)).build();
         } catch (ImageNotFound e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
+    @GET
+    @Path("/{imageId}")
+    public Response getGalleryImage(@PathParam("imageId") String imageId) {
+        log.info("HTTP GET /gallery/{}", imageId);
+        return Response.ok().entity(this.galleryService.getGalleryData(UUID.fromString(imageId))).build();
+    }
+
     @POST
     public Response addImages(List<GalleryImageDTO> images) {
+        log.info("HTTP POST /gallery {}", images);
         log.info("add {} Images", images.size());
         return Response.ok().entity(galleryService.addImages(images)).build();
+    }
+
+    @PUT
+    public Response publishImages(List<String> imageIds) {
+        log.info("HTTP PUT /gallery {}", imageIds);
+        log.info("publish {} Images", imageIds.size());
+        galleryService.publishImages(imageIds);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/events")
+    public List<String> getEvents() {
+        log.info("HTTP GET /gallery/events");
+        return galleryService.getEvents();
     }
 }

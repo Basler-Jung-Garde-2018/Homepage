@@ -8,13 +8,14 @@ import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.image.ImageNotFound;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
-@Log4j2
+@Slf4j
 public class GalleryService {
     @Inject
     GalleryImageRepository galleryImageRepository;
@@ -22,27 +23,16 @@ public class GalleryService {
     @Inject
     ImageRepository imageRepository;
 
+    public List<String> getGallery(int year, String event, int page) {
+        return this.galleryImageRepository.findGalleryIds(year, event, page).stream().map(UUID::toString).toList();
+    }
 
-    public List<GalleryImageDTO> getGallery(int year, String event, int page) throws ImageNotFound {
-        List<GalleryImage> galleryImages = galleryImageRepository.getGallery(year, event, page);
+    public GalleryImageDTO getGalleryData(UUID imageId) throws ImageNotFound {
+        GalleryImage galleryImage = galleryImageRepository.findGalleryImageById(imageId);
 
-        // Get all imageIds of the gallery images
-        List<String> imageIds = galleryImages.stream()
-                .map(galleryImage -> galleryImage.getImageId().toString())
-                .toList();
+        Image image = imageRepository.findById(galleryImage.getImageId());
 
-        List<Image> images = imageRepository.findImagesByIds(imageIds);
-
-        // Add image to gallery image and map to dto
-        return galleryImages.stream()
-                .map(galleryImage -> GalleryImageDTO.fromDomainModel(
-                                galleryImage,
-                                images.stream()
-                                        .filter(image -> image.getId().equals(galleryImage.getImageId()))
-                                        .findFirst()
-                                        .orElseThrow(() -> new ImageNotFound(galleryImage.getId()))
-                        )
-                ).toList();
+        return GalleryImageDTO.fromDomainModel(galleryImage, image);
     }
 
     public List<GalleryImageDTO> addImages(List<GalleryImageDTO> galleryRequests) {
@@ -70,5 +60,16 @@ public class GalleryService {
         galleryImageRepository.saveImages(galleryImages);
 
         return response;
+    }
+
+    public void publishImages(List<String> imageIds) {
+        if (imageIds.isEmpty()) {
+            return;
+        }
+        this.galleryImageRepository.publishImages(imageIds);
+    }
+
+    public List<String> getEvents() {
+        return this.galleryImageRepository.findEvents();
     }
 }

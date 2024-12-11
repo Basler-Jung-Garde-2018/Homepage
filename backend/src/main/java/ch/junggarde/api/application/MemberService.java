@@ -9,12 +9,12 @@ import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.member.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
 @ApplicationScoped
-@Log4j2
+@Slf4j
 public class MemberService {
     @Inject
     MemberRepository memberRepository;

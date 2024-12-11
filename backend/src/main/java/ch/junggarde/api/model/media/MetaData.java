@@ -15,8 +15,9 @@ import java.util.UUID;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class Media {
+public class MetaData {
     private UUID id;
-    private MediaType type;
-    private UUID mediaId;
+    private FileType type;
+    private String name;
+    private int size;
 }

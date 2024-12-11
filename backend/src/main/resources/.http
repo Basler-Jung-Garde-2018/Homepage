@@ -60,3 +60,11 @@ Content-Type: application/json
     "imageBase64": "jasdf9043ieufpe0vjewgvdsfve5gwöore8zb"
   }
 ]
+
+###
+PUT localhost:8080/jung-garde/gallery
+Content-Type: application/json
+
+[
+  "82f110e7-8909-41ac-8b74-ef9c4d6cb9a9"
+]
