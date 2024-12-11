@@ -67,14 +67,12 @@ export class GalleryComponent implements OnInit {
     const event: string = this.eventForm.get("event")?.value;
 
     if (event && event !== "" && year) {
-      console.log(`gallery load start. Year: ${year}, Event: ${event}`)
       this.clientService.getGalleryMetaData(year, event, this.page).subscribe(imageIds => {
         const urls: string[] = [];
         imageIds.forEach(metaData => {
           urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
         });
         this.gallery$.next(urls);
-        console.log("gallery load successful")
       });
     }
   }
