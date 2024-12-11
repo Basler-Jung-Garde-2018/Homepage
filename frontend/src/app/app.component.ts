@@ -15,7 +15,7 @@ import {LoginComponent} from "./pages/login/login.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'jung-garde-frontend';
+  title = 'Jung-Garde';
   readonly dialog = inject(MatDialog);
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

@@ -25,9 +25,7 @@
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>Event</mat-label>
           <mat-select [(ngModel)]="event" (selectionChange)="loadGallery()">
-            <mat-option *ngFor="let event of events" [value]="event">
-              {{ event }}
-            </mat-option>
+            <mat-option value="Fasnacht">Fasnacht</mat-option>
           </mat-select>
         </mat-form-field>
 

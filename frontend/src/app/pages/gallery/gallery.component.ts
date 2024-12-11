@@ -10,7 +10,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {NgForOf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent} from "@angular/material/card";
-import {EventList} from "../../model/event-list.enum";
 
 @Component({
   selector: 'app-gallery',
@@ -41,7 +40,6 @@ export class GalleryComponent implements OnInit {
   selectedYear: number = 2024
   event: string = 'Fasnacht';
   page: number = 0;
-  events = Object.values(EventList);
 
   constructor(private clientService: ClientService) {
     this.selectedYear = new Date().getFullYear();
