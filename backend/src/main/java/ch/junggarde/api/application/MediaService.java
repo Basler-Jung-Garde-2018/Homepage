@@ -97,4 +97,8 @@ public class MediaService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<MetaData> getMetaDataByIds(List<UUID> ids) {
+        return metaDataRepository.findMetaDataByIds(ids);
+    }
 }

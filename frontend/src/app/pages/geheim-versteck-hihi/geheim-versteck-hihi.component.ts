@@ -2,13 +2,20 @@ import {Component, OnInit} from '@angular/core';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {MatButton} from "@angular/material/button";
 import {ClientService} from "../../service/client.service";
 import {Gallery} from "../../model/gallery";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {map, Observable, startWith, switchMap} from "rxjs";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 import {AsyncPipe} from "@angular/common";
+
+interface UploadFile {
+  id: number;
+  file: File;
+  type: string;
+  size: number;
+}
 
 @Component({
   selector: 'app-geheim-versteck-hihi',
@@ -31,7 +38,7 @@ import {AsyncPipe} from "@angular/common";
 })
 export class GeheimVersteckHihiComponent implements OnInit {
   eventForm: FormGroup;
-  files: File[] = [];
+  files: UploadFile[] = [];
   options: string[] = [
     'Fasnacht',
     'Allschwiler Fasnacht',
@@ -65,7 +72,14 @@ export class GeheimVersteckHihiComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.files = Array.from(input.files);
+      this.files = Array.from(input.files).map((file, index) => {
+        return {
+          id: index,
+          file,
+          size: file.size,
+          type: this.getFileType(file.type)
+        }
+      })
     }
   }
 
@@ -73,7 +87,7 @@ export class GeheimVersteckHihiComponent implements OnInit {
     const event: string = this.eventForm.get("event")?.value
     const year: number = Number.parseInt(this.eventForm.get("year")?.value)
     if (year && event && event !== "") {
-      this.clientService.addMedia(this.files).pipe(
+      this.clientService.addMedia(this.files.map(file => file.file)).pipe(
         switchMap((imageIds) => {
           const gallery: Partial<Gallery>[] = imageIds.map(id => ({
             id,
@@ -91,5 +105,10 @@ export class GeheimVersteckHihiComponent implements OnInit {
         }
       });
     }
+  }
+
+  private getFileType(fileString: string): string {
+    const parts = fileString.split('/');
+    return parts[parts.length - 1];
   }
 }

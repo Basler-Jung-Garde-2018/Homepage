@@ -68,10 +68,10 @@ export class GalleryComponent implements OnInit {
 
     if (event && event !== "" && year) {
       console.log(`gallery load start. Year: ${year}, Event: ${event}`)
-      this.clientService.getGalleryIds(year, event, this.page).subscribe(imageIds => {
+      this.clientService.getGalleryMetaData(year, event, this.page).subscribe(imageIds => {
         const urls: string[] = [];
-        imageIds.forEach(imageId => {
-          urls.push(this.clientService.getImageUrl(imageId))
+        imageIds.forEach(metaData => {
+          urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
         });
         this.gallery$.next(urls);
         console.log("gallery load successful")
@@ -94,5 +94,10 @@ export class GalleryComponent implements OnInit {
     );
 
     this.loadGallery();
+  }
+
+  private getFileType(fileString: string): string {
+    const parts = fileString.split('.');
+    return parts[parts.length - 1];
   }
 }

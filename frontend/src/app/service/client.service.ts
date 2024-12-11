@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Appointment} from "../model/appointments";
 import {Gallery} from "../model/gallery";
 import {Member} from "../model/members";
+import {MetaData} from "../model/MetaData";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ClientService {
     return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
   }
 
-  public getGalleryIds(year: number, event: string, page: number): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
+  public getGalleryMetaData(year: number, event: string, page: number): Observable<MetaData[]> {
+    return this.httpClient.get<MetaData[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
   }
 
   public getAppointments(): Observable<Appointment[]> {
@@ -45,7 +46,7 @@ export class ClientService {
     return this.httpClient.post<string[]>(`${this.baseUrl}/media/IMAGE`, formData); // todo: remove IMAGE as hardcoded url
   }
 
-  public getImageUrl(imageId: string): string {
-    return `${this.baseUrl}/gallery/${imageId}`
+  public getImageUrl(type: string, imageId: string): string {
+    return `${this.baseUrl}/gallery/${type}/${imageId}`
   }
 }

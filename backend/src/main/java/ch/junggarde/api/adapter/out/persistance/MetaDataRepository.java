@@ -13,6 +13,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class MetaDataRepository {
@@ -35,5 +36,11 @@ public class MetaDataRepository {
     public List<MetaData> findMetaDataByType(FileType fileType) {
         Bson filter = Filters.eq(MetaData.Fields.type, fileType);
         return collection().find(filter).into(new ArrayList<>());
+    }
+
+    public List<MetaData> findMetaDataByIds(List<UUID> ids) {
+        List<String> stringIds = ids.stream().map(UUID::toString).toList();
+        Bson filter = Filters.in(MetaData.Fields.id, stringIds);
+        return this.collection().find(filter).into(new ArrayList<>());
     }
 }

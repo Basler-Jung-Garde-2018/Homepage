@@ -1,6 +1,7 @@
 package ch.junggarde.api.adapter.in;
 
 import ch.junggarde.api.application.GalleryService;
+import ch.junggarde.api.application.MediaService;
 import ch.junggarde.api.application.dto.GalleryImageDTO;
 import ch.junggarde.api.model.image.ImageNotFound;
 import jakarta.enterprise.context.RequestScoped;
@@ -26,6 +27,8 @@ import java.util.UUID;
 public class GalleryResource {
     @Inject
     GalleryService galleryService;
+    @Inject
+    MediaService mediaService;
 
     @GET
     @Path("/{year}/{event}/{page}")
@@ -36,16 +39,17 @@ public class GalleryResource {
     ) {
         try {
             log.info("HTTP GET /gallery/{}/{}/{}", year, event, page);
-            return Response.ok().entity(this.galleryService.getGallery(year, event, page)).build();
+            List<UUID> galleryIds = this.galleryService.getGallery(year, event, page);
+            return Response.ok().entity(this.mediaService.getMetaDataByIds(galleryIds)).build();
         } catch (ImageNotFound e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
-    @Path("/{imageId}")
+    @Path("/{format}/{imageId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getGalleryImage(@PathParam("imageId") String imageId) {
+    public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId) {
         log.info("HTTP GET /gallery/{}", imageId);
         try {
             return Response.ok((StreamingOutput) output -> {
@@ -56,13 +60,13 @@ public class GalleryResource {
                             .scale(1)
                             .asBufferedImage();
 
-                    if (image.getHeight() > 1080) {
+                    if (image.getHeight() > 1440) {
                         image = Thumbnails.of(new FileInputStream(file))
-                                .size((1080 * image.getWidth()) / image.getHeight(), 1080)
+                                .size((1440 * image.getWidth()) / image.getHeight(), 1440)
                                 .asBufferedImage();
                     }
 
-                    ImageIO.write(image, "jpg", baos); // todo: use format name
+                    ImageIO.write(image, format, baos);
                     baos.flush();
 
                     InputStream scaledInputStream = new ByteArrayInputStream(baos.toByteArray());
