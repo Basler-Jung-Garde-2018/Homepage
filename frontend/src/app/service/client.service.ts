@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Appointment} from "../model/appointments";
-import {Gallery} from "../model/gallery";
+import {GalleryImage} from "../model/galleryImage";
 import {Member} from "../model/members";
 import {MetaData} from "../model/MetaData";
 
@@ -13,8 +13,8 @@ export class ClientService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseUrl = 'https://jung-garde.ch:8443/jung-garde';
 
-  public addGalleryMetaData(data: Partial<Gallery>[]): Observable<Gallery[]> {
-    return this.httpClient.post<Gallery[]>(`${this.baseUrl}/gallery`, data);
+  public addGalleryMetaData(data: Partial<GalleryImage>[]): Observable<GalleryImage[]> {
+    return this.httpClient.post<GalleryImage[]>(`${this.baseUrl}/gallery`, data);
   }
 
   public getGalleryMetaData(year: number, event: string, page: number): Observable<MetaData[]> {
