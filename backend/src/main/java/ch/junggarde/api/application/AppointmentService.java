@@ -1,7 +1,8 @@
 package ch.junggarde.api.application;
 
 import ch.junggarde.api.adapter.out.persistance.AppointmentRepository;
-import ch.junggarde.api.application.dto.AppointmentDTO;
+import ch.junggarde.api.application.dto.AppointmentRequestDTO;
+import ch.junggarde.api.application.dto.AppointmentResponseDTO;
 import ch.junggarde.api.model.Appointment;
 import ch.junggarde.api.model.AppointmentType;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,25 +19,25 @@ public class AppointmentService {
     @Inject
     AppointmentRepository appointmentRepository;
 
-    public List<AppointmentDTO> getPublicAppointments() {
-        return appointmentRepository.findAllPublic().stream().map(AppointmentDTO::fromDomainModel).toList();
+    public List<AppointmentResponseDTO> getPublicAppointments() {
+        return appointmentRepository.findAllPublic().stream().map(AppointmentResponseDTO::fromDomainModel).toList();
     }
 
-    public List<AppointmentDTO> getAppointments() {
-        return appointmentRepository.findAll().stream().map(AppointmentDTO::fromDomainModel).toList();
+    public List<AppointmentResponseDTO> getAppointments() {
+        return appointmentRepository.findAll().stream().map(AppointmentResponseDTO::fromDomainModel).toList();
     }
 
-    public AppointmentDTO saveAppointment(AppointmentDTO appointmentDTO) {
+    public AppointmentResponseDTO saveAppointment(AppointmentRequestDTO appointmentRequestDTO) {
         Appointment appointment = new Appointment(
                 UUID.randomUUID(),
-                LocalDateTime.parse(appointmentDTO.start()),
-                LocalDateTime.parse(appointmentDTO.end()),
-                appointmentDTO.location(),
-                appointmentDTO.name(),
-                AppointmentType.valueOf(appointmentDTO.type()),
-                appointmentDTO.published()
+                LocalDateTime.parse(appointmentRequestDTO.start()),
+                LocalDateTime.parse(appointmentRequestDTO.end()),
+                appointmentRequestDTO.location(),
+                appointmentRequestDTO.name(),
+                AppointmentType.valueOf(appointmentRequestDTO.type()),
+                appointmentRequestDTO.published()
         );
         appointmentRepository.saveAppointment(appointment);
-        return AppointmentDTO.fromDomainModel(appointment);
+        return AppointmentResponseDTO.fromDomainModel(appointment);
     }
 }

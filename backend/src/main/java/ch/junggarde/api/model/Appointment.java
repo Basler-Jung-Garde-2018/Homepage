@@ -22,6 +22,6 @@ public class Appointment {
     private LocalDateTime end;
     private String location;
     private String name;
-    private AppointmentType type; // todo check if needed
+    private AppointmentType type;
     private boolean published;
 }

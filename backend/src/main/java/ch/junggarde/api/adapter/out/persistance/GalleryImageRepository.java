@@ -36,11 +36,6 @@ public class GalleryImageRepository {
         return mongoClient.get().getDatabase(database).getCollection(COLLECTION, Document.class);
     }
 
-    public GalleryImage findGalleryImageById(UUID imageId) {
-        Bson filter = Filters.eq(GalleryImage.Fields.id, imageId.toString());
-        return collection().find(filter).first();
-    }
-
     public List<UUID> findGalleryIds(int year, String event, int page) {
         int docOnPage = 20;
         if (page == 0) {

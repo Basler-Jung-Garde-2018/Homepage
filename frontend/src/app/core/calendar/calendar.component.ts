@@ -86,7 +86,6 @@ export class CalendarComponent {
     this.downloadICS(appointmentsToDownload);
   }
 
-  // todo: add download
   downloadICS(appointments: Partial<Appointment>[]): void {
     const formatDate = (date: Date): string => date.toISOString().replace(/-|:|\.\d{3}/g, '');
 
@@ -125,7 +124,6 @@ export class CalendarComponent {
 
   // check if browser to remove error out of dev console.
   isBrowser: boolean
-
   constructor(@Inject(PLATFORM_ID)
               private platformId: Object
   ) {

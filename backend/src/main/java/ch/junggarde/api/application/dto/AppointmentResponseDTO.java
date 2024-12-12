@@ -1,27 +1,23 @@
 package ch.junggarde.api.application.dto;
 
 import ch.junggarde.api.model.Appointment;
-import jakarta.annotation.Nullable;
 
-public record AppointmentDTO(
-        @Nullable
+public record AppointmentResponseDTO(
         String id,
         String start,
         String end,
         String location,
         String name,
-        String type,
-        boolean published //todo only use on request and not send back
+        String type
 ) {
-    public static AppointmentDTO fromDomainModel(Appointment appointment) {
-        return new AppointmentDTO(
+    public static AppointmentResponseDTO fromDomainModel(Appointment appointment) {
+        return new AppointmentResponseDTO(
                 appointment.getId().toString(),
                 appointment.getStart().toString(),
                 appointment.getEnd().toString(),
                 appointment.getLocation(),
                 appointment.getName(),
-                appointment.getType().toString(),
-                appointment.isPublished()
+                appointment.getType().toString()
         );
     }
 }
