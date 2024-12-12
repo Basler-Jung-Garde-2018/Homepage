@@ -11,7 +11,7 @@ import {MetaData} from "../model/MetaData";
 })
 export class ClientService {
   private readonly httpClient = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/jung-garde';
+  private readonly baseUrl = 'https://jung-garde:8443/jung-garde';
 
   public addGalleryMetaData(data: Partial<GalleryImage>[]): Observable<GalleryImage[]> {
     return this.httpClient.post<GalleryImage[]>(`${this.baseUrl}/gallery`, data);
