@@ -2,7 +2,9 @@
   <h1>Termine & Social Media</h1>
 </div>
 
-<div class="timeline-container scrollable-container">
+<app-calendar [appointments]="appointments"></app-calendar>
+
+<!--<div class="timeline-container scrollable-container">
   <div *ngIf="appointments?.length">
     <div *ngFor="let appointment of appointments; let i = index"
          [ngClass]="{'highlight': isNextAppointment(i)}"
@@ -20,7 +22,7 @@
       <div class="timeline-marker"></div>
     </div>
   </div>
-</div>
+</div>-->
 
 <mat-card>
   <div class="social-media-section">

@@ -14,9 +14,11 @@ import {MatIcon} from "@angular/material/icon";
 import {ClientService} from "../../service/client.service";
 import {Appointment} from "../../model/appointments";
 import {DatePipe, isPlatformBrowser, NgClass, NgForOf, NgIf} from "@angular/common";
+import {CalendarComponent} from "../../core/calendar/calendar.component";
+import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-calendar',
+  selector: 'app-public-calendar',
   standalone: true,
   imports: [
     MatGridList,
@@ -33,41 +35,26 @@ import {DatePipe, isPlatformBrowser, NgClass, NgForOf, NgIf} from "@angular/comm
     NgForOf,
     DatePipe,
     NgClass,
-    NgIf
+    NgIf,
+    CalendarComponent
   ],
-  templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.scss'
+  templateUrl: './public-calender.component.html',
+  styleUrl: './public-calender.component.scss'
 })
-export class CalendarComponent implements OnInit {
-  appointments: Appointment[] | null = null;
+export class PublicCalenderComponent {
+  appointments = this.clientService.getPublicAppointments();
 
-  constructor(private clientService: ClientService,     @Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
-    this.loadAppointments();
+  constructor(private clientService: ClientService) {
   }
 
-  loadAppointments(): void {
-    this.clientService.getAppointments().subscribe({
-      next: (data) => {
-        this.appointments = data;
-        if (isPlatformBrowser(this.platformId)) {
-          this.scrollToNextAppointment();
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching appointments:', error);
-      }
-    });
-  }
-
+  /*
   scrollToNextAppointment(): void {
     if (this.appointments?.length) {
       const nextAppointmentIndex = this.getNextAppointmentIndex();
       if (nextAppointmentIndex !== -1) {
         const nextAppointmentElement = document.querySelectorAll('.timeline-item')[nextAppointmentIndex];
         if (nextAppointmentElement) {
-          nextAppointmentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          nextAppointmentElement.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
       }
     }
@@ -88,11 +75,11 @@ export class CalendarComponent implements OnInit {
     const nextIndex = this.getNextAppointmentIndex();
     return nextIndex === index;
   }
-
+*/
   openLink(url: string): void {
     window.open(url, "_blank");
   }
-
+/*
   downloadICS(appointment: Appointment): void {
     const startDate = new Date(appointment.date);
     const endDate = new Date(startDate);
@@ -115,7 +102,7 @@ export class CalendarComponent implements OnInit {
       'END:VCALENDAR'
     ].join('\r\n');
 
-    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const blob = new Blob([icsContent], {type: 'text/calendar'});
     const url = window.URL.createObjectURL(blob);
     const downloadAnchor = document.createElement('a');
     downloadAnchor.href = url;
@@ -124,5 +111,5 @@ export class CalendarComponent implements OnInit {
     downloadAnchor.click();
     document.body.removeChild(downloadAnchor);
     window.URL.revokeObjectURL(url);
-  }
+  }*/
 }

@@ -9,8 +9,8 @@ import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 @Slf4j
@@ -18,22 +18,25 @@ public class AppointmentService {
     @Inject
     AppointmentRepository appointmentRepository;
 
+    public List<AppointmentDTO> getPublicAppointments() {
+        return appointmentRepository.findAllPublic().stream().map(AppointmentDTO::fromDomainModel).toList();
+    }
+
     public List<AppointmentDTO> getAppointments() {
         return appointmentRepository.findAll().stream().map(AppointmentDTO::fromDomainModel).toList();
     }
 
-    public List<AppointmentDTO> saveAppointments(List<AppointmentDTO> appointmentDTOS) {
-        if (appointmentDTOS.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<Appointment> appointmentList = appointmentDTOS.stream().map(
-                appointmentDTO -> new Appointment(
-                        LocalDateTime.parse(appointmentDTO.date()),
-                        appointmentDTO.location(), appointmentDTO.name(),
-                        AppointmentType.valueOf(appointmentDTO.type()))
-        ).toList();
-        appointmentRepository.saveAppointments(appointmentList);
-        return appointmentList.stream().map(AppointmentDTO::fromDomainModel).toList();
+    public AppointmentDTO saveAppointment(AppointmentDTO appointmentDTO) {
+        Appointment appointment = new Appointment(
+                UUID.randomUUID(),
+                LocalDateTime.parse(appointmentDTO.start()),
+                LocalDateTime.parse(appointmentDTO.end()),
+                appointmentDTO.location(),
+                appointmentDTO.name(),
+                AppointmentType.valueOf(appointmentDTO.type()),
+                appointmentDTO.published()
+        );
+        appointmentRepository.saveAppointment(appointment);
+        return AppointmentDTO.fromDomainModel(appointment);
     }
 }

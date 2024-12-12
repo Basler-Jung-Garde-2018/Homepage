@@ -11,7 +11,7 @@ import {MetaData} from "../model/MetaData";
 })
 export class ClientService {
   private readonly httpClient = inject(HttpClient);
-  private readonly baseUrl = 'https://jung-garde.ch:8443/jung-garde';
+  private readonly baseUrl = 'http://localhost:8080/jung-garde';
 
   public addGalleryMetaData(data: Partial<GalleryImage>[]): Observable<GalleryImage[]> {
     return this.httpClient.post<GalleryImage[]>(`${this.baseUrl}/gallery`, data);
@@ -21,8 +21,12 @@ export class ClientService {
     return this.httpClient.get<MetaData[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
   }
 
-  public getAppointments(): Observable<Appointment[]> {
+  public getPublicAppointments(): Observable<Appointment[]> {
     return this.httpClient.get<Appointment[]>(`${this.baseUrl}/appointments`);
+  }
+
+  public getPrivateAppointments(): Observable<Appointment[]> {
+    return this.httpClient.get<Appointment[]>(`${this.baseUrl}/appointments/private`);
   }
 
   public getMembers(): Observable<Member[]> {

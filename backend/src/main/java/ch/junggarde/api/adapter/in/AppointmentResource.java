@@ -24,12 +24,19 @@ public class AppointmentResource {
     @GET
     public Response getAppointments() {
         log.info("HTTP GET /appointments");
+        return Response.ok().entity(appointMentService.getPublicAppointments()).build();
+    }
+
+    @GET
+    @Path("/private")
+    public Response getPrivateAppointments() {
+        log.info("HTTP GET /appointments/private");
         return Response.ok().entity(appointMentService.getAppointments()).build();
     }
 
     @POST
-    public Response saveAppointments(List<AppointmentDTO> appointments) {
-        log.info("HTTP POST /appointments {}", appointments);
-        return Response.ok().entity(appointMentService.saveAppointments(appointments)).build();
+    public Response saveAppointments(AppointmentDTO appointment) {
+        log.info("HTTP POST /appointments {}", appointment);
+        return Response.ok().entity(appointMentService.saveAppointment(appointment)).build();
     }
 }

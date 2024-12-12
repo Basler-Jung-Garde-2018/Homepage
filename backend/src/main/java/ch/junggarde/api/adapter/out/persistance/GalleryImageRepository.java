@@ -50,8 +50,8 @@ public class GalleryImageRepository {
         }
         Bson filter = Filters.and(
                 Filters.eq(GalleryImage.Fields.year, year),
-                Filters.eq(GalleryImage.Fields.event, event),
-                Filters.eq(GalleryImage.Fields.published, true)
+                Filters.eq(GalleryImage.Fields.event, event)
+//                Filters.eq(GalleryImage.Fields.published, true)
         );
 
         return filterCollection().find(filter)

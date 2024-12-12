@@ -6,18 +6,22 @@ import jakarta.annotation.Nullable;
 public record AppointmentDTO(
         @Nullable
         String id,
-        String date,
+        String start,
+        String end,
         String location,
         String name,
-        String type
+        String type,
+        boolean published
 ) {
     public static AppointmentDTO fromDomainModel(Appointment appointment) {
         return new AppointmentDTO(
                 appointment.getId().toString(),
-                appointment.getDate().toString(),
+                appointment.getStart().toString(),
+                appointment.getEnd().toString(),
                 appointment.getLocation(),
                 appointment.getName(),
-                appointment.getType().toString()
+                appointment.getType().toString(),
+                appointment.isPublished()
         );
     }
 }

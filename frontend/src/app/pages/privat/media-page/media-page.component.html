@@ -2,7 +2,7 @@
   <mat-sidenav mode="side" opened class="sidenav">
     <mat-nav-list>
       <mat-list-item *ngFor="let folder of folders" (click)="onFolderClick(folder)">
-        <mat-icon matListIcon>{{ folder.icon }}</mat-icon>
+        <mat-icon>{{ folder.icon }}</mat-icon>
         <span matLine>{{ folder.name }}</span>
       </mat-list-item>
     </mat-nav-list>
