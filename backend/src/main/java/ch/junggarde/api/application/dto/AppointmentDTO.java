@@ -11,7 +11,7 @@ public record AppointmentDTO(
         String location,
         String name,
         String type,
-        boolean published
+        boolean published //todo only use on request and not send back
 ) {
     public static AppointmentDTO fromDomainModel(Appointment appointment) {
         return new AppointmentDTO(

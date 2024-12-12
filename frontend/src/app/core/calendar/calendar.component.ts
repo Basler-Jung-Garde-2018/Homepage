@@ -69,8 +69,8 @@ export class CalendarComponent {
     const calendarApi = this.calendarComponent?.getApi();
     const visibleEvents = calendarApi?.getEvents().filter(event => {
       const s = calendarApi?.view.activeStart, e = calendarApi?.view.activeEnd;
-      if (event.start! > e || event.end! < s) return false;
-      return true
+      return !(event.start! > e || event.end! < s);
+
     });
     const appointmentsToDownload: Partial<Appointment>[] = visibleEvents?.map((event): Partial<Appointment> => {
       const split = event.title.split("\n");
@@ -130,15 +130,5 @@ export class CalendarComponent {
               private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-  }
-
-  private getTextColorByType(type: AppointmentType): string {
-    switch (type) {
-      case AppointmentType.FASNACHT: {
-        return "turquoise"
-      }
-      default:
-        return "white"
-    }
   }
 }

@@ -10,8 +10,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 @Slf4j
 @Path("/appointments")
 @Consumes(MediaType.APPLICATION_JSON)

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {
   MatCard,
@@ -12,10 +12,8 @@ import {
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ClientService} from "../../service/client.service";
-import {Appointment} from "../../model/appointments";
-import {DatePipe, isPlatformBrowser, NgClass, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {CalendarComponent} from "../../core/calendar/calendar.component";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-public-calendar',
@@ -79,37 +77,38 @@ export class PublicCalenderComponent {
   openLink(url: string): void {
     window.open(url, "_blank");
   }
-/*
-  downloadICS(appointment: Appointment): void {
-    const startDate = new Date(appointment.date);
-    const endDate = new Date(startDate);
-    endDate.setHours(endDate.getHours() + 1);
 
-    const formatDate = (date: Date): string => date.toISOString().replace(/-|:|\.\d{3}/g, '');
+  /*
+    downloadICS(appointment: Appointment): void {
+      const startDate = new Date(appointment.date);
+      const endDate = new Date(startDate);
+      endDate.setHours(endDate.getHours() + 1);
 
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'BEGIN:VEVENT',
-      `UID:${appointment.id}`,
-      `DTSTAMP:${formatDate(new Date())}`,
-      `DTSTART:${formatDate(startDate)}`,
-      `DTEND:${formatDate(endDate)}`,
-      `SUMMARY:${appointment.name}`,
-      `LOCATION:${appointment.location}`,
-      `DESCRIPTION:Type - ${appointment.type}`,
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
+      const formatDate = (date: Date): string => date.toISOString().replace(/-|:|\.\d{3}/g, '');
 
-    const blob = new Blob([icsContent], {type: 'text/calendar'});
-    const url = window.URL.createObjectURL(blob);
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.href = url;
-    downloadAnchor.download = `appointment_${appointment.id}.ics`;
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    document.body.removeChild(downloadAnchor);
-    window.URL.revokeObjectURL(url);
-  }*/
+      const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'BEGIN:VEVENT',
+        `UID:${appointment.id}`,
+        `DTSTAMP:${formatDate(new Date())}`,
+        `DTSTART:${formatDate(startDate)}`,
+        `DTEND:${formatDate(endDate)}`,
+        `SUMMARY:${appointment.name}`,
+        `LOCATION:${appointment.location}`,
+        `DESCRIPTION:Type - ${appointment.type}`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([icsContent], {type: 'text/calendar'});
+      const url = window.URL.createObjectURL(blob);
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.href = url;
+      downloadAnchor.download = `appointment_${appointment.id}.ics`;
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      document.body.removeChild(downloadAnchor);
+      window.URL.revokeObjectURL(url);
+    }*/
 }
