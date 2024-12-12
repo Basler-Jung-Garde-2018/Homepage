@@ -76,6 +76,9 @@ public class GalleryImageRepository {
     }
 
     public List<String> findEvents() {
-        return filterCollection().distinct("event", String.class).into(new ArrayList<>());
+        Bson filter = Filters.eq(GalleryImage.Fields.published, true);
+        return filterCollection()
+                .distinct("event", filter, String.class)
+                .into(new ArrayList<>());
     }
 }

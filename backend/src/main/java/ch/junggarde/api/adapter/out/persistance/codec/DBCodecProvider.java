@@ -2,7 +2,6 @@ package ch.junggarde.api.adapter.out.persistance.codec;
 
 import ch.junggarde.api.model.Appointment;
 import ch.junggarde.api.model.image.GalleryImage;
-import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.media.MetaData;
 import ch.junggarde.api.model.member.AdministrativeMember;
 import ch.junggarde.api.model.member.Member;
@@ -14,9 +13,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 public class DBCodecProvider implements CodecProvider {
     @Override
     public <T> Codec<T> get(final Class<T> clazz, final CodecRegistry registry) {
-        if (clazz.equals(Image.class)) {
-            return (Codec<T>) new ImageCodec();
-        } else if (clazz.equals(GalleryImage.class)) {
+        if (clazz.equals(GalleryImage.class)) {
             return (Codec<T>) new GalleryImageCodec();
         } else if (clazz.equals(Member.class)) {
             return (Codec<T>) new MemberCodec();
