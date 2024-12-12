@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 import {HomepageComponent} from "./pages/homepage/homepage.component";
 import {AboutusComponent} from "./pages/aboutus/aboutus.component";
 import {NotfoundComponent} from "./pages/notfound/notfound.component";
-import {PublicCalenderComponent} from "./pages/public-calendar/public-calender.component";
+import {PublicCalendarComponent} from "./pages/public-calendar/public-calendar.component";
 import {GalleryComponent} from "./pages/gallery/gallery.component";
 import {MembersComponent} from "./pages/aboutus/members/members.component";
 import {LeadershipComponent} from "./pages/aboutus/leadership/leadership.component";
@@ -19,7 +19,7 @@ export const routes: Routes = [
   {path: 'ueber-uns/mitglieder', component: MembersComponent, title: 'Mitglieder'},
   {path: 'ueber-uns/fuehrungsriege', component: LeadershipComponent, title: 'Führungsriege'},
   {path: 'ueber-uns/goenner', component: BenefactorComponent, title: 'Gönner'},
-  {path: 'kalender', component: PublicCalenderComponent, title: 'Termine & Social Media'},
+  {path: 'kalender', component: PublicCalendarComponent, title: 'Termine & Social Media'},
   {path: 'galerie', component: GalleryComponent, title: 'Galerie'},
   {path: 'impressum', component: ImpressumComponent, title: 'Impressum'},
   {path: 'private-section/gallery', component: EditGalleryComponent},

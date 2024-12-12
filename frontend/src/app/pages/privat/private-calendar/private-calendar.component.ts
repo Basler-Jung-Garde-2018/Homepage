@@ -1,5 +1,4 @@
 import {Component, inject} from '@angular/core';
-import {PublicCalenderComponent} from "../../public-calendar/public-calender.component";
 import {CalendarComponent} from "../../../core/calendar/calendar.component";
 import {ClientService} from "../../../service/client.service";
 import {MatButton} from "@angular/material/button";
@@ -8,7 +7,6 @@ import {MatButton} from "@angular/material/button";
   selector: 'app-private-calendar',
   standalone: true,
   imports: [
-    PublicCalenderComponent,
     CalendarComponent,
     MatButton
   ],
