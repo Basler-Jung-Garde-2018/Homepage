@@ -10,6 +10,7 @@ import {BenefactorComponent} from "./pages/aboutus/benefactor/benefactor.compone
 import {ImpressumComponent} from "./pages/impressum/impressum.component";
 import {EditGalleryComponent} from "./pages/privat/edit-gallery/edit-gallery.component";
 import {MediaPageComponent} from "./pages/privat/media-page/media-page.component";
+import {AuthGuard} from "./auth/auth.guard";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/startseite', pathMatch: 'full' },
@@ -19,9 +20,9 @@ export const routes: Routes = [
   { path: 'ueber-uns/fuehrungsriege', component: LeadershipComponent, title: 'Führungsriege' },
   { path: 'ueber-uns/goenner', component: BenefactorComponent, title: 'Gönner' },
   { path: 'kalender', component: CalendarComponent, title: 'Termine & Social Media' },
-  { path: 'galerie', component: GalleryComponent, title: 'Galerie' },
+  { path: 'galerie', component: GalleryComponent, title: 'Galerie'  },
   { path: 'impressum', component: ImpressumComponent, title: 'Impressum' },
-  { path: 'private-section/gallery', component:  EditGalleryComponent},
-  { path: 'private-section/media', component: MediaPageComponent },
+  { path: 'private-section/gallery', component:  EditGalleryComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'vorstand'] }},
+  { path: 'private-section/media', component: MediaPageComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'vorstand', 'muko', 'mitglied'] }},
   { path: '**', component: NotfoundComponent }
 ];
