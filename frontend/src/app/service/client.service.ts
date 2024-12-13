@@ -56,4 +56,10 @@ export class ClientService {
   public getImageUrl(type: string, imageId: string): string {
     return `${this.baseUrl}/gallery/image/${type}/${imageId}`
   }
+
+  public getMedia(id: string, type: string):Observable<Blob> {
+    return this.httpClient.get(`${this.baseUrl}/media/${type}/${id}`, {
+      responseType: 'blob'
+    });
+  }
 }

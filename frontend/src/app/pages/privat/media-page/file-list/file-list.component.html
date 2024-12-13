@@ -10,7 +10,15 @@
       <mat-cell *matCellDef="let element"> {{ element.size | size }}</mat-cell>
     </ng-container>
 
-    <!-- Table Header and Rows -->
+    <ng-container matColumnDef="download">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button (click)="downloadFile(element)">
+          <mat-icon>download</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

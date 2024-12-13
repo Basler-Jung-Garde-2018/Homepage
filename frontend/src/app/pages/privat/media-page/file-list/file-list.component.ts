@@ -16,6 +16,8 @@ import {
 } from "@angular/material/table";
 import {SizePipe} from "../../../../core/size.pipe";
 import {ToastService} from "../../../../core/toast.service";
+import {MatButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-file-list',
@@ -31,7 +33,9 @@ import {ToastService} from "../../../../core/toast.service";
     MatRowDef,
     MatCellDef,
     MatHeaderCellDef,
-    SizePipe
+    SizePipe,
+    MatButton,
+    MatIcon
   ],
   templateUrl: './file-list.component.html',
   styleUrl: './file-list.component.scss'
@@ -41,12 +45,14 @@ export class FileListComponent {
   private readonly toastService = inject(ToastService);
 
   metaData = new MatTableDataSource<MetaData>;
-  displayedColumns: string[] = ['name', 'size'];
+  displayedColumns: string[] = ['name', 'size', "download"];
+
+  type: string = "";
 
   @Input()
   set folder(folder: string) {
-    const type = this.mapToFileType(folder);
-    this.clientService.getMetaDataOfMedia(type).subscribe({
+    this.type = this.mapToFileType(folder);
+    this.clientService.getMetaDataOfMedia(this.type).subscribe({
       next: metaData => {
         this.metaData.data = metaData;
       },
@@ -72,5 +78,16 @@ export class FileListComponent {
       default:
         return ""
     }
+  }
+
+  downloadFile(element: MetaData) {
+    this.clientService.getMedia(element.id, this.type).subscribe(blob => {
+      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      link.href = url;
+      link.download = element.name;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    })
   }
 }
