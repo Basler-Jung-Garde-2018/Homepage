@@ -37,13 +37,16 @@ export class ClientService {
     return this.httpClient.get<string[]>(`${this.baseUrl}/gallery/events`);
   }
 
-  public addMedia(files: File[]) {
+  public addMedia(files: File[], type: string) {
     const formData = new FormData();
     files.forEach(file => {
       formData.append(file.name, file);
     })
+    return this.httpClient.post<string[]>(`${this.baseUrl}/media/${type}`, formData);
+  }
 
-    return this.httpClient.post<string[]>(`${this.baseUrl}/media/IMAGE`, formData); // todo: remove IMAGE as hardcoded url
+  public getMetaDataOfMedia(type: string): Observable<MetaData[]> {
+    return this.httpClient.get<MetaData[]>(`${this.baseUrl}/media/${type}`);
   }
 
   public getImageUrl(type: string, imageId: string): string {

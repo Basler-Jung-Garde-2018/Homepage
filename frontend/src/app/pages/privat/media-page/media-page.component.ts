@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
 import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
-import {MatLine} from "@angular/material/core";
+import {MatLine, MatOption} from "@angular/material/core";
 import {NgForOf} from "@angular/common";
+import {FileListComponent} from "./file-list/file-list.component";
+import {ClientService} from "../../../service/client.service";
+import {MatFormField, MatLabel, MatSelect} from "@angular/material/select";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-media-page',
@@ -16,25 +20,66 @@ import {NgForOf} from "@angular/common";
     MatIcon,
     MatSidenav,
     MatLine,
-    NgForOf
+    NgForOf,
+    FileListComponent,
+    MatSelect,
+    MatOption,
+    MatLabel,
+    MatFormField,
+    MatButton
   ],
   templateUrl: './media-page.component.html',
   styleUrl: './media-page.component.scss'
 })
 export class MediaPageComponent {
+  private readonly clientService = inject(ClientService);
   folders = [
-    { name: 'Audio', icon: 'audiotrack' },
-    { name: 'Noten', icon: 'note' },
-    { name: 'Protokoll', icon: 'description' },
-    { name: 'Form', icon: 'assignment' },
-    { name: 'Regulations', icon: 'gavel' }
+    {name: 'Noten', icon: 'note'},
+    {name: 'Audio', icon: 'audiotrack'},
+    {name: 'Protokolle', icon: 'description'},
+    {name: 'Formulare', icon: 'assignment'},
+    {name: 'Regelungen', icon: 'gavel'},
+    {name: 'Hochladen', icon: 'upload'}
+  ];
+  selectedFolder = 'Noten';
+
+  files: File[] = [];
+  type = "";
+  allowedTypes = [
+    "image",
+    "application/pdf",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "audio/mpeg"
   ];
 
-  selectedFolder = 'Bitte wählen Sie einen Ordner';
+  onFolderClick(folder: string): void {
+    this.selectedFolder = folder;
+  }
 
-  onFolderClick(folder: { name: string; icon: string }): void {
-    this.selectedFolder = folder.name;
-    console.log(`Folder selected: ${folder.name}`);
-    // Hier könnte weitere Logik folgen, z. B. Laden von Dateien
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      Array.from(input.files).forEach(file => {
+        console.log(file.type)
+        if (this.allowedTypes.some(type => file.type.includes(type))) {
+          this.files.push(file);
+        } else {
+          console.log(file.type + " not allowed") // todo add user feedback
+        }
+      });
+    }
+  }
+
+  removeFile(name: string) {
+    this.files = this.files.filter(file => file.name !== name);
+  }
+
+  upload() {
+    if (this.type === "" || this.files.length == 0)
+      return;
+    this.clientService.addMedia(this.files, this.type).subscribe(response => {
+      console.log(response)
+    })
   }
 }

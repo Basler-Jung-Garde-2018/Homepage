@@ -1,3 +1,6 @@
+.full-width {
+  width: 100%;
+}
 .sidenav-container {
   height: 100vh;
   display: flex;
@@ -6,7 +9,7 @@
 }
 
 .sidenav {
-  width: 250px;
+  width: 15%;
   background-color: #ffffff;
   border-right: 1px solid #ddd;
   padding-top: 20px;
@@ -30,29 +33,66 @@
 }
 
 .main-content {
-  padding: 24px;
-  padding-top: 20px;
+  padding: 20px 24px 24px;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .folder-header {
   margin-bottom: 16px;
   font-size: 24px;
   font-weight: 600;
-  color: #00b8a9; /* Akzentfarbe für Titel */
+  color: #00b8a9;
 }
 
 .file-area {
   flex-grow: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #f9f9f9;
   border: 2px dashed #ccc;
   border-radius: 8px;
   padding: 16px;
   color: #666;
   font-size: 18px;
+}
+
+.file-input {
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px dashed #00b8a9;
+  border-radius: 8px;
+  background: #f9f9f9;
+  color: #00b8a9;
+  font-size: 1rem;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 184, 169, 0.1);
+  }
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Adjust the gap as needed */
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.file-name {
+  flex-grow: 1;
+  margin-right: 16px;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: #f44336; /* Red color for delete icon */
 }
