@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ClientService} from "../../../service/client.service";
 import {GalleryImage} from "../../../model/galleryImage";
@@ -23,6 +23,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {map, Observable, startWith, switchMap} from "rxjs";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
+import {ToastService} from "../../../core/toast.service";
 
 @Component({
   selector: 'app-edit-gallery',
@@ -60,6 +61,7 @@ import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/mater
   styleUrl: './edit-gallery.component.scss'
 })
 export class EditGalleryComponent implements OnInit {
+  private readonly toastService = inject(ToastService);
   files: File[] = [];
   eventForm: FormGroup;
 
@@ -89,14 +91,17 @@ export class EditGalleryComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.files = Array.from(input.files);
-
       const event: string = this.eventForm.get("event")?.value
       const year: number = Number.parseInt(this.eventForm.get("year")?.value)
 
       Array.from(input.files).forEach(file => {
+        if (!file.type.includes("image")) {
+          return;
+        }
+        this.files.push(file)
         const reader = new FileReader();
         reader.onload = () => {
+          // downscale image to optimize performance
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -144,16 +149,25 @@ export class EditGalleryComponent implements OnInit {
   onUpload() {
     const event: string = this.eventForm.get("event")?.value
     const year: number = Number.parseInt(this.eventForm.get("year")?.value)
-    if (year && event && event !== "") {
+    if (year && event && event !== "" && this.files.length !== 0) {
       this.clientService.addMedia(this.files, "IMAGE").pipe(
         switchMap((imageIds) => {
           const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year}));
           return this.clientService.addGalleryMetaData(gallery);
         }),
       ).subscribe({
-        next: () => console.log('Gallery metadata added successfully'),
-        error: (err) => console.error('Unexpected error:', err)
+        next: () => {
+          this.toastService.openSuccessToast("Bilder erfolgreich hochgeladen");
+          this.files = [];
+          this.imageDisplay.data = [];
+        },
+        error: (err) => {
+          console.error('Unexpected error:', err)
+          this.toastService.openErrorToast("Es gab ein Fehler beim hochladen der Bilder. Bitte versuchen Sie es erneut.")
+        }
       });
+    } else {
+      this.toastService.openWarnToast("Bitte überprüfen Sie Ihre Eingaben.")
     }
   }
 

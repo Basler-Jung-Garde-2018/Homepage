@@ -15,6 +15,7 @@ import {
   MatTableDataSource
 } from "@angular/material/table";
 import {SizePipe} from "../../../../core/size.pipe";
+import {ToastService} from "../../../../core/toast.service";
 
 @Component({
   selector: 'app-file-list',
@@ -37,6 +38,7 @@ import {SizePipe} from "../../../../core/size.pipe";
 })
 export class FileListComponent {
   private readonly clientService = inject(ClientService);
+  private readonly toastService = inject(ToastService);
 
   metaData = new MatTableDataSource<MetaData>;
   displayedColumns: string[] = ['name', 'size'];
@@ -44,8 +46,14 @@ export class FileListComponent {
   @Input()
   set folder(folder: string) {
     const type = this.mapToFileType(folder);
-    this.clientService.getMetaDataOfMedia(type).subscribe(metaData => {
-      this.metaData.data = metaData;
+    this.clientService.getMetaDataOfMedia(type).subscribe({
+      next: metaData => {
+        this.metaData.data = metaData;
+      },
+      error: err => {
+        console.error("Error occurred: ", err);
+        this.toastService.openErrorToast("Es gab ein Fehler beim Laden der Dateien. Bitte versuchen Sie es später erneut.")
+      }
     });
   }
 

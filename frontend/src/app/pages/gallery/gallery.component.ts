@@ -1,6 +1,6 @@
 import {ClientService} from "../../service/client.service";
 import {MatButton} from "@angular/material/button";
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {BehaviorSubject, map, Observable, startWith} from "rxjs";
+import {ToastService} from "../../core/toast.service";
 
 @Component({
   selector: 'app-gallery',
@@ -41,6 +42,8 @@ import {BehaviorSubject, map, Observable, startWith} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryComponent implements OnInit {
+  private readonly toastService = inject(ToastService);
+
   gallery$ = new BehaviorSubject<string[]>([]);
   page: number = 0;
 
@@ -66,12 +69,22 @@ export class GalleryComponent implements OnInit {
     const event: string = this.eventForm.get("event")?.value;
 
     if (event && event !== "" && year) {
-      this.clientService.getGalleryMetaData(year, event, this.page).subscribe(imageIds => {
-        const urls: string[] = [];
-        imageIds.forEach(metaData => {
-          urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
-        });
-        this.gallery$.next(urls);
+      this.clientService.getGalleryMetaData(year, event, this.page).subscribe({
+        next: imageIds => {
+          if (imageIds.length == 0)
+            this.toastService.openWarnToast(`Es gibt keine Bilder für das Event ${event} im Jahr ${year}`)
+          else {
+            const urls: string[] = [];
+            imageIds.forEach(metaData => {
+              urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
+            });
+            this.gallery$.next(urls);
+          }
+        },
+        error: err => {
+          console.error("Error on gallery load : ", err);
+          this.toastService.openErrorToast("Es gab ein Fehler beim laden der Gallery. Versuchen Sie es später erneut.")
+        }
       });
     }
   }
@@ -82,7 +95,7 @@ export class GalleryComponent implements OnInit {
         this.eventList = events
       },
       error: error =>
-        console.error("Fehler beim Laden der Events, " + error)
+        console.warn("Fehler beim Laden der Events, " + error)
     });
 
     this.filteredOptions = this.eventForm.get('event')?.valueChanges.pipe(

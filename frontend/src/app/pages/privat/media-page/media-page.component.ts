@@ -8,6 +8,7 @@ import {FileListComponent} from "./file-list/file-list.component";
 import {ClientService} from "../../../service/client.service";
 import {MatFormField, MatLabel, MatSelect} from "@angular/material/select";
 import {MatButton} from "@angular/material/button";
+import {ToastService} from "../../../core/toast.service";
 
 @Component({
   selector: 'app-media-page',
@@ -33,6 +34,8 @@ import {MatButton} from "@angular/material/button";
 })
 export class MediaPageComponent {
   private readonly clientService = inject(ClientService);
+  private readonly toastService = inject(ToastService);
+
   folders = [
     {name: 'Noten', icon: 'note'},
     {name: 'Audio', icon: 'audiotrack'},
@@ -76,10 +79,18 @@ export class MediaPageComponent {
   }
 
   upload() {
-    if (this.type === "" || this.files.length == 0)
+    if (this.type === "" || this.files.length == 0) {
+      this.toastService.openWarnToast("Bitte überprüfen Sie Ihre Eingaben.")
       return;
-    this.clientService.addMedia(this.files, this.type).subscribe(response => {
-      console.log(response)
+    }
+    this.clientService.addMedia(this.files, this.type).subscribe({
+      next: () => {
+        this.toastService.openSuccessToast("Dateien Erfolgreich hochgeladen.");
+        this.files = [];
+      }, error: err => {
+        console.error("Error occurred: ", err);
+        this.toastService.openErrorToast("Es gab ein Fehler beim hochalden der Dateien. Bitte versuchen Sie es später erneut.")
+      }
     })
   }
 }

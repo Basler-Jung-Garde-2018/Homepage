@@ -30,3 +30,15 @@ html, body {
 .content {
   overflow-y: auto;
 }
+
+
+// don't ask me why this doesn't work. Google, Copilot, Chat-GPT, Stackoverflow, GitHub and StackBlitz say it works
+.error-toast {
+  background-color: #d32f2f; // red
+  color: white;
+}
+
+.success-toast {
+  background-color: #388e3c; // green
+  color: white;
+}
