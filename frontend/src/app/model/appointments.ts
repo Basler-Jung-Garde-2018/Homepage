@@ -1,7 +1,11 @@
+import {AppointmentType} from "./AppointmentType";
+
 export interface Appointment {
   id: string;
-  date: string;
+  start: Date;
+  end: Date;
   location: string;
   name: string;
-  type: string;
+  type: AppointmentType;
+  published?: boolean
 }

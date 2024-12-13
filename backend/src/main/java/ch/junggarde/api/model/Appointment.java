@@ -18,16 +18,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Appointment {
     private UUID id;
-    private LocalDateTime date;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private String location;
     private String name;
     private AppointmentType type;
-
-    public Appointment(LocalDateTime date, String location, String name, AppointmentType type) {
-        this.id = UUID.randomUUID();
-        this.date = date;
-        this.location = location;
-        this.name = name;
-        this.type = type;
-    }
+    private boolean published;
 }

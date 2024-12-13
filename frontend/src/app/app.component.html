@@ -14,6 +14,7 @@
     <a mat-button [matMenuTriggerFor]="submenu">Privater Bereich</a>
     <mat-menu #submenu="matMenu">
       <button mat-menu-item routerLink="/private-section/gallery">Bilder hochladen</button>
+      <button mat-menu-item routerLink="/private-section/calendar">Kalender</button>
       <button mat-menu-item routerLink="/private-section/media">Noten & Berichte</button>
     </mat-menu>
   </div>
@@ -21,6 +22,7 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" class="hamburger-menu">
     <mat-icon>menu</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/startseite">Startseite</button>
     <button mat-menu-item routerLink="/kalender">Termine & Social Media</button>

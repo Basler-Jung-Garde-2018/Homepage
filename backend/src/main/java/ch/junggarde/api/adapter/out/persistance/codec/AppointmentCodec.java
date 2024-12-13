@@ -24,10 +24,12 @@ public class AppointmentCodec implements CollectibleCodec<Appointment> {
         final Document document = documentCodec.decode(bsonReader, decoderContext);
         return new Appointment(
                 UUID.fromString(document.getString(Appointment.Fields.id)),
-                LocalDateTime.parse(document.getString(Appointment.Fields.date)),
+                LocalDateTime.parse(document.getString(Appointment.Fields.start)),
+                LocalDateTime.parse(document.getString(Appointment.Fields.end)),
                 document.getString(Appointment.Fields.location),
                 document.getString(Appointment.Fields.name),
-                AppointmentType.valueOf(document.getString(Appointment.Fields.type))
+                AppointmentType.valueOf(document.getString(Appointment.Fields.type)),
+                document.getBoolean(Appointment.Fields.published)
         );
     }
 
@@ -35,10 +37,12 @@ public class AppointmentCodec implements CollectibleCodec<Appointment> {
     public void encode(BsonWriter bsonWriter, Appointment appointment, EncoderContext encoderContext) {
         final Document document = new Document()
                 .append(Appointment.Fields.id, appointment.getId().toString())
-                .append(Appointment.Fields.date, appointment.getDate().toString())
+                .append(Appointment.Fields.start, appointment.getStart().toString())
+                .append(Appointment.Fields.end, appointment.getEnd().toString())
                 .append(Appointment.Fields.location, appointment.getLocation())
                 .append(Appointment.Fields.name, appointment.getName())
-                .append(Appointment.Fields.type, appointment.getType().toString());
+                .append(Appointment.Fields.type, appointment.getType().toString())
+                .append(Appointment.Fields.published, appointment.isPublished());
         documentCodec.encode(bsonWriter, document, encoderContext);
     }
 

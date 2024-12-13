@@ -21,8 +21,12 @@ export class ClientService {
     return this.httpClient.get<MetaData[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
   }
 
-  public getAppointments(): Observable<Appointment[]> {
+  public getPublicAppointments(): Observable<Appointment[]> {
     return this.httpClient.get<Appointment[]>(`${this.baseUrl}/appointments`);
+  }
+
+  public getPrivateAppointments(): Observable<Appointment[]> {
+    return this.httpClient.get<Appointment[]>(`${this.baseUrl}/appointments/private`);
   }
 
   public getMembers(): Observable<Member[]> {

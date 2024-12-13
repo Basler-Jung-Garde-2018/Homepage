@@ -61,7 +61,6 @@ export class GalleryComponent implements OnInit {
     return this.eventList.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-
   loadGallery(): void {
     const year: number = this.eventForm.get("year")?.value;
     const event: string = this.eventForm.get("event")?.value;
