@@ -6,5 +6,5 @@ public enum FileType {
     PROTOCOL,
     FORM,
     REGULATIONS,
-    IMAGE
+    PUBLIC // IMAGE // as soon as publishing is implemented
 }
