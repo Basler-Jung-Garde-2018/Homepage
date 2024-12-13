@@ -43,7 +43,8 @@ public class GalleryService {
             GalleryImage galleryImage = new GalleryImage(
                     UUID.fromString(galleryRequest.id()),
                     galleryRequest.year(),
-                    galleryRequest.event()
+                    galleryRequest.event(),
+                    galleryRequest.published()
             );
 
             galleryImages.add(galleryImage);

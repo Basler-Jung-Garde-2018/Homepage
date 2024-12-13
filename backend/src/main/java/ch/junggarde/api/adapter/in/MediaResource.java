@@ -12,7 +12,6 @@ import jakarta.ws.rs.core.StreamingOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.UUID;
@@ -57,9 +56,8 @@ public class MediaResource {
     public Response getMedia(@PathParam("type") String type, @PathParam("mediaId") String mediaId) {
         log.info("HTTP GET /media/{}/{}", type, mediaId);
         try {
-            File file = this.mediaService.getMediaFromDisk(type, UUID.fromString(mediaId));
             return Response.ok((StreamingOutput) output -> {
-                try (InputStream inputStream = new FileInputStream(file)) {
+                try (InputStream inputStream = new FileInputStream(this.mediaService.getMediaFromDisk(type, UUID.fromString(mediaId)))) {
                     byte[] buffer = new byte[1024];
                     int bytesRead;
                     while ((bytesRead = inputStream.read(buffer)) != -1) {

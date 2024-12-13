@@ -1,13 +1,13 @@
 <div class="title-section">
   <h1>Unsere Führungsriege</h1>
 </div>
-<h2 style="margin-top: 0px">Vorstand</h2>
+<h2 style="margin-top: 0">Vorstand</h2>
 <div class="card flex justify-content-center overflow-x-auto">
   <p-organizationChart
     [value]="vorstand"
     selectionMode="multiple"
     [(selection)]="selectedNodes"
-    [collapsible]="true">
+    [collapsible]="false">
     <ng-template let-node pTemplate="person">
       <div class="cyan-background">
         <div class="font-bold">
@@ -50,7 +50,7 @@
     selectionMode="multiple"
     [(selection)]="selectedNodes"
     preserveSpace="false"
-    [collapsible]="true">
+    [collapsible]="false">
     <ng-template let-node pTemplate="person">
       <div class="cyan-background">
         <div class="font-bold">
