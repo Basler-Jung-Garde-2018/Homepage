@@ -20,6 +20,7 @@ export class ToastService {
 
   openErrorToast(message: string) {
     this.snackBar.open(message, 'Close', {
+      duration: 10000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       panelClass: 'error-toast'
@@ -28,6 +29,7 @@ export class ToastService {
 
   openWarnToast(message: string) {
     this.snackBar.open(message, 'Close', {
+      duration: 5000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       panelClass: 'warn-toast'
