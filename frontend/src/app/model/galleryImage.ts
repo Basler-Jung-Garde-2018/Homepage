@@ -3,5 +3,5 @@ export interface GalleryImage {
   base64: string;
   year: number;
   event: string;
-  public: Boolean
+  published: Boolean
 }

@@ -134,7 +134,7 @@ export class EditGalleryComponent implements OnInit {
               year,
               event,
               base64: base64,
-              public: false
+              published: false
             }];
           };
           if (typeof reader.result === "string") {
@@ -153,7 +153,7 @@ export class EditGalleryComponent implements OnInit {
     if (year && event && event !== "" && this.files.length !== 0) {
       this.clientService.addMedia(this.files, "PUBLIC").pipe(
         switchMap((imageIds) => {
-          const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year, public: true}));
+          const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year, published: true}));
           return this.clientService.addGalleryMetaData(gallery);
         }),
       ).subscribe({
