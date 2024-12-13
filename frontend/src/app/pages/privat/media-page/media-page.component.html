@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" opened class="sidenav">
     <mat-nav-list>
-      <mat-list-item *ngFor="let folder of folders" (click)="onFolderClick(folder)">
+      <mat-list-item *ngFor="let folder of folders" (click)="onFolderClick(folder.name)">
         <mat-icon>{{ folder.icon }}</mat-icon>
         <span matLine>{{ folder.name }}</span>
       </mat-list-item>
@@ -12,8 +12,38 @@
     <div class="folder-header">
       <h2>{{ selectedFolder }}</h2>
     </div>
-    <div class="file-area">
-      <p>Hier könnten Dateien für "{{ selectedFolder }}" angezeigt werden.</p>
-    </div>
+    @if (selectedFolder !== "Hochladen") {
+      <div class="file-area">
+        <app-file-list class="full-width" [folder]="selectedFolder"></app-file-list>
+      </div>
+    } @else {
+      <div class="form-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Datei Typ</mat-label>
+          <mat-select [(value)]="type">
+            <mat-option value="NOTES">Noten</mat-option>
+            <mat-option value="AUDIO">Audio</mat-option>
+            <mat-option value="PROTOCOL">Protokolle</mat-option>
+            <mat-option value="FORM">Formulare</mat-option>
+            <mat-option value="REGULATIONS">Regelungen</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="upload()">Hochladen</button>
+      </div>
+
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        multiple
+        class="file-input">
+      <ul>
+        @for (file of files; track file.name) {
+          <div class="file-item">
+            <span class="file-name">{{ file.name }}</span>
+            <mat-icon class="delete-icon" (click)="removeFile(file.name)">delete</mat-icon>
+          </div>
+        }
+      </ul>
+    }
   </mat-sidenav-content>
 </mat-sidenav-container>

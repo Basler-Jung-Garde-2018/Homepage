@@ -1,0 +1,17 @@
+@if (metaData.data.length != 0) {
+  <mat-table [dataSource]="metaData" class="mat-elevation-z8 full-width-table">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="size">
+      <mat-header-cell *matHeaderCellDef> Size (KB)</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.size | size }}</mat-cell>
+    </ng-container>
+
+    <!-- Table Header and Rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+}
