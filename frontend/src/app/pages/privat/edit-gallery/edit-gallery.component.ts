@@ -75,7 +75,7 @@ export class EditGalleryComponent implements OnInit {
     'Marschprobe'
   ];
 
-  displayedColumns: string[] = ['year', 'event', 'base64', 'toggle'];
+  displayedColumns: string[] = ['year', 'event', 'base64'];
   imageDisplay = new MatTableDataSource<Partial<GalleryImage>>([]);
 
   isModalOpen = false;
@@ -149,10 +149,11 @@ export class EditGalleryComponent implements OnInit {
   onUpload() {
     const event: string = this.eventForm.get("event")?.value
     const year: number = Number.parseInt(this.eventForm.get("year")?.value)
+
     if (year && event && event !== "" && this.files.length !== 0) {
       this.clientService.addMedia(this.files, "IMAGE").pipe(
         switchMap((imageIds) => {
-          const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year}));
+          const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year, public: true}));
           return this.clientService.addGalleryMetaData(gallery);
         }),
       ).subscribe({
