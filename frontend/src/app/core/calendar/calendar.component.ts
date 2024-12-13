@@ -8,6 +8,7 @@ import {Appointment} from "../../model/appointments";
 import {Observable} from "rxjs";
 import {AppointmentType} from "../../model/AppointmentType";
 import {MatButton} from "@angular/material/button";
+import {EventImpl} from "@fullcalendar/core/internal";
 
 @Component({
   selector: 'app-calendar',
@@ -67,12 +68,22 @@ export class CalendarComponent {
   download() {
     if (!this.calendarComponent) return;
     const calendarApi = this.calendarComponent?.getApi();
-    const visibleEvents = calendarApi?.getEvents().filter(event => {
+    const events = calendarApi?.getEvents().filter(event => {
       const s = calendarApi?.view.activeStart, e = calendarApi?.view.activeEnd;
       return !(event.start! > e || event.end! < s);
-
     });
-    const appointmentsToDownload: Partial<Appointment>[] = visibleEvents?.map((event): Partial<Appointment> => {
+    this.downloadICS(events);
+  }
+
+  downloadAll() {
+    if (!this.calendarComponent) return;
+    const calendarApi = this.calendarComponent?.getApi();
+    this.downloadICS(calendarApi?.getEvents());
+  }
+
+  downloadICS(events: EventImpl[]): void {
+    console.log(events.length)
+    const appointments: Partial<Appointment>[] = events?.map((event): Partial<Appointment> => {
       const split = event.title.split("\n");
       const name = split[0]
       const location = split[1]
@@ -83,10 +94,7 @@ export class CalendarComponent {
         location: location
       }
     })
-    this.downloadICS(appointmentsToDownload);
-  }
 
-  downloadICS(appointments: Partial<Appointment>[]): void {
     const formatDate = (date: Date): string => date.toISOString().replace(/-|:|\.\d{3}/g, '');
 
     const icsContent = [

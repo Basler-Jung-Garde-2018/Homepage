@@ -1,4 +1,5 @@
 <div class="cal-container" *ngIf="isBrowser">
   <full-calendar #calendar [options]="calendarOptions"></full-calendar>
-  <button mat-button (click)="download()">Download Calender</button>
+  <button mat-button (click)="download()">Sichtbare herunterladen</button>
+  <button mat-button (click)="downloadAll()">Alle herunterladen</button>
 </div>

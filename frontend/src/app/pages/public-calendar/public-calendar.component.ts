@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {
   MatCard,
@@ -40,10 +40,9 @@ import {CalendarComponent} from "../../core/calendar/calendar.component";
   styleUrl: './public-calendar.component.scss'
 })
 export class PublicCalendarComponent {
-  appointments = this.clientService.getPublicAppointments();
+  private readonly clientService = inject(ClientService);
 
-  constructor(private clientService: ClientService) {
-  }
+  appointments = this.clientService.getPublicAppointments();
 
   openLink(url: string): void {
     window.open(url, "_blank");

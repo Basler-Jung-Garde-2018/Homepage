@@ -1,0 +1,36 @@
+<form [formGroup]="appointment" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Start</mat-label>
+    <input matInput type="datetime-local" formControlName="start" placeholder="HH:MM" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>End</mat-label>
+    <input matInput type="datetime-local" formControlName="end" placeholder="HH:MM" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Location</mat-label>
+    <input matInput formControlName="location" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type" required>
+      <mat-option [value]="AppointmentType.PRACTICE">Probe</mat-option>
+      <mat-option [value]="AppointmentType.MEETING">Meeting</mat-option>
+      <mat-option [value]="AppointmentType.PERFORMANCE">Aufführung</mat-option>
+      <mat-option [value]="AppointmentType.FASNACHT">Fasnacht</mat-option>
+      <mat-option [value]="AppointmentType.PRE_FASNACHT">Vorfasnacht</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+
+  <button mat-raised-button type="submit" [disabled]="!appointment.valid">Hinzufügen</button>
+</form>
