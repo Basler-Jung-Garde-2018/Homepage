@@ -145,7 +145,7 @@ export class EditGalleryComponent implements OnInit {
     const event: string = this.eventForm.get("event")?.value
     const year: number = Number.parseInt(this.eventForm.get("year")?.value)
     if (year && event && event !== "") {
-      this.clientService.addMedia(this.files).pipe(
+      this.clientService.addMedia(this.files, "IMAGE").pipe(
         switchMap((imageIds) => {
           const gallery: Partial<GalleryImage>[] = imageIds.map(id => ({id, event, year}));
           return this.clientService.addGalleryMetaData(gallery);
