@@ -45,7 +45,8 @@ export class GalleryComponent implements OnInit {
   private readonly toastService = inject(ToastService);
 
   gallery$ = new BehaviorSubject<string[]>([]);
-  page: number = 0;
+  paginatedGallery$ = new Observable<string[]>();
+  galleryLength = 0;
 
   eventForm: FormGroup;
   eventList: string[] = [];
@@ -69,7 +70,7 @@ export class GalleryComponent implements OnInit {
     const event: string = this.eventForm.get("event")?.value;
 
     if (event && event !== "" && year) {
-      this.clientService.getGalleryMetaData(year, event, this.page).subscribe({
+      this.clientService.getGalleryMetaData(year, event).subscribe({
         next: imageIds => {
           if (imageIds.length == 0)
             this.toastService.openWarnToast(`Es gibt keine Bilder für das Event ${event} im Jahr ${year}`)
@@ -79,6 +80,9 @@ export class GalleryComponent implements OnInit {
               urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
             });
             this.gallery$.next(urls);
+
+            this.galleryLength = urls.length;
+            this.updatePagination(0);
           }
         },
         error: err => {
@@ -109,5 +113,15 @@ export class GalleryComponent implements OnInit {
   private getFileType(fileString: string): string {
     const parts = fileString.split('.');
     return parts[parts.length - 1];
+  }
+
+  updatePagination(page: number) {
+    this.paginatedGallery$ = this.gallery$.pipe(
+      map(gallery => {
+        const startIndex = page * 10;
+        const endIndex = startIndex + 10;
+        return gallery.slice(startIndex, endIndex);
+      })
+    );
   }
 }

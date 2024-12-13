@@ -17,8 +17,8 @@ export class ClientService {
     return this.httpClient.post<GalleryImage[]>(`${this.baseUrl}/gallery`, data);
   }
 
-  public getGalleryMetaData(year: number, event: string, page: number): Observable<MetaData[]> {
-    return this.httpClient.get<MetaData[]>(`${this.baseUrl}/gallery/${year}/${event}/${page}`);
+  public getGalleryMetaData(year: number, event: string): Observable<MetaData[]> {
+    return this.httpClient.get<MetaData[]>(`${this.baseUrl}/gallery/${year}/${event}`);
   }
 
   public getPublicAppointments(): Observable<Appointment[]> {
@@ -54,6 +54,6 @@ export class ClientService {
   }
 
   public getImageUrl(type: string, imageId: string): string {
-    return `${this.baseUrl}/gallery/${type}/${imageId}`
+    return `${this.baseUrl}/gallery/image/${type}/${imageId}`
   }
 }

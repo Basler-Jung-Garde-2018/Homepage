@@ -28,8 +28,8 @@ public class GalleryService {
     @ConfigProperty(name = "variable.path.disk")
     String DIRECTORY;
 
-    public List<UUID> getGallery(int year, String event, int page) {
-        return this.galleryImageRepository.findGalleryIds(year, event, page);
+    public List<UUID> getGallery(int year, String event) {
+        return this.galleryImageRepository.findGalleryIds(year, event);
     }
 
     public List<GalleryImageDTO> addImages(List<GalleryImageDTO> imageMetadata) {
