@@ -6,12 +6,20 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatInput} from "@angular/material/input";
 import {MatPaginator} from "@angular/material/paginator";
-import {AsyncPipe, NgForOf, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
-import {BehaviorSubject, map, Observable, startWith} from "rxjs";
+import {BehaviorSubject, map, Observable, startWith, switchMap} from "rxjs";
 import {ToastService} from "../../core/toast.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ShowImageModalComponent} from "../../core/modals/show-image-modal/show-image-modal.component";
+import {MetaData} from "../../model/MetaData";
+
+interface MetaDataGallery {
+  metaData: MetaData;
+  url: string;
+}
 
 @Component({
   selector: 'app-gallery',
@@ -35,7 +43,8 @@ import {ToastService} from "../../core/toast.service";
     AsyncPipe,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgIf
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
@@ -44,15 +53,20 @@ import {ToastService} from "../../core/toast.service";
 export class GalleryComponent implements OnInit {
   private readonly toastService = inject(ToastService);
 
-  gallery$ = new BehaviorSubject<string[]>([]);
-  paginatedGallery$ = new Observable<string[]>();
+  gallery$ = new BehaviorSubject<MetaDataGallery[]>([]);
+  paginatedGallery$ = new Observable<MetaDataGallery[]>();
+  currentIndex: number = 0;
   galleryLength = 0;
 
   eventForm: FormGroup;
   eventList: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
 
-  constructor(private clientService: ClientService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private clientService: ClientService,
+              private fb: FormBuilder,
+              private cdr: ChangeDetectorRef,
+              private matDialog: MatDialog
+  ) {
     this.eventForm = this.fb.group({
       year: [2024],
       event: ['Fasnacht']
@@ -71,17 +85,20 @@ export class GalleryComponent implements OnInit {
 
     if (event && event !== "" && year) {
       this.clientService.getGalleryMetaData(year, event).subscribe({
-        next: imageIds => {
-          if (imageIds.length == 0)
+        next: metaData => {
+          if (metaData.length == 0)
             this.toastService.openWarnToast(`Es gibt keine Bilder für das Event ${event} im Jahr ${year}`)
           else {
-            const urls: string[] = [];
-            imageIds.forEach(metaData => {
-              urls.push(this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id))
+            const metaDataGalleries: MetaDataGallery[] = [];
+            metaData.forEach(metaData => {
+              metaDataGalleries.push({
+                url: this.clientService.getImageUrl(this.getFileType(metaData.name), metaData.id, false),
+                metaData: metaData
+              })
             });
-            this.gallery$.next(urls);
+            this.gallery$.next(metaDataGalleries);
 
-            this.galleryLength = urls.length;
+            this.galleryLength = metaDataGalleries.length;
             this.updatePagination(0);
             this.cdr.detectChanges();
           }
@@ -124,5 +141,33 @@ export class GalleryComponent implements OnInit {
         return gallery.slice(startIndex, endIndex);
       })
     );
+  }
+
+  enlargeImage(metaDataGallery: MetaDataGallery) {
+    this.matDialog.open(ShowImageModalComponent, {
+      data: {
+        metaData: metaDataGallery.metaData,
+        url: metaDataGallery.url
+      },
+      height: '90vh',
+      minWidth: '90vw'
+    }).afterClosed().pipe(
+      switchMap(result => this.paginatedGallery$.pipe(
+        map(gallery => {
+          if (result === 'previous') {
+            this.currentIndex = (this.currentIndex > 0) ? this.currentIndex - 1 : gallery.length - 1;
+          } else if (result === 'next') {
+            this.currentIndex = (this.currentIndex < gallery.length - 1) ? this.currentIndex + 1 : 0;
+          } else {
+            return null;
+          }
+          return gallery[this.currentIndex];
+        })
+      ))
+    ).subscribe(newImageUrl => {
+      if (newImageUrl) {
+        this.enlargeImage(newImageUrl);
+      }
+    });
   }
 }

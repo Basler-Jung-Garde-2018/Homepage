@@ -5,9 +5,8 @@ import {MatInput} from "@angular/material/input";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import {MatOption, MatSelect} from "@angular/material/select";
-import {AppointmentType} from "../../../../model/AppointmentType";
+import {AppointmentType} from "../../../model/AppointmentType";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
@@ -26,9 +25,6 @@ import {MatDialogRef} from "@angular/material/dialog";
     MatDatepickerToggle,
     MatDatepicker,
     MatHint
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   templateUrl: './add-event-modal.component.html',
   styleUrl: './add-event-modal.component.scss'

@@ -40,8 +40,8 @@
 
 
 <div class="gallery-container">
-  <mat-card *ngFor="let image of paginatedGallery$ | async" class="gallery-card">
-    <img [src]="image" alt="Gallery Image" class="gallery-image"/>
+  <mat-card *ngFor="let metaData of paginatedGallery$ | async" class="gallery-card" (click)="enlargeImage(metaData)">
+    <img [src]="metaData.url" alt="Gallery Image" class="gallery-image" />
   </mat-card>
 </div>
 

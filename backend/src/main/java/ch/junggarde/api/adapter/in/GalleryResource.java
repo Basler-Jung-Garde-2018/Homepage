@@ -46,9 +46,9 @@ public class GalleryResource {
     }
 
     @GET
-    @Path("/image/{format}/{imageId}")
+    @Path("/image/{format}/{imageId}/{full}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId) {
+    public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId, @PathParam("full") boolean full) {
         log.info("HTTP GET /gallery/{}", imageId);
         try {
             return Response.ok((StreamingOutput) output -> {
@@ -59,9 +59,9 @@ public class GalleryResource {
                             .scale(1)
                             .asBufferedImage();
 
-                    if (image.getHeight() > 1440) {
+                    if (!full && image.getHeight() > 1080) {
                         image = Thumbnails.of(new FileInputStream(file))
-                                .size((1440 * image.getWidth()) / image.getHeight(), 1440)
+                                .size((1080 * image.getWidth()) / image.getHeight(), 1080)
                                 .asBufferedImage();
                     }
 
