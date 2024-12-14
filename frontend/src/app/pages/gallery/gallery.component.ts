@@ -1,6 +1,6 @@
 import {ClientService} from "../../service/client.service";
 import {MatButton} from "@angular/material/button";
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
@@ -52,7 +52,7 @@ export class GalleryComponent implements OnInit {
   eventList: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
 
-  constructor(private clientService: ClientService, private fb: FormBuilder) {
+  constructor(private clientService: ClientService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.eventForm = this.fb.group({
       year: [2024],
       event: ['Fasnacht']
@@ -83,6 +83,7 @@ export class GalleryComponent implements OnInit {
 
             this.galleryLength = urls.length;
             this.updatePagination(0);
+            this.cdr.detectChanges();
           }
         },
         error: err => {
