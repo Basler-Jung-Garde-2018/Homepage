@@ -5,7 +5,6 @@ import {MatAnchor, MatButton, MatIconButton} from "@angular/material/button";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginComponent} from "./pages/login/login.component";
 import {KeycloakOperationService} from "./service/keycloak.service";
 import {NgIf} from "@angular/common";
 
@@ -36,15 +35,5 @@ export class AppComponent implements OnInit{
   }
   login() {
     this.keyCloakService.login();
-  }
-
-
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(LoginComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
   }
 }
