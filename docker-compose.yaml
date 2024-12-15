@@ -27,8 +27,10 @@ services:
     env_file:
       - /root/.secrets/.env
     volumes:
+      - keycloak_data:/opt/keycloak/data
       - ./config/keycloak-keystore.jks:/etc/keycloak-keystore.jks
-    command: start --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
+      - /etc/ssl/:/etc/ssl/
+    command: start --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks --https-certificate-file=/etc/ssl/jung-garde.ch/jung-garde-cert.pem --https-certificate-key-file=/etc/ssl/jung-garde.ch/jung-garde-key.key
   mongodb:
     image: mongo
     ports:
@@ -38,3 +40,4 @@ services:
 volumes:
   mongo_data:
   file_data:
+  keycloak_data:
