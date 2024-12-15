@@ -68,7 +68,7 @@ export class MediaPageComponent {
         if (this.allowedTypes.some(type => file.type.includes(type))) {
           this.files.push(file);
         } else {
-          console.log(file.type + " not allowed") // todo add user feedback
+          this.toastService.openWarnToast("Dateityp: " + file.type + " nicht erlaubt")
         }
       });
     }
