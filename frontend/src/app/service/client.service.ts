@@ -53,13 +53,17 @@ export class ClientService {
     return this.httpClient.get<MetaData[]>(`${this.baseUrl}/media/${type}`);
   }
 
-  public getImageUrl(type: string, imageId: string): string {
-    return `${this.baseUrl}/gallery/image/${type}/${imageId}`
+  public getImageUrl(type: string, imageId: string, full: boolean): string {
+    return `${this.baseUrl}/gallery/image/${type}/${imageId}/${full}`
   }
 
-  public getMedia(id: string, type: string):Observable<Blob> {
+  public getMedia(id: string, type: string): Observable<Blob> {
     return this.httpClient.get(`${this.baseUrl}/media/${type}/${id}`, {
       responseType: 'blob'
     });
+  }
+
+  public addAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.httpClient.post<Appointment>(`${this.baseUrl}/appointments`, appointment)
   }
 }

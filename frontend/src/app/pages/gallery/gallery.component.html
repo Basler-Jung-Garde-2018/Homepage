@@ -38,7 +38,6 @@
   </mat-accordion>
 </div>
 
-
 <div class="gallery-container">
   <mat-card *ngFor="let metaData of paginatedGallery$ | async" class="gallery-card" (click)="enlargeImage(metaData)">
     <img [src]="metaData.url" alt="Gallery Image" class="gallery-image" />
