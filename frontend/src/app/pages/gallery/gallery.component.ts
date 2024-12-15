@@ -105,7 +105,7 @@ export class GalleryComponent implements OnInit {
         },
         error: err => {
           console.error("Error on gallery load : ", err);
-          this.toastService.openErrorToast("Es gab ein Fehler beim laden der Gallerie. Versuchen Sie es später erneut.")
+          this.toastService.openErrorToast("Es gab ein Fehler beim laden der Galerie. Versuchen Sie es später erneut.")
         }
       });
     }

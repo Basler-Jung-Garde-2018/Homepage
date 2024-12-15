@@ -27,7 +27,6 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.keyCloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
-      console.table(this.userProfile);
     });
   }
   logout() {

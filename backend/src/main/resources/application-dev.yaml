@@ -8,9 +8,6 @@ quarkus:
   http:
     port: 8080
     root-path: /jung-garde
-    limits:
-      max-body-size:
-        650M
     cors:
       ~: true
       origins:

@@ -89,7 +89,7 @@ export class MediaPageComponent {
         this.files = [];
       }, error: err => {
         console.error("Error occurred: ", err);
-        this.toastService.openErrorToast("Es gab ein Fehler beim hochalden der Dateien. Bitte versuchen Sie es später erneut.")
+        this.toastService.openErrorToast("Es gab ein Fehler beim hochladen der Dateien. Bitte versuchen Sie es später erneut.")
       }
     })
   }

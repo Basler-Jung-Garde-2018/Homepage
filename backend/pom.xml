@@ -84,6 +84,11 @@
             <artifactId>quarkus-resteasy-multipart</artifactId>
             <version>3.17.2</version>
         </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.20</version>
+        </dependency>
     </dependencies>
 
     <build>
