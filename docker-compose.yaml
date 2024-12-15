@@ -23,7 +23,7 @@ services:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     ports:
-      - "8543:8443"
+      - "8543:8543"
     env_file:
       - /root/.secrets/.env
     volumes:
