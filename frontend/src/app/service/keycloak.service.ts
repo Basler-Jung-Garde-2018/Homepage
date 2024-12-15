@@ -18,5 +18,4 @@ export class KeycloakOperationService {
   getUserProfile(): any {
     return this.keycloak.loadUserProfile();
   }
-  // Add other methods as needed for token access, user info retrieval, etc.}
 }

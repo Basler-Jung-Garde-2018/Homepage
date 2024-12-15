@@ -4,7 +4,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'https://localhost:8543',
+        url: 'https://jung-garde.ch:8543',
         realm: 'quarkus',
         clientId: 'frontend-service',
       },

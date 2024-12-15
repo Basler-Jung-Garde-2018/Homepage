@@ -1,39 +1,23 @@
 quarkus:
-  log:
-    category:
-      "io.quarkus.oidc":
-        level: DEBUG
-      "io.quarkus.oidc.runtime":
-        level: DEBUG
-  oidc:
-    auth-server-url: https://localhost:8543/realms/quarkus
-    client-id: backend-service
-    credentials:
-      secret: secret
-    tls:
-      verification: none
-
-  keycloak:
-    policy-enforcer:
-      enable: true
-      lazy-load-paths: true
   mongodb:
     database: jung-garde
-    connection-string: mongodb://localhost:27017
+    connection-string: mongodb://mongodb:27017
     credentials:
-      username: "myuser"
-      password: "password"
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
   http:
-    port: 8080
     root-path: /jung-garde
+    ssl:
+      certificate:
+        files: /etc/ssl/certs/fullchain.pem
+        key-files: /etc/ssl/private/jung-garde-key.key
     limits:
-      max-body-size:
-        650M
+      max-body-size: 650M
     cors:
       ~: true
       origins:
-        - "http://localhost:4200/"
+        - "https://jung-garde.ch"
 
 variable:
   path:
-    disk: src/main/resources/tmp/
+    disk: /data/disk/

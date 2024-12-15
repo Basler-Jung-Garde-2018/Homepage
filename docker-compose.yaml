@@ -10,7 +10,6 @@ services:
     volumes:
       - /etc/ssl/:/etc/ssl/
       - file_data:/data/disk
-
   frontend:
     build:
       context: ./frontend
@@ -20,6 +19,17 @@ services:
     volumes:
       - /etc/ssl/:/etc/ssl/
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    ports:
+      - "8543:8443"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./config/keycloak-keystore.jks:/etc/keycloak-keystore.jks
+    command: start --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
   mongodb:
     image: mongo
     ports:
