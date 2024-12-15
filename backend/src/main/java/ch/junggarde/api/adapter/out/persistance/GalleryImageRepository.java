@@ -36,18 +36,7 @@ public class GalleryImageRepository {
         return mongoClient.get().getDatabase(database).getCollection(COLLECTION, Document.class);
     }
 
-    public GalleryImage findGalleryImageById(UUID imageId) {
-        Bson filter = Filters.eq(GalleryImage.Fields.id, imageId.toString());
-        return collection().find(filter).first();
-    }
-
-    public List<UUID> findGalleryIds(int year, String event, int page) {
-        int docOnPage = 20;
-        if (page == 0) {
-            docOnPage = 40;
-        } else {
-            page += 1;
-        }
+    public List<UUID> findGalleryIds(int year, String event) {
         Bson filter = Filters.and(
                 Filters.eq(GalleryImage.Fields.year, year),
                 Filters.eq(GalleryImage.Fields.event, event),
@@ -55,8 +44,6 @@ public class GalleryImageRepository {
         );
 
         return filterCollection().find(filter)
-                .skip(page * docOnPage)
-                .limit(docOnPage)
                 .projection(Projections.fields(
                         Projections.include("id"),
                         Projections.excludeId()

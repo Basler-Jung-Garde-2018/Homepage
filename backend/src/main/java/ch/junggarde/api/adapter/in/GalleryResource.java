@@ -31,15 +31,14 @@ public class GalleryResource {
     MediaService mediaService;
 
     @GET
-    @Path("/{year}/{event}/{page}")
+    @Path("/{year}/{event}")
     public Response getGallery(
             @PathParam("year") int year,
-            @PathParam("event") String event,
-            @PathParam("page") int page
+            @PathParam("event") String event
     ) {
         try {
-            log.info("HTTP GET /gallery/{}/{}/{}", year, event, page);
-            List<UUID> galleryIds = this.galleryService.getGallery(year, event, page);
+            log.info("HTTP GET /gallery/{}/{}", year, event);
+            List<UUID> galleryIds = this.galleryService.getGallery(year, event);
             return Response.ok().entity(this.mediaService.getMetaDataByIds(galleryIds)).build();
         } catch (ImageNotFound e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -47,9 +46,9 @@ public class GalleryResource {
     }
 
     @GET
-    @Path("/{format}/{imageId}")
+    @Path("/image/{format}/{imageId}/{full}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId) {
+    public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId, @PathParam("full") boolean full) {
         log.info("HTTP GET /gallery/{}", imageId);
         try {
             return Response.ok((StreamingOutput) output -> {
@@ -60,9 +59,9 @@ public class GalleryResource {
                             .scale(1)
                             .asBufferedImage();
 
-                    if (image.getHeight() > 1440) {
+                    if (!full && image.getHeight() > 1080) {
                         image = Thumbnails.of(new FileInputStream(file))
-                                .size((1440 * image.getWidth()) / image.getHeight(), 1440)
+                                .size((1080 * image.getWidth()) / image.getHeight(), 1080)
                                 .asBufferedImage();
                     }
 

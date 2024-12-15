@@ -25,7 +25,7 @@
                    [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               @for (option of filteredOptions | async; track option) {
-                <mat-option [value]="option">{{option}}</mat-option>
+                <mat-option [value]="option">{{ option }}</mat-option>
               }
             </mat-autocomplete>
           </mat-form-field>
@@ -40,7 +40,13 @@
 
 
 <div class="gallery-container">
-  <mat-card *ngFor="let image of gallery$ | async" class="gallery-card">
-    <img [src]="image" alt="Gallery Image" class="gallery-image"/>
+  <mat-card *ngFor="let metaData of paginatedGallery$ | async" class="gallery-card" (click)="enlargeImage(metaData)">
+    <img [src]="metaData.url" alt="Gallery Image" class="gallery-image" />
   </mat-card>
 </div>
+
+<mat-paginator
+  [length]="galleryLength"
+  [pageSize]="10"
+  (page)="updatePagination($event.pageIndex)">
+</mat-paginator>

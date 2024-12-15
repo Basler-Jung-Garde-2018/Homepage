@@ -1,0 +1,12 @@
+<div class="container">
+  <button mat-icon-button class="button-left" (click)="previous()">
+    <mat-icon>navigate_before</mat-icon>
+  </button>
+  <img [src]="data.url" alt="Enlarged Image" class="full-screen-image">
+  <button mat-icon-button class="button-right" (click)="next()">
+    <mat-icon>navigate_next</mat-icon>
+  </button>
+  <button mat-icon-button class="button-download" (click)="download()">
+    <mat-icon>download</mat-icon>
+  </button>
+</div>

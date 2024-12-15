@@ -1,10 +1,16 @@
+html, body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 button {
   border: solid lightgrey 2px;
 }
+
 html, body {
   margin: 0;
   height: 100%;
@@ -30,4 +36,64 @@ html, body {
 
 .content {
   overflow-y: auto;
+}
+
+.error-toast.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: red;
+    border-radius: 4px; /* Adding some rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+    font-weight: bold; /* Making the button text bold */
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: white;
+    font-weight: 500;
+    white-space: pre-wrap;
+    font-size: 16px; /* Adjusting the font size */
+  }
+}
+
+.success-toast.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: green;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+    font-weight: bold;
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: white;
+    font-weight: 500;
+    white-space: pre-wrap;
+    font-size: 16px;
+  }
+}
+
+.warn-toast.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: orange;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .mat-mdc-button {
+    color: black !important;
+    font-weight: bold;
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: black;
+    font-weight: 500;
+    white-space: pre-wrap;
+    font-size: 16px;
+  }
 }
