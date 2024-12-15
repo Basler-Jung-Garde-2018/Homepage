@@ -33,7 +33,7 @@ public class MediaService {
     @ConfigProperty(name = "variable.path.disk")
     String DIRECTORY;
 
-    public void uploadFiles(MultipartFormDataInput input, FileType fileType) throws IOException {
+    public List<UUID> uploadFiles(MultipartFormDataInput input, FileType fileType) throws IOException {
         // Parse input
         Map<String, InputStream> fileMap = input.getFormDataMap()
                 .entrySet()
@@ -74,6 +74,7 @@ public class MediaService {
         }
         // Save metadata to db
         this.metaDataRepository.saveMetaData(metaData);
+        return metaData.stream().map(MetaData::getId).toList();
     }
 
     public List<MetaData> getMetaData(FileType fileType) {
@@ -95,5 +96,9 @@ public class MediaService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<MetaData> getMetaDataByIds(List<UUID> ids) {
+        return metaDataRepository.findMetaDataByIds(ids);
     }
 }

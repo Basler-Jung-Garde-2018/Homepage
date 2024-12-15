@@ -1,17 +1,22 @@
 package ch.junggarde.api.application;
 
 import ch.junggarde.api.adapter.out.persistance.GalleryImageRepository;
-import ch.junggarde.api.adapter.out.persistance.ImageRepository;
 import ch.junggarde.api.application.dto.GalleryImageDTO;
 import ch.junggarde.api.model.image.GalleryImage;
-import ch.junggarde.api.model.image.Image;
 import ch.junggarde.api.model.image.ImageNotFound;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 @Slf4j
@@ -20,53 +25,32 @@ public class GalleryService {
     GalleryImageRepository galleryImageRepository;
 
     @Inject
-    ImageRepository imageRepository;
+    @ConfigProperty(name = "variable.path.disk")
+    String DIRECTORY;
 
-
-    public List<GalleryImageDTO> getGallery(int year, String event, int page) throws ImageNotFound {
-        List<GalleryImage> galleryImages = galleryImageRepository.getGallery(year, event, page);
-
-        // Get all imageIds of the gallery images
-        List<String> imageIds = galleryImages.stream()
-                .map(galleryImage -> galleryImage.getImageId().toString())
-                .toList();
-
-        List<Image> images = imageRepository.findImagesByIds(imageIds);
-
-        // Add image to gallery image and map to dto
-        return galleryImages.stream()
-                .map(galleryImage -> GalleryImageDTO.fromDomainModel(
-                                galleryImage,
-                                images.stream()
-                                        .filter(image -> image.getId().equals(galleryImage.getImageId()))
-                                        .findFirst()
-                                        .orElseThrow(() -> new ImageNotFound(galleryImage.getId()))
-                        )
-                ).toList();
+    public List<UUID> getGallery(int year, String event) {
+        return this.galleryImageRepository.findGalleryIds(year, event);
     }
 
-    public List<GalleryImageDTO> addImages(List<GalleryImageDTO> galleryRequests) {
-        if (galleryRequests.isEmpty()) {
+    public List<GalleryImageDTO> addImages(List<GalleryImageDTO> imageMetadata) {
+        if (imageMetadata.isEmpty()) {
             return new ArrayList<>();
         }
-        List<GalleryImageDTO> response = new ArrayList<>(galleryRequests.size());
-        List<GalleryImage> galleryImages = new ArrayList<>(galleryRequests.size());
-        List<Image> images = new ArrayList<>(galleryRequests.size());
+        List<GalleryImageDTO> response = new ArrayList<>(imageMetadata.size());
+        List<GalleryImage> galleryImages = new ArrayList<>(imageMetadata.size());
 
-        for (GalleryImageDTO galleryRequest : galleryRequests) {
-            Image image = new Image(galleryRequest.base64());
+        for (GalleryImageDTO galleryRequest : imageMetadata) {
             GalleryImage galleryImage = new GalleryImage(
-                    image.getId(),
+                    UUID.fromString(galleryRequest.id()),
                     galleryRequest.year(),
-                    galleryRequest.event()
+                    galleryRequest.event(),
+                    galleryRequest.published()
             );
 
-            images.add(image);
             galleryImages.add(galleryImage);
-            response.add(GalleryImageDTO.fromDomainModel(galleryImage, image));
+            response.add(GalleryImageDTO.fromDomainModel(galleryImage));
         }
 
-        imageRepository.saveImages(images);
         galleryImageRepository.saveImages(galleryImages);
 
         return response;
@@ -77,5 +61,28 @@ public class GalleryService {
             return;
         }
         this.galleryImageRepository.publishImages(imageIds);
+
+        // move files in other directory for better security
+        imageIds.forEach(id -> {
+            Path srcPath = Paths.get(DIRECTORY + "/IMAGE/" + id);
+            Path destPath = Paths.get(DIRECTORY + "/PUBLIC/" + id);
+            try {
+                Files.move(srcPath, destPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public List<String> getEvents() {
+        return this.galleryImageRepository.findEvents();
+    }
+
+    public File getImageFromDisk(UUID imageId) {
+        File image = Paths.get(DIRECTORY, "PUBLIC", imageId.toString()).toFile();
+        if (!image.exists() || !image.isFile()) {
+            throw new ImageNotFound(imageId);
+        }
+        return image;
     }
 }

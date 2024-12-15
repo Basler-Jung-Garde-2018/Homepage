@@ -1,4 +1,13 @@
 quarkus:
+  oidc:
+    auth-server-url: https://jung-garde.ch:8543/realms/quarkus
+    client-id: backend-service
+    credentials:
+      secret: secret
+  keycloak:
+    policy-enforcer:
+      enable: true
+      lazy-load-paths: true
   mongodb:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
@@ -11,8 +20,6 @@ quarkus:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
         key-files: /etc/ssl/private/jung-garde-key.key
-    limits:
-      max-body-size: 650M
     cors:
       ~: true
       origins:

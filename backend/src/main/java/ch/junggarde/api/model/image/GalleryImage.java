@@ -17,15 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class GalleryImage {
     private UUID id;
-    private UUID imageId;
     private int year;
     private String event;
     private boolean published = false;
-
-    public GalleryImage(UUID imageId, int year, String event) {
-        this.id = UUID.randomUUID();
-        this.imageId = imageId;
-        this.year = year;
-        this.event = event;
-    }
 }

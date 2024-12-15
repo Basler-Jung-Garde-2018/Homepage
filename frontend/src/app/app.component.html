@@ -9,23 +9,34 @@
     <a mat-button routerLink="/kalender">Termine & Social Media</a>
     <a mat-button routerLink="/galerie">Galerie</a>
     <a mat-button routerLink="/ueber-uns">Über uns</a>
+    <a mat-button *ngIf="!userProfile" (click)="login()">Login</a>
+    <a mat-button *ngIf="userProfile" (click)="logout()">Logout</a>
+
+    <a mat-button *ngIf="userProfile" [matMenuTriggerFor]="submenu">Privater Bereich</a>
+    <mat-menu #submenu="matMenu">
+      <button mat-menu-item routerLink="/private-section/gallery">Bilder hochladen</button>
+      <button mat-menu-item routerLink="/private-section/calendar">Kalender</button>
+      <button mat-menu-item routerLink="/private-section/media">Noten & Berichte</button>
+    </mat-menu>
   </div>
 
   <button mat-icon-button [matMenuTriggerFor]="menu" class="hamburger-menu">
     <mat-icon>menu</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/startseite">Startseite</button>
     <button mat-menu-item routerLink="/kalender">Termine & Social Media</button>
     <button mat-menu-item routerLink="/galerie">Galerie</button>
     <button mat-menu-item routerLink="/ueber-uns">Über uns</button>
+    <a mat-button *ngIf="!userProfile" (click)="login()">Login</a>
+    <a mat-button *ngIf="userProfile" (click)="logout()">Logout</a>
+    <button mat-menu-item *ngIf="userProfile" [matMenuTriggerFor]="submenu">Privater Bereich</button>
   </mat-menu>
 </mat-toolbar>
 
-
-
 <div class="bg-image">
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 <footer class="footer">
   <div class="footer-content">

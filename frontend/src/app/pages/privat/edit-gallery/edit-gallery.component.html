@@ -1,0 +1,69 @@
+<mat-card class="upload-card">
+  <mat-card-header>
+    <mat-card-title>Bilder hochladen</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="eventForm" (ngSubmit)="onUpload()" class="event-form">
+      <div class="form-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Jahr</mat-label>
+          <input matInput formControlName="year" type="number" placeholder="Jahr eingeben">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Event</mat-label>
+          <input type="text"
+                 placeholder="Fasnacht"
+                 aria-label="Event"
+                 matInput
+                 formControlName="event"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        multiple
+        class="file-input">
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">Hochladen</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<div class="gallery-container">
+  <table mat-table [dataSource]="imageDisplay" class="gallery-table">
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year</th>
+      <td mat-cell *matCellDef="let element"> {{ element.year }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="event">
+      <th mat-header-cell *matHeaderCellDef> Event</th>
+      <td mat-cell *matCellDef="let element"> {{ element.event }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="base64">
+      <th mat-header-cell *matHeaderCellDef> Preview</th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.base64" [src]="element.base64" alt="Image" class="gallery-image"
+             (click)="openImageModal(element.base64)"/>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="modal" *ngIf="isModalOpen" (click)="closeImageModal()">
+  <div class="modal-content">
+    <span class="close" (click)="closeImageModal()">&times;</span>
+    <img [src]="selectedImage" alt="Enlarged Image"/>
+  </div>
+</div>
