@@ -33,6 +33,7 @@ public class AppointmentResource {
     }
 
     @POST
+    @Path("/private")
     public Response saveAppointments(AppointmentRequestDTO appointment) {
         log.info("HTTP POST /appointments {}", appointment);
         return Response.ok().entity(appointMentService.saveAppointment(appointment)).build();
