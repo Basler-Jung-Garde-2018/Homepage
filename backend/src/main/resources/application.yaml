@@ -3,7 +3,7 @@ quarkus:
     auth-server-url: https://jung-garde.ch:8543/realms/quarkus
     client-id: backend-service
     credentials:
-      secret: secret
+      secret: ${KC_SECRET}
   keycloak:
     policy-enforcer:
       enable: true
