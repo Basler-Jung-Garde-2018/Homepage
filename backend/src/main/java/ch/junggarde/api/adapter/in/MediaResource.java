@@ -26,7 +26,7 @@ public class MediaResource {
     MediaService mediaService;
 
     @POST
-    @Path("/{type}")
+    @Path("/{type}/admin")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
         log.info("HTTP POST /media/{} {}", type, input);
