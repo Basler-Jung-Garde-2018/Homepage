@@ -30,7 +30,7 @@ export class ClientService {
   }
 
   public getMembers(): Observable<Member[]> {
-    return this.httpClient.get<Member[]>(`${this.baseUrl}/members`);
+    return this.httpClient.get<Member[]>(`${this.baseUrl}/members/public`);
   }
 
   public getAdministrativeMembers(): Observable<any> {
@@ -46,7 +46,7 @@ export class ClientService {
     files.forEach(file => {
       formData.append(file.name, file);
     })
-    return this.httpClient.post<string[]>(`${this.baseUrl}/media/${type}`, formData);
+    return this.httpClient.post<string[]>(`${this.baseUrl}/media/${type}/admin`, formData);
   }
 
   public getMetaDataOfMedia(type: string): Observable<MetaData[]> {
@@ -64,6 +64,6 @@ export class ClientService {
   }
 
   public addAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.httpClient.post<Appointment>(`${this.baseUrl}/appointments`, appointment)
+    return this.httpClient.post<Appointment>(`${this.baseUrl}/appointments/private`, appointment)
   }
 }
