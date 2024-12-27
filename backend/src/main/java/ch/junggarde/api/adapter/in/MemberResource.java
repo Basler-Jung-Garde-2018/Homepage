@@ -23,6 +23,7 @@ public class MemberResource {
     MemberService memberService;
 
     @GET
+    @Path("/public")
     public Response getMembers() {
         log.info("HTTP GET /members/public");
         return Response.ok(memberService.getMembers()).build();
