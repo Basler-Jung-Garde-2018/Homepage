@@ -16,6 +16,8 @@ quarkus:
       password: ${MONGO_PASSWORD}
   http:
     root-path: /jung-garde
+    limits:
+      max-body-size: 650M
     ssl:
       certificate:
         files: /etc/ssl/certs/fullchain.pem
