@@ -1,5 +1,7 @@
 services:
   backend:
+    depends_on:
+      - keycloak
     build:
       context: ./backend
       dockerfile: src/main/docker/Dockerfile.jvm
