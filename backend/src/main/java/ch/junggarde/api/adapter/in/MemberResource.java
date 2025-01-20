@@ -4,6 +4,8 @@ import ch.junggarde.api.application.MemberService;
 import ch.junggarde.api.application.dto.AdministrativeMemberDTO;
 import ch.junggarde.api.application.dto.MemberDTO;
 import ch.junggarde.api.model.member.MemberNotFound;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -24,12 +26,14 @@ public class MemberResource {
 
     @GET
     @Path("/public")
+    @PermitAll
     public Response getMembers() {
         log.info("HTTP GET /members/public");
         return Response.ok(memberService.getMembers()).build();
     }
 
     @POST
+    @RolesAllowed("mitglied")
     public Response addMembers(List<MemberDTO> members) {
         log.info("HTTP POST /members {}", members);
         log.info("add {} Members", members.size());
@@ -38,6 +42,7 @@ public class MemberResource {
 
     @Path("/administrative")
     @GET
+    @RolesAllowed("mitglied")
     public Response getAdministrative() {
         log.info("HTTP GET /members/administrative");
         try {
@@ -49,6 +54,7 @@ public class MemberResource {
 
     @Path("/administrative")
     @POST
+    @RolesAllowed("mitglied")
     public Response addAdministrativeMembers(List<AdministrativeMemberDTO> administrativeMemberDTOS) {
         log.info("HTTP POST /members/administrative {}", administrativeMemberDTOS);
         log.info("add {} AdministrativeMembers", administrativeMemberDTOS.size());

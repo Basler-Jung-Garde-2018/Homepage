@@ -1,4 +1,13 @@
 quarkus:
+  oidc:
+    auth-server-url: https://jung-garde.ch:8543/realms/quarkus
+    client-id: test
+    credentials:
+      secret: ${KC_SECRET}
+  keycloak:
+    policy-enforcer:
+      enable: true
+      lazy-load-paths: true
   mongodb:
     database: jung-garde
     connection-string: mongodb://localhost:27017
@@ -8,10 +17,19 @@ quarkus:
   http:
     port: 8080
     root-path: /jung-garde
+    limits:
+      max-body-size: 650M
     cors:
       ~: true
       origins:
         - "http://localhost:4200"
+
+mp:
+  jwt:
+    verify:
+      issuer: https://jung-garde.ch:8543/realms/quarkus
+      publickey:
+        location: https://jung-garde.ch:8543/realms/quarkus
 
 variable:
   path:

@@ -8,19 +8,6 @@ quarkus:
     policy-enforcer:
       enable: true
       lazy-load-paths: true
-      paths:
-        public:
-          paths:
-            - name: public
-              path: /jung-garde/gallery/*
-              enforcement-mode: DISABLED
-            - name: public
-              path: /jung-garde/appointments
-              enforcement-mode: DISABLED
-            - name: public
-              path: /jung-garde/members
-
-
   mongodb:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
@@ -39,6 +26,13 @@ quarkus:
       ~: true
       origins:
         - "https://jung-garde.ch"
+
+mp:
+  jwt:
+    verify:
+      issuer: https://jung-garde.ch:8543/realms/quarkus
+      publickey:
+        location: https://jung-garde.ch:8543/realms/quarkus
 
 variable:
   path:
