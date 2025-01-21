@@ -7,10 +7,6 @@ import {MembersComponent} from "./pages/aboutus/members/members.component";
 import {LeadershipComponent} from "./pages/aboutus/leadership/leadership.component";
 import {BenefactorComponent} from "./pages/aboutus/benefactor/benefactor.component";
 import {ImpressumComponent} from "./pages/impressum/impressum.component";
-import {EditGalleryComponent} from "./pages/privat/edit-gallery/edit-gallery.component";
-import {MediaPageComponent} from "./pages/privat/media-page/media-page.component";
-import {AuthGuard} from "./auth/auth.guard";
-import {PrivateCalendarComponent} from "./pages/privat/private-calendar/private-calendar.component";
 import {PublicCalendarComponent} from "./pages/public-calendar/public-calendar.component";
 
 export const routes: Routes = [
@@ -23,8 +19,5 @@ export const routes: Routes = [
   {path: 'kalender', component: PublicCalendarComponent, title: 'Termine & Social Media'},
   {path: 'galerie', component: GalleryComponent, title: 'Galerie'},
   {path: 'impressum', component: ImpressumComponent, title: 'Impressum'},
-  { path: 'private-section/gallery', component:  EditGalleryComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'vorstand'] }},
-  {path: 'private-section/media', component: MediaPageComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'vorstand', 'mitglied', 'muko'] }},
-  {path: 'private-section/calendar', component: PrivateCalendarComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'vorstand', 'mitglied', 'muko'] }},
-  {path: '**', component: NotfoundComponent},
+  {path: '**', component: NotfoundComponent}
 ];
