@@ -1,13 +1,4 @@
 quarkus:
-  oidc:
-    auth-server-url: https://jung-garde.ch:8543/realms/quarkus
-    client-id: backend-service
-    credentials:
-      secret: ${KC_SECRET}
-  keycloak:
-    policy-enforcer:
-      enable: true
-      lazy-load-paths: true
   mongodb:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
@@ -26,13 +17,6 @@ quarkus:
       ~: true
       origins:
         - "https://jung-garde.ch"
-
-mp:
-  jwt:
-    verify:
-      issuer: https://jung-garde.ch:8543/realms/quarkus
-      publickey:
-        location: https://jung-garde.ch:8543/realms/quarkus
 
 variable:
   path:

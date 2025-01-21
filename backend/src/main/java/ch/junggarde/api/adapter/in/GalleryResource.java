@@ -34,7 +34,6 @@ public class GalleryResource {
 
     @GET
     @Path("/{year}/{event}")
-    @PermitAll
     public Response getGallery(
             @PathParam("year") int year,
             @PathParam("event") String event
@@ -50,7 +49,6 @@ public class GalleryResource {
 
     @GET
     @Path("/image/{format}/{imageId}/{full}")
-    @PermitAll
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getGalleryImage(@PathParam("format") String format, @PathParam("imageId") String imageId, @PathParam("full") boolean full) {
         log.info("HTTP GET /gallery/{}", imageId);
@@ -92,7 +90,6 @@ public class GalleryResource {
     }
 
     @POST
-    @RolesAllowed("mitglied")
     public Response addImageMetaData(List<GalleryImageDTO> imageMetadata) {
         log.info("HTTP POST /gallery metadata.event: {}, metadata.year: {}", imageMetadata.getFirst().event(), imageMetadata.getFirst().year());
         log.info("add {} Images", imageMetadata.size());
@@ -100,7 +97,6 @@ public class GalleryResource {
     }
 
     @PUT
-    @RolesAllowed("mitglied")
     public Response publishImages(List<String> imageIds) {
         log.info("HTTP PUT /gallery {}", imageIds);
         log.info("publish {} Images", imageIds.size());
@@ -110,7 +106,6 @@ public class GalleryResource {
 
     @GET
     @Path("/events")
-    @PermitAll
     public List<String> getEvents() {
         log.info("HTTP GET /gallery/events");
         return galleryService.getEvents();

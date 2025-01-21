@@ -29,7 +29,6 @@ public class MediaResource {
     @POST
     @Path("/{type}/admin")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed("mitglied")
     public Response uploadMedia(MultipartFormDataInput input, @PathParam("type") String type) {
         log.info("HTTP POST /media/{} {}", type, input);
         try {
@@ -42,7 +41,6 @@ public class MediaResource {
 
     @GET
     @Path("/{type}")
-    @RolesAllowed("mitglied")
     public Response getMetaData(@PathParam("type") String type) {
         log.info("HTTP GET /media/{}", type);
         try {
@@ -56,7 +54,6 @@ public class MediaResource {
     @GET
     @Path("/{type}/{mediaId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @RolesAllowed("mitglied")
     public Response getMedia(@PathParam("type") String type, @PathParam("mediaId") String mediaId) {
         log.info("HTTP GET /media/{}/{}", type, mediaId);
         try {
