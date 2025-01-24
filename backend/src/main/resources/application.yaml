@@ -32,7 +32,7 @@ mp:
     verify:
       issuer: https://jung-garde.ch:8543/realms/quarkus
       publickey:
-        location: https://jung-garde.ch:8543/realms/quarkus
+        location: https://jung-garde.ch:8543/realms/quarkus/protocol/openid-connect/token
 
 variable:
   path:
