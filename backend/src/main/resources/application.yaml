@@ -1,9 +1,4 @@
 quarkus:
-  oidc:
-    auth-server-url: https://jung-garde.ch:8543/realms/quarkus
-    client-id: backend-service
-    credentials:
-      secret: ${KC_SECRET}
   keycloak:
     policy-enforcer:
       enable: true
@@ -26,13 +21,25 @@ quarkus:
       ~: true
       origins:
         - "https://jung-garde.ch"
+    auth:
+      permission:
+        authenticated:
+          paths: /*
+          policy: authenticated
+  oidc:
+    auth-server-url: https://jung-garde.ch:8543/realms/quarkus
+    client-id: backend-service
+    credentials:
+      secret: ${KC_SECRET}
+    token:
+      audience: account
 
 mp:
   jwt:
     verify:
       issuer: https://jung-garde.ch:8543/realms/quarkus
       publickey:
-        location: https://jung-garde.ch:8543/realms/quarkus
+        location: https://jung-garde.ch:8543/realms/quarkus/protocol/openid-connect/token
 
 variable:
   path:
