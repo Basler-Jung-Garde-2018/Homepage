@@ -68,8 +68,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "sslKey": "/etc/ssl/private/jung-garde-key.key",
-            "sslCert": "/etc/ssl/certs/fullchain.pem"
+            "sslKey": "/etc/letsencrypt/live/jung-garde.ch/privkey.pem",
+            "sslCert": "/etc/letsencrypt/live/jung-garde.ch/fullchain.pem"
           },
           "configurations": {
             "production": {
