@@ -10,7 +10,7 @@ services:
     env_file:
       - /root/.secrets/.env
     volumes:
-      - /etc/ssl/:/etc/ssl/
+      - /etc/letsencrypt/live/jung-garde.ch/:/etc/ssl/
       - file_data:/data/disk
   frontend:
     build:
@@ -19,7 +19,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /etc/ssl/:/etc/ssl/
+      - /etc/letsencrypt/live/jung-garde.ch/:/etc/ssl/
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
