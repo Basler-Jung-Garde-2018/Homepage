@@ -20,12 +20,13 @@ quarkus:
       max-body-size: 650M
     ssl:
       certificate:
-        files: /etc/ssl/certs/fullchain.pem
-        key-files: /etc/ssl/private/jung-garde-key.key
+        files: /etc/ssl/fullchain.pem
+        key-files: /etc/ssl/privkey.pem
     cors:
       ~: true
       origins:
         - "https://jung-garde.ch"
+        - "https://www.jung-garde.ch"
 
 mp:
   jwt:
