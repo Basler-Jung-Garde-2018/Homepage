@@ -34,8 +34,8 @@ services:
       - KC_HTTPS_CERTIFICATE_FILE=/etc/ssl/jung-garde.ch/fullchain.pem
     volumes:
       - keycloak_data:/opt/keycloak/data
-      - /etc/ssl/jung-garde.ch/jung-garde-key.key:/etc/ssl/jung-garde.ch/jung-garde-key.key
-      - /etc/ssl/jung-garde.ch/fullchain.pem:/etc/ssl/jung-garde.ch/fullchain.pem
+      - /etc/letsencrypt/live/jung-garde.ch/privkey.pem:/etc/ssl/jung-garde.ch/jung-garde-key.key
+      - /etc/letsencrypt/live/jung-garde.ch/fullchain.pem:/etc/ssl/jung-garde.ch/fullchain.pem
     command: start
 
   mongodb:
