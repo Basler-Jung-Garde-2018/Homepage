@@ -11,6 +11,7 @@ services:
       - /root/.secrets/.env
     volumes:
       - /etc/letsencrypt/live/jung-garde.ch/:/etc/ssl/
+      - /etc/letsencrypt/archive/jung-garde.ch/:/archive/jung-garde.ch/
       - file_data:/data/disk
   frontend:
     build:
@@ -20,9 +21,9 @@ services:
       - "443:443"
     volumes:
       - /etc/letsencrypt/live/jung-garde.ch/:/etc/ssl/
-
+      - /etc/letsencrypt/archive/jung-garde.ch/:/archive/jung-garde.ch/
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:26.1.1
     container_name: keycloak
     ports:
       - "8543:8443"
@@ -30,12 +31,13 @@ services:
       - /root/.secrets/.env
     environment:
       - KC_HOSTNAME=jung-garde.ch
-      - KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/ssl/jung-garde.ch/jung-garde-key.key
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/ssl/jung-garde.ch/privkey.pem
       - KC_HTTPS_CERTIFICATE_FILE=/etc/ssl/jung-garde.ch/fullchain.pem
     volumes:
       - keycloak_data:/opt/keycloak/data
-      - /etc/letsencrypt/live/jung-garde.ch/privkey.pem:/etc/ssl/jung-garde.ch/jung-garde-key.key
+      - /etc/letsencrypt/live/jung-garde.ch/privkey.pem:/etc/ssl/jung-garde.ch/privkey.pem
       - /etc/letsencrypt/live/jung-garde.ch/fullchain.pem:/etc/ssl/jung-garde.ch/fullchain.pem
+    user: "0:0"
     command: start
 
   mongodb:
