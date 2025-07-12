@@ -4,10 +4,6 @@ quarkus:
     client-id: backend-service
     credentials:
       secret: ${KC_SECRET}
-  keycloak:
-    policy-enforcer:
-      enable: true
-      lazy-load-paths: true
   mongodb:
     database: jung-garde
     connection-string: mongodb://mongodb:27017
@@ -18,10 +14,10 @@ quarkus:
     root-path: /jung-garde
     limits:
       max-body-size: 650M
-    ssl:
-      certificate:
-        files: /etc/ssl/fullchain.pem
-        key-files: /etc/ssl/privkey.pem
+#    ssl:
+#      certificate:
+#        files: /etc/ssl/fullchain.pem
+#        key-files: /etc/ssl/privkey.pem
     cors:
       ~: true
       origins:
